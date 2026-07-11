@@ -677,8 +677,8 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
   const trainName = d.trainName || 'Express Train';
 
   return `
-    <div class="live-tracker-card">
-      <div class="live-hero-map p-5">
+    <div class="space-y-5 animate-scale-in">
+      <div class="live-hero-map p-5 rounded-[2rem] shadow-premium">
         <div class="relative z-10 flex items-start justify-between gap-3 mb-5">
           <div class="min-w-0">
             <!-- Train Details Header Badge -->
@@ -717,8 +717,8 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
         </div>
       </div>
       
-      <div class="p-5 bg-white/70 backdrop-blur-md">
-        <div class="flex items-center justify-between mb-3">
+      <div class="py-2 px-1">
+        <div class="flex items-center justify-between mb-4 px-2">
           <div>
             <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.18em]">Station Timeline</div>
             <div class="text-[11px] text-slate-500 font-semibold mt-0.5">Real-time route and station progress</div>
@@ -1138,6 +1138,7 @@ function renderUnconfirmedPNRResult(d) {
     </div>
   `;
   document.getElementById('pnr-results').classList.remove('hidden');
+  document.getElementById('testimonials-section')?.classList.add('hidden');
   setTimeout(() => {
     document.getElementById('pnr-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
@@ -1525,7 +1526,6 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
     let label = '';
     if (i === 1) label = 'Tomorrow';
     else if (i === 0) label = 'Today';
-    else if (i === -1) label = 'Yesterday';
     
     const displayDate = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }); // e.g. "11 Jul"
     
@@ -1539,15 +1539,15 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
   const pillsHTML = options.length === 0 
     ? `<div class="text-xs text-slate-500 font-bold p-3 text-center w-full">This train does not run on any available dates in the tracking window.</div>`
     : options.map(opt => `
-        <button type="button" class="date-pill bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl font-bold text-xs text-slate-700 active:scale-95 transition-all flex flex-col items-center min-w-[90px] cursor-pointer" onclick="selectLiveDate('${trainNo}', '${opt.apiDate}', this)">
-          <span class="text-[9px] uppercase tracking-wider text-slate-400 font-medium">${opt.label}</span>
-          <span class="mt-0.5 font-bold">${opt.displayDate}</span>
+        <button type="button" class="date-pill bg-white/60 backdrop-blur-sm border border-slate-200/50 px-4 py-3 rounded-2xl font-bold text-xs text-slate-800 active:scale-95 transition-all flex flex-col items-center justify-center min-w-[85px] cursor-pointer" onclick="selectLiveDate('${trainNo}', '${opt.apiDate}', this)">
+          <span class="text-xs font-black">${opt.displayDate}</span>
+          ${opt.label ? `<span class="text-[8px] uppercase tracking-wider text-slate-450 font-bold mt-1">${opt.label}</span>` : ''}
         </button>
       `).join('');
 
   // Update datesContainer with the full Premium Verified Card
   datesContainer.innerHTML = `
-    <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm space-y-4 animate-fade-in-up mt-5">
+    <div class="bg-slate-50/50 border border-slate-100 rounded-3xl p-4.5 space-y-4 shadow-sm backdrop-blur-sm animate-fade-in-up mt-5">
       <!-- Train Details Section -->
       <div class="flex items-center justify-between">
         <div class="min-w-0">
@@ -1559,7 +1559,7 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
       </div>
       
       <!-- Route Info -->
-      <div class="flex justify-between items-center bg-slate-50 border border-slate-100/50 rounded-2xl p-3.5 text-xs text-slate-700">
+      <div class="flex justify-between items-center bg-white/60 backdrop-blur-sm border border-slate-100/50 rounded-2xl p-3.5 text-xs text-slate-700">
         <div class="flex flex-col">
           <span class="text-[8px] uppercase tracking-wider text-slate-400 font-bold">Source</span>
           <span class="font-black truncate max-w-[90px]">${trainInfo.from_stn_name || 'Origin'}</span>
@@ -2012,48 +2012,32 @@ function updateShopTopbar() {
   const toEl = document.getElementById('shop-pnr-to');
   const strip = document.getElementById('train-strip');
 
-  if (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') {
+  if (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—' && appState.isPnrConfirmed) {
     const d = appState.pnrData;
     const pax = d.passengerList && d.passengerList[0];
     const coach = pax ? pax.coach : '—';
     const seat = pax ? pax.berth : '—';
     const berth = pax ? pax.berthCode : '';
 
-    if (appState.isPnrConfirmed) {
-      if (labelEl) {
-        labelEl.innerHTML = `<span class="font-serif-display italic text-[#e6fcf5]">Deliver in</span><span class="text-[14px] font-headline font-black text-secondary block mt-1.5 tracking-normal normal-case">${d.trainName}</span>`;
-      }
-      if (headerEl) {
-        headerEl.className = "flex flex-col gap-1 mt-1 text-white text-left items-start justify-start";
-        headerEl.innerHTML = `
-          <div class="flex items-center gap-1 font-mono text-[10px] text-white/80 font-semibold uppercase tracking-wider">
-            <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
-            <span>Train No: ${d.trainNumber} · Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}</span>
-          </div>
-          <div class="flex items-center gap-1 text-[10px] text-white/60 font-medium">
-            <span class="material-symbols-outlined text-[12px] text-secondary">route</span>
-            <span>${d.source.split('(')[0].trim()} to ${d.destination.split('(')[0].trim()}</span>
-          </div>
-        `;
-      }
-    } else {
-      // Direct train search guest mode (do not show train name/seat in the above topbar!)
-      if (labelEl) {
-        labelEl.innerHTML = `<span class="font-serif-display italic text-[#e6fcf5]">Deliver in</span><span class="text-[14px] font-headline font-black text-secondary block mt-1.5 tracking-normal normal-case">Station / Seat TBD</span>`;
-      }
-      if (headerEl) {
-        headerEl.className = "flex flex-col gap-1.5 mt-1 text-white text-left items-start justify-start";
-        headerEl.innerHTML = `
-          <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[14px] text-secondary">train</span>
-            <span class="font-mono text-[10px] text-white/80 font-semibold uppercase tracking-widest">Tracking Train: ${d.trainNumber}</span>
-          </div>
-        `;
-      }
+    if (labelEl) {
+      labelEl.innerHTML = `<span class="font-serif-display italic text-[#e6fcf5]">Deliver in</span><span class="text-[14px] font-headline font-black text-secondary block mt-1.5 tracking-normal normal-case">${d.trainName}</span>`;
+    }
+    if (headerEl) {
+      headerEl.className = "flex flex-col gap-1 mt-1 text-white text-left items-start justify-start";
+      headerEl.innerHTML = `
+        <div class="flex items-center gap-1 font-mono text-[10px] text-white/80 font-semibold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
+          <span>Train No: ${d.trainNumber} · Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}</span>
+        </div>
+        <div class="flex items-center gap-1 text-[10px] text-white/60 font-medium">
+          <span class="material-symbols-outlined text-[12px] text-secondary">route</span>
+          <span>${d.source.split('(')[0].trim()} to ${d.destination.split('(')[0].trim()}</span>
+        </div>
+      `;
     }
 
-    if (seatEl) seatEl.textContent = appState.isPnrConfirmed ? `Seat ${coach}-${seat} ${berth ? `(${berth})` : ''}` : 'Seat —';
-    if (statusEl) statusEl.textContent = appState.isPnrConfirmed ? 'Verified' : 'No Ticket';
+    if (seatEl) seatEl.textContent = `Seat ${coach}-${seat} ${berth ? `(${berth})` : ''}`;
+    if (statusEl) statusEl.textContent = 'Verified';
     if (fromEl) fromEl.textContent = d.source.split('(')[0].trim();
     if (toEl) toEl.textContent = d.destination.split('(')[0].trim();
     
@@ -2083,6 +2067,7 @@ function updateShopTopbar() {
     if (statusEl) statusEl.textContent = 'No Ticket';
     if (fromEl) fromEl.textContent = '—';
     if (toEl) toEl.textContent = '—';
+    if (strip) strip.classList.add('hidden');
   }
 }
 
@@ -3687,18 +3672,13 @@ function updateBottomNav(pageId) {
   const navPages = ['page-shop', 'page-pnr', 'page-live-tracking', 'page-orders', 'page-account', 'page-category-view', 'page-search'];
   let canShowNav = navPages.includes(pageId);
   
-  // Keep bottom nav completely hidden on PNR page during initial onboarding
-  if (pageId === 'page-pnr' && !appState.hasOnboarded) {
-    canShowNav = false;
-  }
-  
   if (canShowNav) {
     nav.classList.remove('hidden-nav');
     nav.style.display = 'flex';
     nav.style.transform = '';
   } else {
     nav.classList.add('hidden-nav');
-    if (pageId === 'page-splash' || (pageId === 'page-pnr' && !appState.hasOnboarded)) {
+    if (pageId === 'page-splash') {
       nav.style.display = 'none';
     } else {
       setTimeout(() => {
@@ -4321,7 +4301,7 @@ function renderFilteredPlatforms(query) {
         <input type="text" placeholder="Search station (e.g. Kanpur)..." class="w-full bg-white border border-outline-variant/60 rounded-xl pl-9 pr-3 py-2 text-[10px] font-medium focus:outline-none focus:border-primary transition-all" value="${query}" oninput="renderFilteredPlatforms(this.value)" />
       </div>
 
-      <div class="space-y-2 max-h-[190px] overflow-y-auto pr-1 scrollbar-none pt-1">
+      <div class="space-y-2 max-h-[285px] overflow-y-auto pr-1 scrollbar-none pt-1">
         ${routeHTML}
       </div>
     </div>
@@ -4569,7 +4549,7 @@ function renderFilteredTimetable(query) {
       </div>
 
       <!-- Scrollable timeline route -->
-      <div class="relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-150 text-xs space-y-4 max-h-[170px] overflow-y-auto scrollbar-none pt-1">
+      <div class="relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-150 text-xs space-y-4 max-h-[265px] overflow-y-auto scrollbar-none pt-1">
         ${stopsHTML}
       </div>
     </div>
