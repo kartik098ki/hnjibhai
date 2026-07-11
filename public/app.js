@@ -737,6 +737,12 @@ function renderJourneyDashboard(containerId, pnrData, liveData) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
+  // Hide the search card and bottom utilities grid so results take over the screen
+  const searchCard = document.getElementById('pnr-search-card');
+  if (searchCard) searchCard.classList.add('hidden');
+  const botUtils = document.getElementById('travel-utility-section');
+  if (botUtils && containerId === 'pnr-results') botUtils.classList.add('hidden');
+
   const trainNo = pnrData?.trainNumber || liveData?.trainNo || '—';
   const trainName = pnrData?.trainName || liveData?.trainName || 'Express Train';
   const statusNote = liveData?.statusNote || 'Running';
@@ -808,6 +814,12 @@ function renderJourneyDashboard(containerId, pnrData, liveData) {
       <div class="rounded-[2.5rem] bg-gradient-to-br from-emerald-950 to-emerald-900 border border-emerald-800/40 p-5 text-white relative overflow-hidden shadow-xl">
         <div class="absolute -top-8 -right-8 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full pointer-events-none"></div>
         <div class="absolute -bottom-12 -left-12 w-28 h-28 bg-secondary/5 blur-3xl rounded-full pointer-events-none"></div>
+        
+        <!-- Premium Back Button Capsule -->
+        <button onclick="goBackToSearch()" class="flex items-center gap-1.5 text-emerald-300 hover:text-white mb-4 transition-colors font-headline font-black text-[9px] uppercase tracking-widest focus:outline-none relative z-20 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full select-none">
+          <span class="material-symbols-outlined text-[12px] font-bold">arrow_back</span>
+          Search Another PNR / Train
+        </button>
         
         <div class="flex justify-between items-start mb-4 relative z-10">
           <div class="min-w-0">
@@ -4480,7 +4492,10 @@ function selectCoachLayout(coachType) {
   let blueprintHTML = `
     <div class="flex items-center justify-between text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 px-1">
       <span>Compartment Blueprint</span>
-      <span class="flex items-center gap-1 text-primary">Train Direction <span class="material-symbols-outlined text-[10px] animate-pulse">arrow_right_alt</span></span>
+      <span onclick="toggleTrainDirection(this)" class="flex items-center gap-1 text-primary cursor-pointer hover:bg-primary/5 px-2 py-0.5 rounded-lg transition-colors select-none">
+        Train Direction: <span class="direction-label font-bold">Forward</span>
+        <span class="material-symbols-outlined text-[12px] animate-pulse direction-arrow transition-transform duration-300">arrow_right_alt</span>
+      </span>
     </div>
     
     <!-- Visual Train Coach Shell -->
@@ -5028,4 +5043,60 @@ function saveRecentSearch(term) {
 function clearRecentSearches() {
   localStorage.removeItem('railquick_recent_searches');
   loadRecentSearches();
+}
+
+// Phase 2 helper functions
+function toggleTrainDirection(element) {
+  const label = element.querySelector('.direction-label');
+  const arrow = element.querySelector('.direction-arrow');
+  if (label && arrow) {
+    const isForward = label.textContent === 'Forward';
+    label.textContent = isForward ? 'Reverse' : 'Forward';
+    arrow.style.transform = isForward ? 'rotate(180deg)' : 'rotate(0deg)';
+    showToast(`Train direction toggled to ${isForward ? 'Reverse' : 'Forward'}!`, 'info');
+    
+    if (navigator.vibrate) navigator.vibrate(20);
+  }
+}
+
+function prefillPNRInput(val) {
+  const input = document.getElementById('pnr-input');
+  if (input) {
+    input.value = val;
+    if (navigator.vibrate) navigator.vibrate(20);
+    checkPNRStatus();
+  }
+}
+
+function prefillLiveTrainInput(val) {
+  const input = document.getElementById('live-train-input');
+  if (input) {
+    input.value = val;
+    if (navigator.vibrate) navigator.vibrate(20);
+    verifyTrainAndShowDates();
+  }
+}
+
+function goBackToSearch() {
+  const searchCard = document.getElementById('pnr-search-card');
+  if (searchCard) {
+    searchCard.classList.remove('hidden');
+  }
+  const resultsPnr = document.getElementById('pnr-results');
+  if (resultsPnr) {
+    resultsPnr.classList.add('hidden');
+    resultsPnr.innerHTML = '';
+  }
+  const resultsLive = document.getElementById('live-tracking-results');
+  if (resultsLive) {
+    resultsLive.classList.add('hidden');
+    resultsLive.innerHTML = '';
+  }
+  
+  const botUtils = document.getElementById('travel-utility-section');
+  if (botUtils) {
+    botUtils.classList.remove('hidden');
+  }
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
