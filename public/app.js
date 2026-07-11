@@ -375,7 +375,13 @@ async function checkPNRStatus() {
       document.getElementById('pnr-results').classList.add('hidden');
       updateShopTopbar(); 
       showToast('Ticket verified! Entering app...', 'success');
-      setTimeout(() => navigateTo('page-shop'), 1500);
+      setTimeout(() => {
+        if (appState.cart && appState.cart.length > 0) {
+          navigateTo('page-cart');
+        } else {
+          navigateTo('page-shop');
+        }
+      }, 1500);
     } else {
       appState.isPnrConfirmed = false;
       appState.hasOnboarded = true;
@@ -2653,6 +2659,16 @@ function proceedToCheckout() {
     localStorage.setItem('railquick_return_after_login', appState.cart.length ? 'page-cart' : 'page-account'); navigateTo('page-account');
     return; 
   }
+  // Require Confirmed PNR to proceed with order checkout
+  if (!appState.isPnrConfirmed || !appState.pnrData) {
+    showToast('Confirmed PNR verification required to place an order.', 'warning');
+    appState.hasOnboarded = false;
+    saveState();
+    setTimeout(() => {
+      navigateTo('page-pnr');
+    }, 1200);
+    return;
+  }
   navigateTo('page-checkout');
 }
 
@@ -3703,8 +3719,8 @@ function updateBottomNav(pageId) {
   items.forEach(item => {
     const targetPage = item.dataset.page;
     const icon = item.querySelector('.nav-icon');
-    const isPnrActive = (targetPage === 'page-pnr' && (pageId === 'page-pnr' || pageId === 'page-live-tracking'));
-    if (targetPage === pageId || isPnrActive ||
+    const isLiveActive = (targetPage === 'page-live-tracking' && (pageId === 'page-live-tracking' || pageId === 'page-pnr'));
+    if (targetPage === pageId || isLiveActive ||
         (targetPage === 'page-account' && ['page-offers', 'page-support', 'page-games'].includes(pageId)) ||
         (targetPage === 'page-shop' && pageId === 'page-category-view')) {
       item.classList.add('active');
