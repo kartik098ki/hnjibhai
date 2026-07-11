@@ -1698,26 +1698,28 @@ async function checkLiveStatus() {
 }
 
 function renderLiveTrainResult(d, trainNo) {
+  const statusNote = d.statusNote || 'Running';
+  const isDelayed = statusNote.toLowerCase().includes('late') || statusNote.toLowerCase().includes('delay');
+  const timelineHTML = buildPremiumStationTimelineHTML(d, statusNote, isDelayed);
+
+  const containerHTML = generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML);
+
   const resultsPnr = document.getElementById('pnr-results');
   const resultsLive = document.getElementById('live-tracking-results');
-  
-  const mockPnr = {
-    trainNumber: trainNo,
-    trainName: d.trainName || 'Express Train',
-    passengerList: [],
-    source: d.timeline?.[0] ? `${d.timeline[0].stationName} (${d.timeline[0].stationCode})` : '—',
-    destination: d.timeline?.[d.timeline.length - 1] ? `${d.timeline[d.timeline.length - 1].stationName} (${d.timeline[d.timeline.length - 1].stationCode})` : '—'
-  };
+  const innerHTML = `
+    <div class="fade-in-item">
+      ${containerHTML}
+    </div>`;
 
   if (resultsPnr) {
-    renderJourneyDashboard('pnr-results', mockPnr, d);
+    resultsPnr.innerHTML = innerHTML;
     resultsPnr.classList.remove('hidden');
   }
   if (resultsLive) {
-    renderJourneyDashboard('live-tracking-results', mockPnr, d);
+    resultsLive.innerHTML = innerHTML;
   }
   
-  // Smooth scroll container into view
+  // Smooth scroll container into view, then current station node
   setTimeout(() => {
     let scrollTarget = null;
     if (appState.currentPage === 'page-pnr' && resultsPnr && !resultsPnr.classList.contains('hidden')) {
@@ -1729,6 +1731,21 @@ function renderLiveTrainResult(d, trainNo) {
     if (scrollTarget) {
       scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    
+    // Slightly later, scroll the current node to center inside the scroll container without shifting parent pages
+    setTimeout(() => {
+      const listContainer = document.querySelector('.live-station-list');
+      const currentNode = listContainer ? listContainer.querySelector('.live-station-node.current') : null;
+      if (listContainer && currentNode) {
+        const containerHeight = listContainer.clientHeight;
+        const nodeOffsetTop = currentNode.offsetTop;
+        const nodeHeight = currentNode.clientHeight;
+        listContainer.scrollTo({
+          top: nodeOffsetTop - (containerHeight / 2) + (nodeHeight / 2),
+          behavior: 'smooth'
+        });
+      }
+    }, 280);
   }, 100);
 }
 
