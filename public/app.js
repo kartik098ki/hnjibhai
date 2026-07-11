@@ -279,13 +279,59 @@ function validateApiResponse(data) {
   return payload;
 }
 
+function hasTrainReachedDestination(pnrData, liveData) {
+  if (!pnrData || !liveData?.timeline?.length) return false;
+  
+  const destMatch = pnrData.destination.match(/\(([^)]+)\)/);
+  if (!destMatch) return false;
+  const destCode = destMatch[1].toUpperCase();
+
+  const destStop = liveData.timeline.find(s => s.stationCode && s.stationCode.toUpperCase() === destCode);
+  if (!destStop) return false;
+
+  const destIndex = liveData.timeline.indexOf(destStop);
+
+  const currentStnCode = liveData.currentStationCode;
+  const currentStop = liveData.timeline.find(s => 
+    s.status === 'current' || 
+    (s.stationCode && currentStnCode && s.stationCode.toUpperCase() === currentStnCode.toUpperCase())
+  );
+  
+  if (currentStop) {
+    const currentIndex = liveData.timeline.indexOf(currentStop);
+    if (currentIndex >= destIndex) {
+      return true;
+    }
+  }
+
+  if (destStop.status === 'departed' || destStop.status === 'current') {
+    return true; 
+  }
+
+  return false;
+}
+
 async function checkPNRStatus() {
   const pnr = document.getElementById('pnr-input').value.trim();
-  if (pnr.length !== 10) { showToast('Please enter a valid 10-digit PNR', 'warning'); return; }
-  showLoading('Checking PNR & Live Status...');
+  if (pnr.length !== 10 || !/^\d+$/.test(pnr)) { 
+    showToast('Please enter a valid 10-digit numeric PNR', 'warning'); 
+    return; 
+  }
+  
+  if (pnr.startsWith('000') || pnr === '9999999999' || pnr.startsWith('123456')) {
+    showToast('Invalid PNR Number. Please check your ticket and try again.', 'error');
+    return;
+  }
+  
+  showLoading('Verifying PNR booking segment...');
   try {
     const resp = await fetch(`/api/pnr/${pnr}`);
     const data = await resp.json();
+    
+    if (!data.success) {
+      throw new Error(data.error || 'Invalid PNR number');
+    }
+    
     const d = validateApiResponse(data);
     const mapped = {
       pnrNumber: d.pnr,
@@ -297,6 +343,7 @@ async function checkPNRStatus() {
       reservationClass: d.journey?.class || '—', chartPrepared: d.chart?.status || '—', fare: d.booking?.fare || null,
       passengerList: (d.passengers || []).map(p => ({ serialNumber: p.serialNumber || 'Passenger', bookingStatus: p.booking?.details || '—', currentStatus: p.current?.details || '—', coach: p.current?.coach || p.booking?.coach || '', berth: p.current?.berthNo || p.booking?.berthNo || '', berthCode: p.current?.berthCode || p.booking?.berthCode || '' }))
     };
+    
     let liveData = null;
     if (mapped.trainNumber && mapped.trainNumber !== '—') {
       try {
@@ -309,6 +356,12 @@ async function checkPNRStatus() {
     }
     if (!liveData && mapped.trainNumber) liveData = getMockLiveStatus(mapped.trainNumber);
     
+    if (hasTrainReachedDestination(mapped, liveData)) {
+      hideLoading();
+      showToast('Cannot enter app: Train has already reached your destination.', 'error');
+      return;
+    }
+    
     appState.pnrData = mapped; 
     appState.pnrLiveData = liveData; 
     
@@ -318,22 +371,30 @@ async function checkPNRStatus() {
       appState.hasOnboarded = true;
       saveState();
       hideLoading(); 
-      renderPNRResult(mapped); 
-      showContinueBar(mapped); 
+      document.getElementById('pnr-results').innerHTML = '';
+      document.getElementById('pnr-results').classList.add('hidden');
       updateShopTopbar(); 
-      showToast('✓ PNR status verified! Live dashboard loaded.', 'success');
+      showToast('Ticket verified! Entering app...', 'success');
+      setTimeout(() => navigateTo('page-shop'), 1500);
     } else {
       appState.isPnrConfirmed = false;
       appState.hasOnboarded = true;
       saveState();
       hideLoading();
-      renderUnconfirmedPNRResult(mapped);
-      showToast('✓ Waitlisted PNR verified! Live dashboard loaded.', 'warning');
+      document.getElementById('pnr-results').innerHTML = '';
+      document.getElementById('pnr-results').classList.add('hidden');
+      showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
     }
   } catch (err) {
     console.warn('API Offline, running fallback mock:', err.message);
     const mock = getMockPNRData(pnr);
     const liveData = getMockLiveStatus(mock.trainNumber);
+    
+    if (hasTrainReachedDestination(mock, liveData)) {
+      hideLoading();
+      showToast('Cannot enter app: Train has already reached your destination.', 'error');
+      return;
+    }
     
     appState.pnrData = mock; 
     appState.pnrLiveData = liveData; 
@@ -344,17 +405,19 @@ async function checkPNRStatus() {
       appState.hasOnboarded = true;
       saveState();
       hideLoading(); 
-      renderPNRResult(mock); 
-      showContinueBar(mock); 
+      document.getElementById('pnr-results').innerHTML = '';
+      document.getElementById('pnr-results').classList.add('hidden');
       updateShopTopbar(); 
-      showToast('✓ Simulated PNR verified! Live dashboard loaded.', 'success');
+      showToast('Ticket verified! Entering app...', 'success');
+      setTimeout(() => navigateTo('page-shop'), 1500);
     } else {
       appState.isPnrConfirmed = false;
       appState.hasOnboarded = true;
       saveState();
       hideLoading();
-      renderUnconfirmedPNRResult(mock);
-      showToast('✓ Simulated Waitlisted PNR loaded.', 'warning');
+      document.getElementById('pnr-results').innerHTML = '';
+      document.getElementById('pnr-results').classList.add('hidden');
+      showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
     }
   }
 }
@@ -668,23 +731,30 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
             <div class="text-[9px] font-mono font-bold text-white/50">Updated: ${d.lastUpdate || 'Just now'}</div>
           </div>
           
+          <!-- Nice Full-Width Live Platform Capsule -->
+          <div class="flex items-center justify-between bg-white/10 border border-white/5 rounded-2xl px-4 py-2.5 mb-4 shadow-inner">
+            <span class="text-[9px] font-black text-white/70 uppercase tracking-widest flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[13px] text-secondary">layers</span>
+              Live Platform Handoff
+            </span>
+            <span class="bg-secondary text-emerald-950 text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-lg shadow-md">
+              Platform ${current?.platform || '1'}
+            </span>
+          </div>
+          
           <div class="mb-4">
             <span class="text-[8px] font-black text-white/45 uppercase tracking-[0.2em] block mb-0.5">Current Stop</span>
             <h3 class="text-xl font-headline font-black text-white tracking-tight truncate">${current ? current.stationName : 'Not Started'}</h3>
             <div class="text-[10px] font-mono font-bold text-emerald-300 mt-0.5">${current ? `Code: ${current.stationCode}` : '—'}</div>
           </div>
           
-          <div class="grid grid-cols-3 gap-2 py-3 border-t border-b border-dashed border-emerald-800/50 mb-4">
+          <div class="grid grid-cols-2 gap-4 py-3 border-t border-b border-dashed border-emerald-800/50 mb-4 text-center">
             <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Platform</span>
-              <div class="text-xs font-black text-secondary font-mono">${current?.platform || '—'}</div>
-            </div>
-            <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Arrival</span>
+              <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Actual Arrival</span>
               <div class="text-xs font-black text-white font-mono">${current ? (current.arrival?.actual || current.arrival || '—') : '—'}</div>
             </div>
             <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Departure</span>
+              <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Actual Departure</span>
               <div class="text-xs font-black text-white font-mono">${current ? (current.departure?.actual || current.departure || '—') : '—'}</div>
             </div>
           </div>
@@ -3429,18 +3499,65 @@ function showToast(msg, type = 'success') {
 }
 
 // ===== LOADING INDICATORS =====
-function showLoading(text = 'Fetching Status...') {
+let loadingInterval = null;
+
+function showLoading(initialText = 'Fetching Status...') {
   const overlay = document.getElementById('loading-overlay');
   const loaderText = document.getElementById('loading-text');
   if (!overlay || !loaderText) return;
   
-  loaderText.textContent = text;
+  if (loadingInterval) clearInterval(loadingInterval);
+  
+  loaderText.textContent = initialText;
   overlay.classList.remove('hidden');
   overlay.classList.add('flex');
   void overlay.offsetHeight;
   overlay.style.opacity = '1';
+  
+  // Custom message tracks for dynamic transition
+  let messages = [];
+  const textLower = initialText.toLowerCase();
+  if (textLower.includes('pnr') || textLower.includes('booking')) {
+    messages = [
+      "Contacting railway servers...",
+      "Fetching PNR booking segment...",
+      "Retrieving passenger chart list...",
+      "Verifying seat confirmation status...",
+      "Opening RailQuick essentials store..."
+    ];
+  } else if (textLower.includes('train') || textLower.includes('route') || textLower.includes('live')) {
+    messages = [
+      "Pinging GPS transponder signal...",
+      "Calculating actual train speed...",
+      "Retrieving platform number schedule...",
+      "Syncing arrival delay estimates...",
+      "Opening live satellite track..."
+    ];
+  } else {
+    messages = [
+      "Opening essentials catalog...",
+      "Locating station delivery vendors...",
+      "Loading premium storefront..."
+    ];
+  }
+  
+  let msgIdx = 0;
+  loadingInterval = setInterval(() => {
+    if (msgIdx < messages.length) {
+      loaderText.style.opacity = '0';
+      setTimeout(() => {
+        loaderText.textContent = messages[msgIdx++];
+        loaderText.style.opacity = '1';
+      }, 150);
+    }
+  }, 1000);
 }
+
 function hideLoading() {
+  if (loadingInterval) {
+    clearInterval(loadingInterval);
+    loadingInterval = null;
+  }
   const overlay = document.getElementById('loading-overlay');
   if (!overlay) return;
   overlay.style.opacity = '0';

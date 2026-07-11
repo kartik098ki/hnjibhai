@@ -1743,13 +1743,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             <span class="material-symbols-outlined text-slate-400 text-[18px] select-none shrink-0">confirmation_number</span>
             <input class="w-full bg-transparent border-0 py-3.5 pl-3 pr-2 font-headline font-semibold text-slate-800 focus:outline-none text-sm placeholder:text-slate-450 placeholder:font-normal" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
           </div>
-
-          <!-- Interactive PNR Suggestion Chips -->
-          <div class="flex flex-wrap items-center gap-1.5 pt-0.5 text-[9px] font-bold text-slate-450 select-none">
-            <span class="text-slate-350">Quick Suggest:</span>
-            <span onclick="prefillPNRInput('4321098765')" class="cursor-pointer bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-650 px-2.5 py-1 rounded-full transition-all border border-slate-200/20">4321098765 (CNF)</span>
-            <span onclick="prefillPNRInput('9876543210')" class="cursor-pointer bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-650 px-2.5 py-1 rounded-full transition-all border border-slate-200/20">9876543210 (WL)</span>
-          </div>
           
           <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="checkPNRStatus()">
             Check Live Status
@@ -1775,13 +1768,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             <div id="live-train-suggestions" class="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-150 rounded-2xl shadow-xl max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-slate-100/50"></div>
           </div>
 
-          <!-- Interactive Live Suggestions -->
-          <div class="flex flex-wrap items-center gap-1.5 pt-0.5 text-[9px] font-bold text-slate-450 select-none">
-            <span class="text-slate-350">Popular Trains:</span>
-            <span onclick="prefillLiveTrainInput('12424')" class="cursor-pointer bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-650 px-2.5 py-1 rounded-full transition-all border border-slate-200/20">12424 (Rajdhani)</span>
-            <span onclick="prefillLiveTrainInput('12002')" class="cursor-pointer bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-650 px-2.5 py-1 rounded-full transition-all border border-slate-200/20">12002 (Shatabdi)</span>
-          </div>
-          
           <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="verifyTrainAndShowDates()">
             Find Train Route
             <span class="material-symbols-outlined text-sm">explore</span>
