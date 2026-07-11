@@ -1228,18 +1228,17 @@ function initPnrPage() {
         resultsEl.classList.remove('hidden');
         renderLiveTrainResult(appState.pnrLiveData, trainNo);
       }
-      } else {
-        switchPNRTab('pnr');
-      }
-    }
-
-    // Toggle testimonials section visibility based on results container state
-    const results = document.getElementById('pnr-results');
-    if (results && !results.classList.contains('hidden')) {
-      document.getElementById('testimonials-section')?.classList.add('hidden');
     } else {
-      document.getElementById('testimonials-section')?.classList.remove('hidden');
+      switchPNRTab('pnr');
     }
+  }
+
+  // Toggle testimonials section visibility based on results container state
+  const results = document.getElementById('pnr-results');
+  if (results && !results.classList.contains('hidden')) {
+    document.getElementById('testimonials-section')?.classList.add('hidden');
+  } else {
+    document.getElementById('testimonials-section')?.classList.remove('hidden');
   }
 }
 
