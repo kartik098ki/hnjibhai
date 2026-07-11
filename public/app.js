@@ -683,14 +683,14 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
           <div class="min-w-0">
             <!-- Train Details Header Badge -->
             <div class="bg-white/15 px-2.5 py-1 rounded-lg flex items-center gap-1.5 mb-3 max-w-fit border border-white/5 shadow-sm">
-              <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
+              <span class="material-symbols-outlined text-[12px] text-emerald-300">train</span>
               <span class="text-[9px] font-black text-white uppercase tracking-wider">${trainNo} - ${trainName}</span>
             </div>
             
-            <div class="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-amber-200 mb-2">
+            <div class="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-emerald-350 mb-2">
               <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-300 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-300"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
               </span>
               Live Railway Position
             </div>
@@ -703,11 +703,11 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
         <div class="relative z-10">
           <div class="flex justify-between items-center text-[10px] font-bold text-white/75 mb-2">
             <span class="truncate max-w-[38%]">${previous ? previous.stationName : 'Origin'}</span>
-            <span class="text-amber-200">${progress}% Journey Completed</span>
+            <span class="text-emerald-250">${progress}% Journey Completed</span>
             <span class="truncate max-w-[38%] text-right">${next ? next.stationName : 'Destination'}</span>
           </div>
           <div class="live-progress-track relative h-4 bg-white/25 rounded-full overflow-hidden flex items-center justify-center">
-            <div class="live-progress-fill absolute left-0 top-0 h-full bg-secondary transition-all duration-500" style="width:${progress}%"></div>
+            <div class="live-progress-fill absolute left-0 top-0 h-full bg-gradient-to-r from-emerald-450 to-emerald-300 transition-all duration-500" style="width:${progress}%"></div>
             <span class="relative z-10 text-[9px] font-black text-white uppercase tracking-wider">${progress}%</span>
           </div>
           <div class="flex justify-between items-center mt-3 text-[9px] font-mono text-white/70">
@@ -717,80 +717,7 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
         </div>
       </div>
       
-      <div class="p-5 bg-white">
-        <!-- Redesigned Hero Position Card (Vertical, glassmorphic accents) -->
-        <div class="rounded-3xl bg-gradient-to-br from-emerald-950 to-emerald-900 border border-emerald-800/40 p-5 mb-6 text-white relative overflow-hidden shadow-xl animate-fade-in-up">
-          <div class="absolute -top-8 -right-8 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full pointer-events-none"></div>
-          <div class="absolute -bottom-12 -left-12 w-28 h-28 bg-secondary/5 blur-3xl rounded-full pointer-events-none"></div>
-          
-          <div class="flex justify-between items-center mb-4">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-800/40 border border-emerald-700/30 text-white text-[9px] font-black uppercase tracking-widest backdrop-blur-sm">
-              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-              Active Live Status
-            </div>
-            <div class="text-[9px] font-mono font-bold text-white/50">Updated: ${d.lastUpdate || 'Just now'}</div>
-          </div>
-          
-          <!-- Nice Full-Width Live Platform Capsule -->
-          <div class="flex items-center justify-between bg-white/10 border border-white/5 rounded-2xl px-4 py-2.5 mb-4 shadow-inner">
-            <span class="text-[9px] font-black text-white/70 uppercase tracking-widest flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[13px] text-secondary">layers</span>
-              Live Platform Handoff
-            </span>
-            <span class="bg-secondary text-emerald-950 text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-lg shadow-md">
-              Platform ${current?.platform || '1'}
-            </span>
-          </div>
-          
-          <div class="mb-4">
-            <span class="text-[8px] font-black text-white/45 uppercase tracking-[0.2em] block mb-0.5">Current Stop</span>
-            <h3 class="text-xl font-headline font-black text-white tracking-tight truncate">${current ? current.stationName : 'Not Started'}</h3>
-            <div class="text-[10px] font-mono font-bold text-emerald-300 mt-0.5">${current ? `Code: ${current.stationCode}` : '—'}</div>
-          </div>
-          
-          <div class="grid grid-cols-2 gap-4 py-3 border-t border-b border-dashed border-emerald-800/50 mb-4 text-center">
-            <div>
-              <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Actual Arrival</span>
-              <div class="text-xs font-black text-white font-mono">${current ? (current.arrival?.actual || current.arrival || '—') : '—'}</div>
-            </div>
-            <div>
-              <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Actual Departure</span>
-              <div class="text-xs font-black text-white font-mono">${current ? (current.departure?.actual || current.departure || '—') : '—'}</div>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-3 gap-2 mb-4 text-xs">
-            <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Speed</span>
-              <div class="font-mono font-bold text-[10px] text-emerald-300 flex items-center gap-0.5">
-                <span class="material-symbols-outlined text-[11px]">speed</span>
-                ${current ? '74 km/h' : '0 km/h'}
-              </div>
-            </div>
-            <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Next Stop</span>
-              <div class="font-bold text-[10px] text-emerald-300 flex items-center gap-0.5 truncate">
-                <span class="material-symbols-outlined text-[11px] shrink-0">arrow_forward</span>
-                <span class="truncate">${next ? next.stationName : 'Destination'}</span>
-              </div>
-            </div>
-            <div>
-              <span class="text-[7px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Delay</span>
-              <span class="px-1.5 py-0.5 rounded text-[8.5px] font-black ${isDelayed ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'} font-mono uppercase">
-                ${isDelayed ? 'Delayed' : 'On Time'}
-              </span>
-            </div>
-          </div>
-          
-          ${statusNote ? `
-          <div class="bg-white/10 rounded-2xl p-3 border border-white/5 backdrop-blur-md shadow-sm">
-            <div class="flex gap-2.5 items-start">
-              <span class="material-symbols-outlined text-secondary text-sm mt-0.5">info</span>
-              <p class="text-[10px] text-white/90 font-medium leading-relaxed">${statusNote}</p>
-            </div>
-          </div>` : ''}
-        </div>
-        
+      <div class="p-5 bg-white/70 backdrop-blur-md">
         <div class="flex items-center justify-between mb-3">
           <div>
             <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.18em]">Station Timeline</div>
@@ -895,7 +822,7 @@ function renderJourneyDashboard(containerId, pnrData, liveData) {
           <div class="min-w-0">
             <!-- Train Details Header Badge -->
             <div class="bg-white/10 px-2.5 py-1 rounded-lg flex items-center gap-1.5 mb-2 max-w-fit border border-white/5 shadow-sm">
-              <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
+              <span class="material-symbols-outlined text-[12px] text-emerald-300">train</span>
               <span class="text-[9px] font-black text-white uppercase tracking-wider">${trainNo} · ${trainName}</span>
             </div>
             
@@ -940,11 +867,11 @@ function renderJourneyDashboard(containerId, pnrData, liveData) {
         <div class="mt-5 relative z-10">
           <div class="flex justify-between items-center text-[8.5px] font-bold text-white/70 mb-1.5">
             <span>${previous ? previous.stationName : 'Origin'}</span>
-            <span class="text-secondary">${progress}% Journey Covered</span>
+            <span class="text-emerald-250">${progress}% Journey Covered</span>
             <span>${next ? next.stationName : 'Destination'}</span>
           </div>
           <div class="h-3.5 bg-white/20 rounded-full overflow-hidden flex items-center justify-center relative">
-            <div class="h-full bg-secondary absolute left-0 top-0 transition-all duration-500" style="width:${progress}%"></div>
+            <div class="h-full bg-gradient-to-r from-emerald-450 to-emerald-300 absolute left-0 top-0 transition-all duration-500" style="width:${progress}%"></div>
             <span class="relative z-10 text-[8px] font-black text-white">${progress}%</span>
           </div>
         </div>
@@ -1019,19 +946,6 @@ function renderJourneyDashboard(containerId, pnrData, liveData) {
         </button>
         <div id="dashboard-timeline-content" class="hidden transition-all duration-300 pt-3 border-t border-slate-100">
           <div class="live-station-list font-medium">${timelineHTML}</div>
-        </div>
-      </div>
-
-      <!-- 6. Customer Testimonial Slide -->
-      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3">
-        <div class="text-[9px] font-black text-slate-400 uppercase tracking-wider">What Travelers Say</div>
-        <div class="bg-slate-50 border border-slate-100/60 rounded-2xl p-4 text-[10px] italic text-slate-650 relative overflow-hidden">
-          <span class="absolute right-3 top-3 text-[48px] font-serif leading-none text-slate-200/50 select-none">“</span>
-          <p class="relative z-10 leading-relaxed font-medium">"Local vendors often sell low-quality or fake products. I always order from RailQuick because it solves this exact problem and delivers verified products right to my seat."</p>
-          <div class="mt-3 flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-slate-400 not-italic">
-            <span>— Rohit (Verified Passenger)</span>
-            <span class="text-amber-500">★★★★★</span>
-          </div>
         </div>
       </div>
     </div>
@@ -1314,8 +1228,17 @@ function initPnrPage() {
         resultsEl.classList.remove('hidden');
         renderLiveTrainResult(appState.pnrLiveData, trainNo);
       }
+      } else {
+        switchPNRTab('pnr');
+      }
+    }
+
+    // Toggle testimonials section visibility based on results container state
+    const results = document.getElementById('pnr-results');
+    if (results && !results.classList.contains('hidden')) {
+      document.getElementById('testimonials-section')?.classList.add('hidden');
     } else {
-      switchPNRTab('pnr');
+      document.getElementById('testimonials-section')?.classList.remove('hidden');
     }
   }
 }
@@ -1568,8 +1491,8 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
   const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const dayNamesDisplay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   
-  // Generate Tomorrow (i=1), Today (i=0), Yesterday (i=-1), down to 6 days ago (i=-6)
-  for (let i = 1; i >= -6; i--) {
+  // Generate Tomorrow (i=1), Today (i=0), Yesterday (i=-1)
+  for (let i = 1; i >= -1; i--) {
     const d = new Date(now);
     d.setDate(now.getDate() + i);
     
@@ -1600,7 +1523,7 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
     const year = d.getFullYear();
     const formattedDate = `${day}-${month}-${year}`; // DD-MM-YYYY
     
-    let label = `${Math.abs(i)} days ago`;
+    let label = '';
     if (i === 1) label = 'Tomorrow';
     else if (i === 0) label = 'Today';
     else if (i === -1) label = 'Yesterday';
@@ -1788,6 +1711,9 @@ function renderLiveTrainResult(d, trainNo) {
   if (resultsLive) {
     resultsLive.innerHTML = innerHTML;
   }
+  
+  // Hide testimonials when train details / timeline are displayed
+  document.getElementById('testimonials-section')?.classList.add('hidden');
   
   // Smooth scroll container into view, then current station node
   setTimeout(() => {
@@ -5305,6 +5231,9 @@ function goBackToSearch() {
   if (botUtils) {
     botUtils.classList.remove('hidden');
   }
+  
+  // Show testimonials back when returning to search
+  document.getElementById('testimonials-section')?.classList.remove('hidden');
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
