@@ -32,35 +32,32 @@ let clerkInstance = null;
 
 // ===== PRODUCTS DATABASE =====
 const PRODUCTS = [
-  // Comfort / Travel category
-  { id: 101, name: 'Memory Foam Travel Neck Pillow', price: 450, category: 'comfort', weight: 'Ergonomic', img: 'product_neckpillow.png', rating: 4.8, reviews: 1140, description: 'Soft memory foam pillow providing excellent neck support for long train journeys.', tags: ['Comfort', 'Sleep'] },
-  { id: 102, name: 'Premium Sleep Eye Mask & Earplugs Set', price: 150, category: 'comfort', weight: '1 Kit', img: 'product_neckpillow.png', rating: 4.7, reviews: 320, description: 'Contoured 3D blackout eye mask and noise-cancelling foam earplugs for peaceful sleep.', tags: ['Comfort', 'Sleep'] },
-  { id: 103, name: 'Pocket Facial Tissues Pack (3-Pack)', price: 30, category: 'comfort', weight: '3 Packs', img: 'product_toothbrush.png', rating: 4.8, reviews: 540, description: 'Soft, 3-ply pocket-sized facial tissues, perfect for travel hygiene and quick cleanups.', tags: ['Hygiene', 'Paper'] },
-  { id: 104, name: 'Disposable Toilet Seat Covers (10 Pcs)', price: 99, category: 'comfort', weight: '10 Sheets', img: 'product_toothbrush.png', rating: 4.6, reviews: 180, description: 'Biodegradable paper toilet seat covers for a clean and hygienic restroom experience.', tags: ['Hygiene', 'Essential'] },
-  { id: 105, name: 'First Aid & Band-Aid Travel Kit', price: 120, category: 'comfort', weight: '1 Kit', img: 'product_sanitizer.png', rating: 4.9, reviews: 450, description: 'Emergency travel kit containing antiseptic wipes, Band-Aids, bandages, and medical tape.', tags: ['Safety', 'Medical'] },
+  // Comfort / Travel category (Match Day / Comfort)
+  { id: 101, name: 'Premium Memory Foam Neck Pillow', price: 299, category: 'comfort', weight: '1 Unit', img: 'product_neckpillow.png', rating: 4.9, reviews: 1420, description: 'High-density memory foam pillow providing 360-degree neck support for sitting berths.', tags: ['Comfort', 'Best Seller'] },
+  { id: 102, name: 'Blackout Eye Mask & Foam Earplugs', price: 99, category: 'comfort', weight: '1 Combo Pack', img: 'product_neckpillow.png', rating: 4.7, reviews: 560, description: '3D contoured light-blocking eye mask paired with high-decibel reduction earplugs.', tags: ['Sleep', 'Travel'] },
+  { id: 103, name: 'Haldiram\'s Bhujia Sev Combo Pack', price: 45, category: 'comfort', weight: '150g + 50g Extra', img: 'product_haldirams.png', rating: 4.9, reviews: 3120, description: 'Crispy and spicy gram flour noodle snacks, perfect companion for tea times.', tags: ['Snacks', 'Veg'] },
+  { id: 104, name: 'Bingo Potato Chips (Masala Masti)', price: 30, category: 'comfort', weight: '130g Pack', img: 'product_haldirams.png', rating: 4.8, reviews: 2200, description: 'Spicy and crunchy potato chips for instant journey munching.', tags: ['Snacks', 'Veg'] },
+  { id: 105, name: 'IRCTC Hot Samosa & Masala Chai Combo', price: 50, category: 'comfort', weight: '2 Samosas + 1 Tea', img: 'product_tea.png', rating: 4.9, reviews: 6890, description: 'Golden crispy samosas served with hot traditional claypot ginger masala tea.', tags: ['Hot Food', 'Chai', 'Traditional'] },
 
-  // Beverages category
-  { id: 201, name: 'Rail Neer Packaged Drinking Water', price: 15, category: 'beverages', weight: '1 Ltr', img: 'product_water.png', rating: 4.9, reviews: 2450, description: 'Official IRCTC purified and mineral-enriched drinking water bottle.', tags: ['Water', 'Hydration', 'Official'] },
-  { id: 202, name: 'Coca-Cola Chilled Can', price: 40, category: 'beverages', weight: '300 ml', img: 'product_water.png', rating: 4.8, reviews: 1890, description: 'Chilled carbonated soft drink to refresh you.', tags: ['Cold Drink'] },
-  { id: 203, name: 'Claypot Masala Chai (Hot Kulhad Tea)', price: 20, category: 'beverages', weight: '1 Cup', img: 'product_tea.png', rating: 4.9, reviews: 4320, description: 'Fresh hot ginger masala tea served in traditional clay kulhad cup.', tags: ['Chai', 'Hot', 'Traditional'] },
-  { id: 204, name: 'Nescafe Premium Hot Coffee', price: 30, category: 'beverages', weight: '1 Cup', img: 'product_tea.png', rating: 4.6, reviews: 1200, description: 'Hot instant coffee brewed with fresh steamed milk.', tags: ['Coffee', 'Hot'] },
-  { id: 205, name: 'Red Bull Energy Drink Can', price: 125, category: 'beverages', weight: '250 ml', img: 'product_water.png', rating: 4.8, reviews: 924, description: 'Vitalizes body and mind for staying active during long travel hours.', tags: ['Energy', 'Cold'] },
-  { id: 206, name: 'Real Mixed Fruit Juice Box', price: 30, category: 'beverages', weight: '200 ml', img: 'product_water.png', rating: 4.9, reviews: 3120, description: 'Refreshing mixed fruit juice packed with natural vitamins.', tags: ['Juice', 'Cold', 'Veg'] },
+  // Beverages / Fresh category
+  { id: 201, name: 'Chilled Rail Neer Mineral Water', price: 15, category: 'beverages', weight: '1 Litre', img: 'product_water.png', rating: 4.9, reviews: 9450, description: 'Purified and mineral-enriched drinking water bottle, officially approved by IRCTC.', tags: ['Water', 'Hydration', 'Official'] },
+  { id: 202, name: 'Coca-Cola Chilled Beverage Can', price: 40, category: 'beverages', weight: '300 ml', img: 'product_water.png', rating: 4.8, reviews: 4320, description: 'Refreshing, ice-chilled carbonated soft drink delivered straight to your seat.', tags: ['Cold Drink', 'Veg'] },
+  { id: 203, name: 'Claypot Ginger Masala Chai', price: 20, category: 'beverages', weight: '1 Kulhad Cup', img: 'product_tea.png', rating: 4.9, reviews: 8120, description: 'Freshly brewed piping hot tea with ginger and cardamom in an eco-friendly kulhad.', tags: ['Chai', 'Hot', 'Traditional'] },
+  { id: 204, name: 'Nescafe Classic Rich Hot Coffee', price: 30, category: 'beverages', weight: '1 Cup', img: 'product_tea.png', rating: 4.7, reviews: 2900, description: 'Hot instant coffee brewed with fresh creamed milk for an instant energy boost.', tags: ['Coffee', 'Hot'] },
+  { id: 205, name: 'Real Mixed Fruit Juice Tetrapack', price: 30, category: 'beverages', weight: '200 ml', img: 'product_water.png', rating: 4.9, reviews: 1890, description: 'Delicious mixed fruit juice packed with natural vitamins, safe for kids.', tags: ['Juice', 'Cold'] },
 
-  // Hygiene category
-  { id: 301, name: 'Dettol Antiseptic Hand Sanitizer', price: 50, category: 'hygiene', weight: '50 ml', img: 'product_sanitizer.png', rating: 4.8, reviews: 1450, description: 'Instant travel-friendly hand sanitizer kills 99.9% of germs without water.', tags: ['Clean hands'] },
-  { id: 302, name: 'Colgate Travel Toothbrush & Paste Kit', price: 60, category: 'hygiene', weight: '1 Pack', img: 'product_toothbrush.png', rating: 4.7, reviews: 624, description: 'Compact travel toothbrush and toothpaste set for active oral hygiene.', tags: ['Dental', 'Travel'] },
-  { id: 303, name: 'Anti-Bacterial Wet Cleansing Wipes', price: 85, category: 'hygiene', weight: '30 Wipes', img: 'product_sanitizer.png', rating: 4.7, reviews: 935, description: 'Refreshing anti-bacterial wipes to clean hands, face, and train seats/trays.', tags: ['Wipes'] },
-  { id: 304, name: 'Whisper Ultra Clean Sanitary Pads', price: 90, category: 'hygiene', weight: '8 Pads', img: 'product_sanitizer.png', rating: 4.8, reviews: 412, description: 'Reliable feminine hygiene essential for worry-free travel comfort.', tags: ['Hygiene', 'Feminine'] },
-  { id: 305, name: 'Odomos Mosquito Repellent Cream', price: 60, category: 'hygiene', weight: '50 g', img: 'product_toothbrush.png', rating: 4.8, reviews: 812, description: 'Protective mosquito repellent skin cream, essential for overnight berths.', tags: ['Protection', 'Travel'] },
-  { id: 306, name: 'PeeSafe Toilet Seat Sanitizer Spray', price: 120, category: 'hygiene', weight: '75 ml', img: 'product_sanitizer.png', rating: 4.8, reviews: 290, description: 'Fast-drying sanitizing spray for train toilets. Protects against 99.9% germs.', tags: ['Sanitization', 'Travel'] },
+  // Hygiene / Fashion category
+  { id: 301, name: 'Dettol Instant Hand Sanitizer Gel', price: 50, category: 'hygiene', weight: '50 ml', img: 'product_sanitizer.png', rating: 4.8, reviews: 2450, description: 'germ protection formula that kills 99.9% germs without needing water.', tags: ['Hygiene', 'Essential'] },
+  { id: 302, name: 'Colgate Fresh Mint Toothbrush & Paste', price: 55, category: 'hygiene', weight: '1 Kit', img: 'product_toothbrush.png', rating: 4.7, reviews: 920, description: 'Compact travel toothbrush paired with a mini toothpaste tube.', tags: ['Dental', 'Travel'] },
+  { id: 303, name: 'Anti-Bacterial Wet Cleansing Wipes', price: 79, category: 'hygiene', weight: '25 Wipes', img: 'product_sanitizer.png', rating: 4.8, reviews: 1840, description: 'Refreshing wet wipes to easily clean hands, face, or dirty train seat trays.', tags: ['Wipes', 'Hygiene'] },
+  { id: 304, name: 'PeeSafe Toilet Seat Sanitizer Spray', price: 110, category: 'hygiene', weight: '75 ml Spray', img: 'product_sanitizer.png', rating: 4.9, reviews: 1120, description: 'Fast-drying sanitizing spray for clean and worry-free train restroom use.', tags: ['Hygiene', 'Travel'] },
+  { id: 305, name: 'Whisper Ultra Clean Sanitary Pads Pack', price: 85, category: 'hygiene', weight: '7 Pads', img: 'product_sanitizer.png', rating: 4.8, reviews: 650, description: 'Reliable feminine hygiene essential for long-duration train travels.', tags: ['Hygiene', 'Feminine'] },
 
-  // Tech category
-  { id: 401, name: 'boAt Wired Earphones (With HD Mic)', price: 349, category: 'tech', weight: 'With Mic', img: 'product_earphones.png', rating: 4.7, reviews: 3200, description: 'In-ear wired earphones with inline microphone for handsfree calls and entertainment.', tags: ['Audio', 'Mic'] },
-  { id: 402, name: '10,000mAh Power Bank (20W PD)', price: 899, category: 'tech', weight: '20W PD Fast', img: 'product_powerbank.png', rating: 4.8, reviews: 4500, description: 'Slim fast-charging power bank, perfect for keeping mobile devices powered on long trips.', tags: ['Power bank'] },
-  { id: 403, name: '20W Fast Wall Adapter Charger', price: 399, category: 'tech', weight: '20W Dual', img: 'product_powerbank.png', rating: 4.7, reviews: 684, description: 'Dual USB and Type-C fast wall adapter for charging at station or seat sockets.', tags: ['Charger', 'Fast'] },
-  { id: 404, name: 'Fast USB-C to USB-C Braided Cable', price: 199, category: 'tech', weight: '1.2 Meter', img: 'product_powerbank.png', rating: 4.5, reviews: 189, description: 'Tough braided fast-charging cable, extra durable for rough travel handling.', tags: ['Cable'] },
-  { id: 405, name: 'Universal Multi-Plug Travel Adapter', price: 299, category: 'tech', weight: '1 Unit', img: 'product_powerbank.png', rating: 4.6, reviews: 140, description: 'Universal adapter to fit various charger plugs into railway compartment sockets.', tags: ['Adapter', 'Travel'] }
+  // Tech / Electronics category
+  { id: 401, name: 'boAt BassHeads Wired Earphones Mic', price: 349, category: 'tech', weight: 'Wired HD Mic', img: 'product_earphones.png', rating: 4.8, reviews: 5200, description: 'In-ear wired earphones with dynamic bass and mic for handsfree calling.', tags: ['Audio', 'boAt'] },
+  { id: 402, name: '10,000mAh Slim Fast Power Bank', price: 799, category: 'tech', weight: '12W Dual Output', img: 'product_powerbank.png', rating: 4.8, reviews: 6100, description: 'Compact power bank to keep your phone charged throughout the long journey.', tags: ['Power', 'Fast Charger'] },
+  { id: 403, name: '20W Dual Port Fast Charger Adapter', price: 299, category: 'tech', weight: 'Type-C + USB', img: 'product_powerbank.png', rating: 4.7, reviews: 1840, description: 'Fast wall charger supporting dual ports for train cabin sockets.', tags: ['Charger', 'Fast'] },
+  { id: 404, name: 'Tough Braided Type-C Charging Cable', price: 149, category: 'tech', weight: '1.2 Meter', img: 'product_powerbank.png', rating: 4.6, reviews: 980, description: 'Durable fast-charging data cable, built to withstand rough travel use.', tags: ['Cable', 'USB-C'] }
 ];
 
 function isTicketConfirmed(pnrData) {
@@ -250,16 +247,16 @@ function switchPNRTab(tab) {
   const indicator = document.getElementById('pnr-tab-indicator');
   
   if (tab === 'pnr') {
-    tabPnrBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-semibold text-white transition-all duration-300 rounded-full focus:outline-none';
-    tabLiveBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-medium text-slate-600 hover:text-primary transition-all duration-300 rounded-full focus:outline-none';
+    tabPnrBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-semibold text-white transition-all duration-300 rounded-lg focus:outline-none';
+    tabLiveBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-medium text-[#6B7280] hover:text-[#118A4E] transition-all duration-300 rounded-lg focus:outline-none';
     if (indicator) {
       indicator.style.transform = 'translateX(0)';
     }
   } else {
-    tabLiveBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-semibold text-white transition-all duration-300 rounded-full focus:outline-none';
-    tabPnrBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-medium text-slate-600 hover:text-primary transition-all duration-300 rounded-full focus:outline-none';
+    tabLiveBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-semibold text-white transition-all duration-300 rounded-lg focus:outline-none';
+    tabPnrBtn.className = 'relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-medium text-[#6B7280] hover:text-[#118A4E] transition-all duration-300 rounded-lg focus:outline-none';
     if (indicator) {
-      indicator.style.transform = 'translateX(calc(100% + 4px))';
+      indicator.style.transform = 'translateX(calc(100% + 6px))';
     }
   }
   const results = document.getElementById('pnr-results');
@@ -1890,7 +1887,7 @@ function initShopPage() {
   const hour = new Date().getHours();
   const greeting = hour < 5 ? 'Good Night' : hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
   const greetEl = document.getElementById('shop-delivering-label');
-  if (greetEl && !appState.pnrData) greetEl.innerHTML = `<span class="font-serif-display italic text-[#e6fcf5]">${greeting}</span>`;
+  if (greetEl && !appState.pnrData) greetEl.textContent = greeting;
 
   showProductSkeletons();
   setTimeout(() => {
@@ -2025,17 +2022,17 @@ function updateShopTopbar() {
     const berth = pax ? pax.berthCode : '';
 
     if (labelEl) {
-      labelEl.innerHTML = `<span class="font-serif-display italic text-[#e6fcf5]">Deliver in</span><span class="text-[14px] font-headline font-black text-secondary block mt-1.5 tracking-normal normal-case">${d.trainName}</span>`;
+      labelEl.innerHTML = `Deliver in<span style="display:block;font-size:14px;font-weight:900;color:#117A4A;margin-top:6px;letter-spacing:0;">${d.trainName}</span>`;
     }
     if (headerEl) {
-      headerEl.className = "flex flex-col gap-1 mt-1 text-white text-left items-start justify-start";
+      headerEl.style.marginTop = "12px";
       headerEl.innerHTML = `
-        <div class="flex items-center gap-1 font-mono text-[10px] text-white/80 font-semibold uppercase tracking-wider">
-          <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
+          <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">train</span>
           <span>Train No: ${d.trainNumber} · Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}</span>
         </div>
-        <div class="flex items-center gap-1 text-[10px] text-white/60 font-medium">
-          <span class="material-symbols-outlined text-[12px] text-secondary">route</span>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#9CA3AF;font-weight:500;margin-top:3px;">
+          <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">route</span>
           <span>${d.source.split('(')[0].trim()} to ${d.destination.split('(')[0].trim()}</span>
         </div>
       `;
@@ -2056,15 +2053,11 @@ function updateShopTopbar() {
   } else {
     if (labelEl) labelEl.textContent = 'Deliver in';
     if (headerEl) {
-      headerEl.className = "flex flex-col gap-1.5 mt-1 text-white text-left items-start justify-start";
+      headerEl.className = "mt-3";
       headerEl.innerHTML = `
-        <div class="flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-[14px] text-secondary">train</span>
-          <span class="font-mono text-[10px] text-white/80 font-semibold uppercase tracking-widest">Select Train / PNR</span>
-        </div>
-        <button class="mt-2 bg-white/10 hover:bg-white/20 active:scale-95 transition-all text-white border border-white/5 text-[9px] font-black uppercase tracking-wider px-2.5 py-1.5 rounded-lg flex items-center gap-1" onclick="resetAppStateAndLogin()">
-          <span class="material-symbols-outlined text-[11px] fill-1">add_circle</span>
-          Add PNR / Train
+        <button class="flex items-center gap-1.5 bg-white border border-[#ECECEC] text-[#118A4E] px-3.5 py-2 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.05)] active:scale-95 transition-all text-[10px] font-extrabold uppercase tracking-wider font-headline" onclick="resetAppStateAndLogin()">
+          <span class="material-symbols-outlined text-[14px] text-secondary fill-1">train</span>
+          Select Train / PNR
         </button>
       `;
     }
@@ -3877,8 +3870,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
+  startSearchTypewriter();
+  
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProductModal(); });
 });
+
+function startSearchTypewriter() {
+  const element = document.getElementById('search-placeholder-text');
+  if (!element) return;
+
+  const words = [
+    '"hot samosa"',
+    '"chilled coke"',
+    '"pain relief spray"',
+    '"earphones"',
+    '"neck pillow"',
+    '"masala tea"'
+  ];
+
+  let wordIdx = 0;
+  let charIdx = 0;
+  let isDeleting = false;
+
+  function type() {
+    const currentWord = words[wordIdx];
+    if (isDeleting) {
+      element.textContent = currentWord.substring(0, charIdx - 1);
+      charIdx--;
+    } else {
+      element.textContent = currentWord.substring(0, charIdx + 1);
+      charIdx++;
+    }
+
+    let typeSpeed = isDeleting ? 30 : 60;
+
+    if (!isDeleting && charIdx === currentWord.length) {
+      typeSpeed = 1800; // pause at full word
+      isDeleting = true;
+    } else if (isDeleting && charIdx === 0) {
+      isDeleting = false;
+      wordIdx = (wordIdx + 1) % words.length;
+      typeSpeed = 400; // pause before next word
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  type();
+}
 
 
 function setupScrollChromeBehavior() {

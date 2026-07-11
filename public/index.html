@@ -31,16 +31,16 @@
       theme: {
         extend: {
           colors: {
-            "primary": "#0C8346", // Premium Vibrant Blinkit Green
-            "primary-light": "#10B981",
-            "primary-soft": "#E1F5EC",
+            "primary": "#118A4E", // Premium Vibrant Uber/Blinkit Green
+            "primary-light": "#16A35E",
+            "primary-soft": "#E7F6EF",
             "secondary": "#F59E0B",
-            "background": "#FFFFFF", // White background
+            "background": "#F6F7F8", // Grayish white background
             "surface": "#FFFFFF",
-            "on-surface": "#1E293B",
-            "on-surface-variant": "#64748B",
-            "outline-variant": "#E2E8F0",
-            "emerald-midnight": "#065F46"
+            "on-surface": "#111827", // Dark text
+            "on-surface-variant": "#6B7280", // Gray text
+            "outline-variant": "#ECECEC", // Subtle border
+            "emerald-midnight": "#0C5E35"
           },
           borderRadius: {
             "squircle": "1.25rem",
@@ -1104,13 +1104,13 @@ body { background-color: #10151d; }
   font-weight: 900 !important;
 }
 #shop-pnr-card {
-  border-radius: 36px !important;
-  padding: 20px !important;
-  background: rgba(255, 255, 255, 0.075) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 20px 45px rgba(0, 31, 25, 0.18) !important;
+  border-radius: 22px !important;
+  padding: 20px 22px !important;
+  background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important;
+  border: none !important;
+  box-shadow: 0 12px 32px rgba(10, 92, 53, 0.25) !important;
 }
-#shop-pnr-seat { color: var(--rq-gold) !important; font-size: 24px !important; }
+#shop-pnr-seat { color: #ffffff !important; font-size: 26px !important; }
 .home-search-card {
   height: 64px !important;
   border-radius: 28px !important;
@@ -1204,13 +1204,14 @@ body { background-color: #10151d; }
 
 /* ===== RAILQUICK STABLE PREMIUM REDESIGN ===== */
 :root {
-  --rq-green: #006b4f;
-  --rq-green-deep: #004d3c;
-  --rq-green-soft: #e8f7f0;
+  --rq-green: #118A4E;
+  --rq-green-deep: #0e703f;
+  --rq-green-soft: #e7f6ef;
   --rq-gold: #d4af37;
-  --rq-ink: #15231f;
-  --rq-muted: #64716c;
-  --rq-bg: #f6f8f7;
+  --rq-ink: #111827;
+  --rq-muted: #6B7280;
+  --rq-bg: #F6F7F8;
+  --rq-border: #ECECEC;
 }
 
 #page-splash {
@@ -1250,48 +1251,51 @@ body { background-color: #10151d; }
 }
 #page-pnr header {
   min-height: auto !important;
-  padding-top: calc(14px + var(--rq-safe-top)) !important;
-  padding-bottom: 18px !important;
+  padding-top: calc(24px + var(--rq-safe-top)) !important;
+  padding-bottom: 24px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
-  background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.08), transparent 45%), radial-gradient(circle at 10% 90%, rgba(0,0,0,0.12), transparent 55%), linear-gradient(135deg, #0C8346 0%, #065F32 50%, #034523 100%) !important;
-  border-bottom-left-radius: 28px !important;
-  border-bottom-right-radius: 28px !important;
-  box-shadow: 0 8px 24px rgba(0, 77, 60, 0.16) !important;
+  background: radial-gradient(circle at 80% 30%, rgba(17, 138, 78, 0.10) 0%, rgba(255, 255, 255, 0) 75%), #ffffff !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  box-shadow: none !important;
+  position: relative !important;
 }
 #page-pnr header button {
-  width: 38px !important;
-  height: 38px !important;
+  width: 36px !important;
+  height: 36px !important;
   border-radius: 999px !important;
-  background: rgba(255,255,255,0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 4px 10px rgba(0,0,0,0.08) !important;
+  background: #FFFFFF !important;
+  border: 1px solid #ECECEC !important;
+  color: #111827 !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
   transition: all 0.2s ease !important;
 }
 #page-pnr header h1 {
   font-family: 'Outfit', sans-serif !important;
-  font-size: 21px !important;
+  font-size: 28px !important;
   line-height: 1.15 !important;
   letter-spacing: -0.03em !important;
-  font-weight: 900 !important;
-  color: #ffffff !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
 }
 #page-pnr header p {
-  font-size: 11px !important;
-  color: rgba(255,255,255,0.85) !important;
-  margin-top: 4px !important;
-  line-height: 1.35 !important;
+  font-size: 13px !important;
+  color: #6B7280 !important;
+  margin-top: 6px !important;
+  line-height: 1.45 !important;
 }
 #page-pnr main {
-  margin-top: 12px !important;
+  margin-top: 4px !important;
   padding-left: 16px !important;
   padding-right: 16px !important;
 }
 #page-pnr main > section:first-child {
-  border-radius: 16px !important;
-  padding: 16px 14px !important;
-  border: 1px solid rgba(15,23,42,0.05) !important;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04) !important;
+  border-radius: 28px !important;
+  padding: 24px 20px !important;
+  border: 1px solid #ECECEC !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03) !important;
+  background: #FFFFFF !important;
 }
 #page-pnr #tab-pnr,
 #page-pnr #tab-live {
@@ -1300,28 +1304,47 @@ body { background-color: #10151d; }
   background: transparent !important;
 }
 #page-pnr .pnr-panel input {
-  height: 48px !important;
-  min-height: 48px !important;
-  border-radius: 12px !important;
-  font-size: 14px !important;
-  padding: 12px 14px !important;
-  box-shadow: 0 2px 8px rgba(15,23,42,0.03) !important;
+  height: 54px !important;
+  min-height: 54px !important;
+  border-radius: 16px !important;
+  font-size: 15px !important;
+  padding: 12px 16px !important;
+  border: 1px solid #ECECEC !important;
+  box-shadow: none !important;
+}
+#page-pnr .pnr-panel input:focus {
+  border-color: #118A4E !important;
+  box-shadow: 0 0 0 3px rgba(17, 138, 78, 0.08) !important;
 }
 #page-pnr .pnr-panel label {
-  color: var(--rq-green) !important;
+  color: #118A4E !important;
   letter-spacing: 0.05em !important;
 }
 #page-pnr .pnr-panel button {
-  height: 46px !important;
-  min-height: 46px !important;
-  border-radius: 12px !important;
-  font-size: 13px !important;
-  padding: 10px 16px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  border-radius: 16px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
 }
 #page-pnr .pnr-panel button.bg-primary,
 #page-pnr .pnr-panel button[class*="bg-primary"] {
-  background: var(--rq-green) !important;
-  box-shadow: 0 8px 20px rgba(0, 107, 79, 0.15) !important;
+  background: #118A4E !important;
+  box-shadow: 0 6px 20px rgba(17, 138, 78, 0.15) !important;
+}
+.train-hero-img {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 50%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
 }
 
 #page-shop {
@@ -1341,12 +1364,12 @@ body { background-color: #10151d; }
   font-weight: 900 !important;
 }
 #shop-pnr-card {
-  border-radius: 30px !important;
-  background: rgba(255,255,255,0.085) !important;
-  border: 1px solid rgba(255,255,255,0.18) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 18px 42px rgba(0,31,25,0.16) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important;
+  border: none !important;
+  box-shadow: 0 12px 32px rgba(10, 92, 53, 0.25) !important;
 }
-#shop-pnr-seat { color: var(--rq-gold) !important; }
+#shop-pnr-seat { color: #ffffff !important; }
 .home-search-card {
   height: 62px !important;
   border-radius: 26px !important;
@@ -1361,25 +1384,45 @@ body { background-color: #10151d; }
   border: 0 !important;
   box-shadow: none !important;
   padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
 }
 #page-shop .cat-icon-wrapper {
-  width: 64px !important;
-  height: 64px !important;
-  border-radius: 23px !important;
-  border: 0 !important;
-  box-shadow: 0 10px 24px rgba(15,23,42,0.075);
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 9999px !important;
+  border: 1px solid #ECECEC !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
+  background: #F8F9FA !important;
+  color: #64748b !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 #page-shop .category-pill.active .cat-icon-wrapper {
-  background: var(--rq-green) !important;
-  color: #fff !important;
-  box-shadow: 0 14px 30px rgba(0,107,79,0.25) !important;
+  background: #E7F6EF !important;
+  color: var(--rq-green) !important;
+  border-color: var(--rq-green) !important;
+  box-shadow: 0 8px 16px rgba(17,138,78,0.12) !important;
+  transform: scale(1.05);
 }
 #page-shop .category-pill .cat-label {
-  font-size: 12px !important;
-  font-weight: 900 !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
   color: #64748b !important;
+  transition: all 0.25s ease !important;
 }
-#page-shop .category-pill.active .cat-label { color: var(--rq-green) !important; }
+#page-shop .category-pill.active .cat-label { 
+  color: var(--rq-green) !important; 
+  font-weight: 800 !important;
+}
+.shop-hero-train-img {
+  display: none !important;
+}
 .product-card-premium {
   border-radius: 24px !important;
   background: #ffffff !important;
@@ -1567,8 +1610,8 @@ body { background-color: #10151d; }
     linear-gradient(145deg, #003f33 0%, #006b4f 54%, #08966e 100%) !important;
   padding-bottom: 74px !important;
 }
-.home-hero-title { font-size: 26px !important; letter-spacing: 0 !important; text-shadow: 0 10px 30px rgba(0,0,0,.16); }
-.home-seat-card { border: 1px solid rgba(255,255,255,.20) !important; box-shadow: 0 18px 44px rgba(0,0,0,.15) !important; }
+.home-hero-title { font-size: 32px !important; letter-spacing: -0.02em !important; color: #1A1A1A !important; text-shadow: none !important; }
+.home-seat-card { border: none !important; box-shadow: 0 12px 32px rgba(10, 92, 53, 0.25) !important; }
 #page-shop section:has(.category-pill) {
   position: relative !important; top: auto !important; z-index: 2 !important;
   background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
@@ -1702,78 +1745,124 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== PNR & TRAIN STATUS PAGE ==================== -->
   <div id="page-pnr" class="page tab-page bg-background active">
-    <!-- Header Section (Clean Spacious App Layout) -->
-    <header class="gradient-header relative overflow-hidden shadow-md">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
-      <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-white/5 blur-2xl rounded-full -ml-16 -mb-16 pointer-events-none"></div>
-      
-      <!-- Action Bar -->
-      <div class="flex items-start gap-4 relative z-10">
-        <button id="pnr-back-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/15 active:scale-90 transition-all border border-white/20 hover:bg-white/20 mt-0.5" style="display: none;">
-          <span class="material-symbols-outlined text-white text-base">arrow_back</span>
-        </button>
-        <div class="flex flex-col">
-          <span class="text-[7.5px] font-black text-white/55 uppercase tracking-[0.25em] leading-none mb-1.5">RailQuick Services</span>
-          <h1 class="text-2xl font-black text-white tracking-tight leading-none mb-2">PNR &amp; Train Tracking</h1>
-          <p class="text-xs text-white/80 font-medium leading-relaxed max-w-[240px]">
-            Track your train and order essentials delivered directly to your seat.
-          </p>
+    <!-- Header Section (Elegant & Minimal Hero) -->
+    <header class="relative overflow-hidden bg-white px-5 pt-8 pb-5 flex flex-row items-center justify-between min-h-[220px]">
+      <!-- Radial Glow and Masked Train Image container on the right -->
+      <div class="absolute right-0 top-0 bottom-0 w-[45%] overflow-hidden pointer-events-none z-0">
+        <img src="pnr_hero.png" class="w-full h-full object-cover object-[70%_bottom]" style="mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);" alt="Premium Train Service" />
+      </div>
+
+      <div class="relative z-10 flex flex-col w-[55%] items-start">
+        <!-- Action Bar & Badge -->
+        <div class="flex items-center gap-2 mb-3">
+          <button id="pnr-back-btn" class="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-[#ECECEC] active:scale-95 transition-all text-[#111827]" style="display: none;">
+            <span class="material-symbols-outlined text-base">arrow_back</span>
+          </button>
+          
+          <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-[#118A4E]/15 bg-[#E7F6EF] text-[#118A4E] font-bold text-[9px] uppercase tracking-wider">
+            <span class="material-symbols-outlined text-[10px] fill-1">shield</span>
+            Essentials Delivered
+          </div>
+        </div>
+
+        <h1 class="text-2xl font-extrabold text-[#111827] tracking-tight leading-[1.2] mb-2 font-headline">
+          Essentials,<br/>
+          <span class="text-[#118A4E]">delivered</span> to<br/>
+          your seat.
+        </h1>
+        
+        <p class="text-[11px] text-[#6B7280] font-medium leading-relaxed mb-4">
+          Medicines, snacks, chargers & more — delivered at the next station.
+        </p>
+
+        <!-- Tiny Feature Chips -->
+        <div class="flex flex-wrap gap-1.5 mt-0.5 w-[180px] xs:w-full">
+          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
+            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center text-[9px] font-normal shrink-0">⚡</span>
+            <span>Live Updates</span>
+          </div>
+          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
+            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[9px] text-[#118A4E] fill-1">shield</span>
+            </span>
+            <span>100% Secure</span>
+          </div>
+          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
+            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-[9px] text-[#118A4E]">location_on</span>
+            </span>
+            <span>Delivered at next station</span>
+          </div>
         </div>
       </div>
     </header>
 
     <!-- Main Content Form Box -->
     <main class="relative z-20 px-margin-mobile">
-      <section id="pnr-search-card" class="bg-surface rounded-elite shadow-[0_8px_30px_rgb(0,0,0,0.06)] p-6 border border-black/[0.04]">
+      <section id="pnr-search-card" class="bg-surface rounded-[28px] shadow-[0_8px_30px_rgba(0,0,0,0.03)] p-6 border border-[#ECECEC]">
         
-        <!-- Tab Headers (Premium Circular Pill Switcher) -->
-        <div id="pnr-tabs-container" class="relative bg-slate-100/80 p-1 rounded-full flex mb-6 max-w-[280px] mx-auto border border-slate-200/40 shadow-inner">
+        <!-- Tab Headers (Premium Apple Wallet Segmented Control) -->
+        <div id="pnr-tabs-container" class="relative bg-[#F6F7F8] p-1.5 rounded-2xl flex mb-6 max-w-[280px] mx-auto border border-[#ECECEC] shadow-inner">
           <!-- Sliding Background Indicator -->
-          <div id="pnr-tab-indicator" class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-primary rounded-full shadow-md transition-transform duration-300 ease-out"></div>
+          <div id="pnr-tab-indicator" class="absolute top-1.5 bottom-1.5 left-1.5 w-[calc(50%-3px)] bg-[#118A4E] rounded-[10px] shadow-sm transition-transform duration-300 ease-out"></div>
           
-          <button class="relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-semibold text-white transition-all duration-300 rounded-full focus:outline-none" id="tab-pnr" onclick="switchPNRTab('pnr')">
+          <button class="relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-semibold text-white transition-all duration-300 rounded-lg focus:outline-none" id="tab-pnr" onclick="switchPNRTab('pnr')">
+            <span class="material-symbols-outlined text-xs mr-1">confirmation_number</span>
             PNR Status
           </button>
-          <button class="relative z-10 flex-1 h-9 flex items-center justify-center text-[11px] font-medium text-slate-600 hover:text-primary transition-all duration-300 rounded-full focus:outline-none" id="tab-live" onclick="switchPNRTab('live')">
+          <button class="relative z-10 flex-1 h-9 flex items-center justify-center text-[12px] font-medium text-[#6B7280] hover:text-[#118A4E] transition-all duration-300 rounded-lg focus:outline-none" id="tab-live" onclick="switchPNRTab('live')">
+            <span class="material-symbols-outlined text-xs mr-1">train</span>
             Live Status
           </button>
         </div>
 
         <!-- PNR Input Panel -->
-        <div id="panel-pnr" class="pnr-panel space-y-5">
-          <!-- Premium Input Capsule -->
-          <div class="relative flex items-center bg-slate-50 border border-slate-200/50 rounded-2xl py-1 px-4 shadow-inner focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-300">
-            <span class="material-symbols-outlined text-slate-400 text-[18px] select-none shrink-0">confirmation_number</span>
-            <input class="w-full bg-transparent border-0 py-3.5 pl-3 pr-2 font-headline font-semibold text-slate-800 focus:outline-none text-sm placeholder:text-slate-450 placeholder:font-normal" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
+        <div id="panel-pnr" class="pnr-panel space-y-4">
+          <!-- Premium Input Capsule (Scanner Removed) -->
+          <div class="relative flex items-center bg-white border border-[#ECECEC] rounded-2xl px-4 py-0.5 focus-within:border-[#118A4E] focus-within:ring-4 focus-within:ring-[#118A4E]/5 transition-all duration-200 shadow-sm">
+            <span class="material-symbols-outlined text-[#6B7280] text-lg select-none shrink-0">confirmation_number</span>
+            <input class="w-full bg-transparent border-0 py-4 pl-3 pr-3 font-sans font-semibold text-[#111827] focus:outline-none focus:ring-0 text-sm placeholder:text-[#6B7280]/60 placeholder:font-normal" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
           </div>
           
-          <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="checkPNRStatus()">
-            Check Live Status
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          <!-- CTA Button -->
+          <button class="w-full bg-primary text-white py-4 rounded-2xl font-sans font-bold hover:bg-[#16A35E] active:scale-[0.97] transition-all flex justify-center items-center gap-2 btn-tactile text-sm shadow-[0_4px_12px_rgba(17,138,78,0.12)]" onclick="checkPNRStatus()">
+            Continue to Order
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
           </button>
           
-          <div class="relative flex py-2 items-center justify-center">
-            <div class="w-full border-t border-slate-100/80"></div>
-            <span class="absolute bg-white px-3 text-[9px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none select-none">Or</span>
+          <div class="relative flex py-1.5 items-center justify-center">
+            <div class="w-full border-t border-[#ECECEC]"></div>
+            <span class="absolute bg-white px-4 text-[9px] font-bold text-[#6B7280] uppercase tracking-[0.2em] leading-none select-none">Or</span>
           </div>
-          <button type="button" class="w-full bg-slate-50 border border-slate-200/50 text-slate-700 py-3.5 rounded-2xl font-headline font-black hover:bg-slate-100 active:scale-[0.97] transition-all text-xs flex justify-center items-center gap-2 shadow-sm" onclick="completeOnboarding()">
-            <span class="material-symbols-outlined text-sm">search</span>
-            Browse Travel Store
-          </button>
+          
+          <!-- Browse Essentials Card -->
+          <div class="flex items-center justify-between p-3.5 bg-white border border-[#ECECEC] rounded-2xl cursor-pointer active:scale-[0.99] hover:border-[#118A4E]/30 hover:bg-[#E7F6EF]/10 transition-all duration-200" onclick="completeOnboarding()">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-lg">shopping_bag</span>
+              </div>
+              <div class="flex flex-col text-left">
+                <h4 class="text-xs font-bold text-[#111827] leading-none mb-1">Browse Essentials</h4>
+                <p class="text-[10px] text-[#6B7280] font-medium leading-none">Explore 100+ travel essentials</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[#6B7280] text-base">chevron_right</span>
+          </div>
         </div>
 
         <!-- Live Status Panel -->
-        <div id="panel-live" class="pnr-panel hidden space-y-5">
+        <div id="panel-live" class="pnr-panel hidden space-y-4">
           <!-- Premium Input Capsule -->
-          <div class="relative flex items-center bg-slate-50 border border-slate-200/50 rounded-2xl py-1 px-4 shadow-inner focus-within:bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-300">
-            <span class="material-symbols-outlined text-slate-400 text-[18px] select-none shrink-0">train</span>
-            <input class="w-full bg-transparent border-0 py-3.5 pl-3 pr-2 font-headline font-semibold text-slate-800 focus:outline-none text-sm placeholder:text-slate-450 placeholder:font-normal" placeholder="Train Name or 5-digit Number" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
-            <div id="live-train-suggestions" class="absolute left-0 right-0 top-full mt-2 bg-white border border-slate-150 rounded-2xl shadow-xl max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-slate-100/50"></div>
+          <div class="relative flex items-center bg-white border border-[#ECECEC] rounded-2xl px-4 py-0.5 focus-within:border-[#118A4E] focus-within:ring-4 focus-within:ring-[#118A4E]/5 transition-all duration-200 shadow-sm">
+            <span class="material-symbols-outlined text-[#6B7280] text-lg select-none shrink-0">train</span>
+            <input class="w-full bg-transparent border-0 py-4 pl-3 pr-3 font-sans font-semibold text-[#111827] focus:outline-none focus:ring-0 text-sm placeholder:text-[#6B7280]/60 placeholder:font-normal" placeholder="Train Name or 5-digit Number" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
+            <div id="live-train-suggestions" class="absolute left-0 right-0 top-full mt-2 bg-white border border-[#ECECEC] rounded-2xl shadow-xl max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-slate-100/50"></div>
           </div>
 
-          <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="verifyTrainAndShowDates()">
+          <!-- Submit Button -->
+          <button class="w-full bg-primary text-white py-4 rounded-2xl font-sans font-bold hover:bg-[#16A35E] active:scale-[0.97] transition-all flex justify-center items-center gap-2 btn-tactile text-sm shadow-[0_4px_12px_rgba(17,138,78,0.12)]" onclick="verifyTrainAndShowDates()">
             Find Train Route
-            <span class="material-symbols-outlined text-sm">explore</span>
+            <span class="material-symbols-outlined text-base">explore</span>
           </button>
           
           <!-- Running Date Selection Container -->
@@ -1782,54 +1871,51 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
           <!-- Fallback hidden inputs to preserve state and form compatibility -->
           <input type="hidden" id="live-date-input" />
         </div>
-
       </section>
 
       <!-- Results Display Container -->
       <section id="pnr-results" class="pnr-results hidden mt-6"></section>
 
-      <!-- Station services: Extra UI/UX details -->
-      <section id="travel-utility-section" class="mt-8 mb-12">
-        <h3 class="text-xs font-bold text-on-surface-variant/70 uppercase tracking-widest mb-4 flex items-center gap-2">
-          <span class="material-symbols-outlined text-secondary text-lg">explore</span>
-          Travel Utility Services
+      <!-- Travel Utility Services (Apple Human Interface style) -->
+      <section id="travel-utility-section" class="mt-8 mb-10">
+        <h3 class="text-[11px] font-bold text-[#6B7280] uppercase tracking-widest mb-4 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[#118A4E] text-base">explore</span>
+          Travel Utilities
         </h3>
         <div class="grid grid-cols-4 gap-2.5">
           <!-- Platform Finder -->
-          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('platform')">
-            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-base">directions_railway</span>
+          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-[#ECECEC] rounded-2xl cursor-pointer hover:border-[#118A4E]/30 hover:bg-[#E7F6EF]/10 active:scale-95 transition-all duration-200" onclick="openUtilModal('platform')">
+            <div class="w-8.5 h-8.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center mb-2 shrink-0">
+              <span class="material-symbols-outlined text-sm">directions_railway</span>
             </div>
-            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Platform</span>
+            <span class="text-[9.5px] font-bold text-[#111827] tracking-tight leading-tight">Platform</span>
           </div>
           <!-- Refund Calculator -->
-          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('refund')">
-            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-base">currency_rupee</span>
+          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-[#ECECEC] rounded-2xl cursor-pointer hover:border-[#118A4E]/30 hover:bg-[#E7F6EF]/10 active:scale-95 transition-all duration-200" onclick="openUtilModal('refund')">
+            <div class="w-8.5 h-8.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center mb-2 shrink-0">
+              <span class="material-symbols-outlined text-sm">currency_rupee</span>
             </div>
-            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Refund Calc</span>
+            <span class="text-[9.5px] font-bold text-[#111827] tracking-tight leading-tight">Refund Calc</span>
           </div>
           <!-- Timetable Schedule -->
-          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('timetable')">
-            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-base">schedule</span>
+          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-[#ECECEC] rounded-2xl cursor-pointer hover:border-[#118A4E]/30 hover:bg-[#E7F6EF]/10 active:scale-95 transition-all duration-200" onclick="openUtilModal('timetable')">
+            <div class="w-8.5 h-8.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center mb-2 shrink-0">
+              <span class="material-symbols-outlined text-sm">schedule</span>
             </div>
-            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Timetable</span>
+            <span class="text-[9.5px] font-bold text-[#111827] tracking-tight leading-tight">Timetable</span>
           </div>
           <!-- Helpline 139 Direct Dial -->
-          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="window.location.href='tel:139'; showToast('Dialing Helpline 139...', 'info')">
-            <div class="w-9 h-9 rounded-xl bg-red-50 text-red-650 flex items-center justify-center mb-1.5 transition-all group-hover:bg-red-600 group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-base">call</span>
+          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-[#ECECEC] rounded-2xl cursor-pointer hover:border-red-500/20 hover:bg-red-50/50 active:scale-95 transition-all duration-200" onclick="window.location.href='tel:139'; showToast('Dialing Helpline 139...', 'info')">
+            <div class="w-8.5 h-8.5 rounded-full bg-red-50 text-[#EF4444] flex items-center justify-center mb-2 shrink-0">
+              <span class="material-symbols-outlined text-sm">call</span>
             </div>
-            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Helpline 139</span>
+            <span class="text-[9.5px] font-bold text-[#111827] tracking-tight leading-tight">Helpline</span>
           </div>
         </div>
-      </section>
-
-      <!-- What Our Customers Say Carousel (Premium Infinite Marquee) -->
-      <section id="testimonials-section" class="mt-8 mb-8 overflow-hidden select-none">
-        <h3 class="text-xs font-bold text-on-surface-variant/70 uppercase tracking-widest mb-4 flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary text-lg">reviews</span>
+      </section>      <!-- What Our Customers Say Carousel (Premium Infinite Marquee) -->
+      <section id="testimonials-section" class="mt-8 mb-6 overflow-hidden select-none">
+        <h3 class="text-[11px] font-bold text-[#6B7280] uppercase tracking-widest mb-4 flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[#118A4E] text-base">reviews</span>
           What Our Customers Say
         </h3>
         <div class="testimonials-marquee-wrapper relative w-full overflow-hidden flex py-1">
@@ -1838,127 +1924,122 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             
             <div class="flex gap-4 shrink-0">
               <!-- Testimonial 1 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-emerald-50 text-primary flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-primary/5">R</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center font-bold font-headline text-xs shadow-inner">R</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Rohit</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Passenger at Delhi Station</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Rohit</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Delhi Station</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
-                    "Local vendors often sell low-quality or fake products. I would always prefer ordering from RailQuick because it solves this exact problem."
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
+                    "Local vendors often sell low-quality or fake products. I prefer ordering from RailQuick because it solves this exact problem."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 2 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-blue-500/5">S</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">S</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Shreya</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Solo Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Shreya</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Solo Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "I'll definitely use this service. No overpricing, no different or fake products — that's what travelers actually need."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 3 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-purple-500/5">V</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">V</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Varun</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Regular Commuter</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Varun</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Regular Commuter</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "Finding trusted products during a train journey is always a problem. RailQuick makes it simple, reliable, and stress-free."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 4 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-amber-500/5">G</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">G</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Gaurav</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Business Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Gaurav</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Business Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "Knowing that the products are verified gives confidence. I don't mind ordering if I know I'm getting genuine items."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 5 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-rose-500/5">A</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">A</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Ayush</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Student Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Ayush</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Student Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "This feels like a service Indian Railways passengers have needed for a long time."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
             </div>
@@ -1966,131 +2047,125 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             <!-- Duplicate Part for Infinite Scroll -->
             <div class="flex gap-4 shrink-0" aria-hidden="true">
               <!-- Testimonial 1 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-emerald-50 text-primary flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-primary/5">R</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center font-bold font-headline text-xs shadow-inner">R</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Rohit</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Passenger at Delhi Station</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Rohit</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Delhi Station</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
-                    "Local vendors often sell low-quality or fake products. I would always prefer ordering from RailQuick because it solves this exact problem."
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
+                    "Local vendors often sell low-quality or fake products. I prefer ordering from RailQuick because it solves this exact problem."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 2 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-blue-500/5">S</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">S</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Shreya</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Solo Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Shreya</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Solo Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "I'll definitely use this service. No overpricing, no different or fake products — that's what travelers actually need."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 3 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-purple-500/5">V</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">V</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Varun</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Regular Commuter</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Varun</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Regular Commuter</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "Finding trusted products during a train journey is always a problem. RailQuick makes it simple, reliable, and stress-free."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 4 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-amber-500/5">G</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">G</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Gaurav</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Business Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Gaurav</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Business Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "Knowing that the products are verified gives confidence. I don't mind ordering if I know I'm getting genuine items."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
 
               <!-- Testimonial 5 -->
-              <div class="w-[280px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div class="w-[230px] bg-white border border-[#ECECEC] rounded-2xl p-4 shadow-sm relative flex flex-col justify-between transition-all duration-200">
                 <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-rose-500/5">A</div>
+                  <div class="flex items-center justify-between gap-2 mb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold font-headline text-xs shadow-inner">A</div>
                       <div>
-                        <h4 class="text-xs font-black text-on-surface">Ayush</h4>
-                        <div class="text-[8px] font-bold text-slate-400">Student Traveler</div>
+                        <h4 class="text-xs font-bold text-[#111827] leading-none mb-0.5">Ayush</h4>
+                        <div class="text-[8px] font-semibold text-[#6B7280]">Student Traveler</div>
                       </div>
                     </div>
-                    <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
-                      <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                    <div class="bg-[#E7F6EF] text-[#118A4E] text-[8px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shrink-0">
+                      <span class="material-symbols-outlined text-[8px] fill-1">verified</span> Verified
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-600 leading-relaxed italic mb-4 whitespace-normal">
+                  <p class="text-[10px] text-[#6B7280] leading-relaxed italic mb-1.5 whitespace-normal">
                     "This feels like a service Indian Railways passengers have needed for a long time."
                   </p>
                 </div>
-                <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
-                  <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
-                  <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+                <div class="flex justify-between items-center pt-1.5 border-t border-[#ECECEC]/40">
+                  <div class="flex text-amber-400 text-[8px] gap-0.5">★ ★ ★ ★ ★</div>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </section>
@@ -2160,159 +2235,194 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== SHOP / HOME PAGE ==================== -->
   <div id="page-shop" class="page tab-page bg-background">
-    <!-- Sophisticated Header Section -->
-    <section class="gradient-header w-full pt-6 pb-16 px-margin-mobile rounded-b-[3rem] relative overflow-hidden">
-      <!-- Abstract light artifacts for depth -->
-      <div class="absolute top-0 right-0 w-64 h-64 bg-primary-light/20 blur-[100px] rounded-full -mr-20 -mt-20"></div>
-      <div class="absolute bottom-0 left-0 w-48 h-48 bg-secondary/5 blur-[80px] rounded-full -ml-20 -mb-20"></div>
+    <!-- Hero Section -->
+    <section class="shop-hero-section" style="background: #ffffff !important; padding-top: calc(18px + var(--rq-safe-top)); padding-bottom: 12px; position: relative; overflow: hidden; border-bottom: 1.5px solid #F3F4F6;">
       
-      <!-- Top Status Bar -->
-      <div class="flex justify-between items-start mb-6 relative z-10">
-        <div class="flex flex-col gap-1">
-          <span class="text-[10px] font-black text-secondary uppercase tracking-[0.2em] leading-none mb-1">RailQuick</span>
-          <h1 class="home-hero-title text-3xl font-serif-display font-black text-white leading-none mb-1 tracking-tight" id="shop-delivering-label"><span class="font-serif-display italic bg-gradient-to-r from-white via-slate-100 to-emerald-200 bg-clip-text text-transparent">Deliver in</span></h1>
-          <div class="flex items-center gap-1.5 mt-0.5" id="shop-delivery-header">
-            <span class="material-symbols-outlined text-[14px] text-secondary">train</span>
-            <span class="font-mono text-[10px] text-white/80 font-semibold uppercase tracking-widest">Select Train / PNR</span>
-          </div>
-        </div>
-        <!-- Profile Account Button -->
-        <div class="w-12 h-12 rounded-full bg-white/10 p-[1px] relative shadow-lg cursor-pointer" onclick="navigateTo('page-account')">
-          <div class="absolute inset-0 rounded-full border border-secondary/40"></div>
-          <div id="shop-profile-avatar-container" class="w-full h-full rounded-full overflow-hidden bg-emerald-midnight flex items-center justify-center">
-            <span class="material-symbols-outlined text-white/80 text-[24px]">person</span>
-          </div>
+      <!-- Row 1: RAILQUICK branding + Profile button (No train here, no overlap) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: relative; z-index: 10;">
+        <span style="font-size: 10px; font-weight: 900; color: #117A4A; letter-spacing: 0.28em; text-transform: uppercase;">RAILQUICK</span>
+        <!-- Profile Button (Slightly larger, top-right) -->
+        <div onclick="navigateTo('page-account')" style="width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: 1.5px solid #E5E7EB; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+          <span class="material-symbols-outlined" style="font-size: 22px; color: #117A4A;">person</span>
         </div>
       </div>
 
+      <!-- Row 2: Title text (left) + Train image (right) -->
+      <div style="display: flex; align-items: flex-start; padding: 0 20px; margin-top: 10px; position: relative; min-height: 110px;">
+        <!-- Left: Text content -->
+        <div style="flex: 1; padding-top: 2px; position: relative; z-index: 5; max-width: 55%;">
+          <h1 class="font-headline" id="shop-delivering-label" style="font-size: 32px; font-weight: 950; color: #1A1A1A; line-height: 1.05; letter-spacing: -0.02em; margin: 0;">Deliver in</h1>
+          
+          <!-- Select Train / PNR Button -->
+          <div id="shop-delivery-header" style="margin-top: 8px;">
+            <button onclick="resetAppStateAndLogin()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1.5px solid #E0E0E0; color: #117A4A; padding: 8px 16px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.03em; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.2s;">
+              <span class="material-symbols-outlined" style="font-size: 15px; color: #117A4A;">train</span>
+              Select Train / PNR
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right: Train hero image (absolute and large, sits under the profile button of Row 1) -->
+        <div style="position: absolute; right: -12px; top: -30px; width: 58%; z-index: 2; pointer-events: none;">
+          <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06));" />
+        </div>
+      </div>
 
-
-      <!-- Refined PNR Glass Card -->
-      <div class="glass-card home-seat-card rounded-3xl p-4 relative z-10 cursor-pointer shadow-premium" id="shop-pnr-card" onclick="goToLiveStatusFromHome()">
-        <div class="flex justify-between items-start">
+      <!-- Seat Card: Solid green card (moved higher up) -->
+      <div class="home-seat-card" id="shop-pnr-card" onclick="goToLiveStatusFromHome()" style="margin: -8px 20px 0; padding: 18px 20px; border-radius: 20px; background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important; box-shadow: 0 10px 28px rgba(10, 92, 53, 0.22) !important; border: none !important; cursor: pointer; position: relative; z-index: 10;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
           <div>
-            <h2 class="font-serif-display text-3xl text-secondary" id="shop-pnr-seat">Seat —</h2>
+            <h2 id="shop-pnr-seat" style="font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; line-height: 1; font-family: var(--font-headline);">Seat —</h2>
           </div>
-          <div class="text-right">
-            <p class="text-[9px] font-bold text-white/60 uppercase tracking-[0.2em] mb-1">Ticket</p>
-            <div class="flex items-center gap-1.5 text-white bg-white/10 px-2.5 py-1 rounded-lg">
-              <span class="material-symbols-outlined text-secondary text-[14px] fill-1">verified</span>
-              <span class="text-xs font-bold tracking-tight" id="shop-pnr-status">No PNR</span>
+          <div style="text-align: right;">
+            <p style="font-size: 8px; font-weight: 800; color: rgba(255,255,255,0.50); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 5px;">TICKET</p>
+            <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">
+              <span class="material-symbols-outlined fill-1" style="font-size: 12px; color: #4ADE80;">verified</span>
+              <span id="shop-pnr-status" style="font-size: 9px; font-weight: 800; color: #ffffff; letter-spacing: 0.04em;">No PNR</span>
             </div>
           </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-white">
-          <div class="flex flex-col">
-            <span class="text-[9px] text-white/40 uppercase font-bold">From</span>
-            <span class="text-sm font-semibold truncate max-w-[120px]" id="shop-pnr-from">—</span>
+        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; align-items: center; color: #ffffff;">
+          <div style="display: flex; flex-direction: column; text-align: left;">
+            <span style="font-size: 8px; color: rgba(255,255,255,0.40); text-transform: uppercase; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 3px;">FROM</span>
+            <span id="shop-pnr-from" style="font-size: 12px; font-weight: 800; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</span>
           </div>
-          <div class="flex flex-col items-center flex-grow px-4">
-            <div class="w-full h-[1px] bg-white/10 relative">
-              <span class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14px] text-secondary rotate-90">navigation</span>
+          <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 0 10px;">
+            <div style="width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center;">
+              <span class="material-symbols-outlined" style="font-size: 14px; color: rgba(255,255,255,0.45);">swap_horiz</span>
             </div>
           </div>
-          <div class="flex flex-col text-right">
-            <span class="text-[9px] text-white/40 uppercase font-bold">To</span>
-            <span class="text-sm font-semibold truncate max-w-[120px]" id="shop-pnr-to">—</span>
+          <div style="display: flex; flex-direction: column; text-align: right;">
+            <span style="font-size: 8px; color: rgba(255,255,255,0.40); text-transform: uppercase; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 3px;">TO</span>
+            <span id="shop-pnr-to" style="font-size: 12px; font-weight: 800; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Section: Taller search box with circular pill border and custom thick green styling -->
+      <div style="padding: 0 20px; margin-top: 8px; position: relative; z-index: 20;" onclick="openSearchOverlay()">
+        <div style="background: #ffffff; border-radius: 999px; box-shadow: 0 4px 18px rgba(17, 122, 74, 0.08); border: 2px solid #117A4A; display: flex; align-items: center; height: 52px; cursor: pointer; padding: 0 18px; transition: all 0.2s;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 22px; color: #117A4A;">search</span>
+          </div>
+          <!-- Typewriter container with static prefix outside -->
+          <div style="flex-grow: 1; display: flex; align-items: center; font-size: 13.5px; font-weight: 700; color: #1A1A1A; user-select: none; text-align: left; margin-left: 8px;">
+            <span style="color: #6B7280; font-weight: 500;">Search&nbsp;</span>
+            <span id="search-placeholder-text" style="color: #117A4A;">"hot samosa"</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Search Section (Floating Overlap) -->
-    <section class="px-margin-mobile relative z-20 -mt-12" onclick="openSearchOverlay()">
-      <div class="home-search-card bg-surface rounded-2xl shadow-premium p-1 border flex items-center h-14 border-secondary/20 hover:border-primary/40 cursor-pointer transition-colors">
-        <div class="w-12 flex items-center justify-center text-primary-light">
-          <span class="material-symbols-outlined text-[24px]">search</span>
-        </div>
-        <span class="flex-grow text-sm font-medium tracking-wide text-on-surface-variant/40 select-none">Search comfort, drinks, hygiene...</span>
-      </div>
-    </section>
-
-        <!-- Train Info Strip (Alternate) -->
-    <div id="train-strip" class="mx-margin-mobile mt-4 bg-white border border-outline-variant/60 rounded-xl p-3 flex items-center justify-between hidden shadow-sm">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined">train</span>
-        </div>
-        <div>
-          <div class="text-xs font-bold text-on-surface leading-tight" id="strip-train-name">Express</div>
-          <div class="text-[10px] text-secondary font-bold" id="strip-seat">Seat —</div>
-        </div>
-      </div>
-      <button class="text-xs font-bold text-primary hover:text-primary-light" onclick="navigateTo('page-pnr')">Change</button>
-    </div>
-
-    
-    <!-- Premium Categories Section -->
-    <section class="mt-6 mb-6 overflow-hidden">
-      <div class="px-margin-mobile flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-          <div class="w-1 h-5 bg-primary rounded-full"></div>
-          <h3 class="text-sm font-headline font-bold text-on-surface">Shop by journey need</h3>
-        </div>
-        <button class="text-[10px] font-bold text-primary/70 hover:text-primary flex items-center gap-0.5 transition-colors" onclick="filterCategory('all', null)">
-          See all <span class="material-symbols-outlined text-xs">chevron_right</span>
+    <!-- Categories Strip: Transparent background, immediately below search bar with high-fidelity PNG product icons -->
+    <section style="background: transparent !important; padding: 14px 0 10px; select-none;">
+      <!-- Horizontal Scroll Track -->
+      <div class="flex gap-6 overflow-x-auto no-scrollbar px-5 justify-between">
+        <!-- All -->
+        <button class="category-pill active flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('all', this)" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; width: auto !important; height: auto !important;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: #E6F4EA; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.04); border: 1.5px solid rgba(19, 115, 51, 0.15); transition: all 0.2s;">
+            <img src="product_water.png" style="width: 36px; height: 36px; object-fit: contain;" alt="All" />
+          </div>
+          <span class="cat-label font-headline" style="font-size: 11px; font-weight: 800; color: #1E293B; margin-top: 4px;">All</span>
         </button>
+
+        <!-- Match Day -->
+        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('comfort', this)" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; width: auto !important; height: auto !important;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFF3E0; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.04); border: 1.5px solid rgba(230, 81, 0, 0.15); transition: all 0.2s;">
+            <img src="product_haldirams.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Snacks" />
+          </div>
+          <span class="cat-label font-headline" style="font-size: 11px; font-weight: 800; color: #1E293B; margin-top: 4px;">Match Day</span>
+        </button>
+
+        <!-- Fresh -->
+        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('beverages', this)" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; width: auto !important; height: auto !important;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: #E8F0FE; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.04); border: 1.5px solid rgba(26, 115, 232, 0.15); transition: all 0.2s;">
+            <img src="product_tea.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Drinks" />
+          </div>
+          <span class="cat-label font-headline" style="font-size: 11px; font-weight: 800; color: #1E293B; margin-top: 4px;">Fresh</span>
+        </button>
+
+        <!-- Electronics -->
+        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('tech', this)" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; width: auto !important; height: auto !important;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: #F3E8FD; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.04); border: 1.5px solid rgba(161, 66, 244, 0.15); transition: all 0.2s;">
+            <img src="product_earphones.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Tech" />
+          </div>
+          <span class="cat-label font-headline" style="font-size: 11px; font-weight: 800; color: #1E293B; margin-top: 4px;">Electronics</span>
+        </button>
+
+        <!-- Fashion -->
+        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('hygiene', this)" style="border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; width: auto !important; height: auto !important;">
+          <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFDE7; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.04); border: 1.5px solid rgba(176, 96, 0, 0.15); transition: all 0.2s;">
+            <img src="product_neckpillow.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Comfort" />
+          </div>
+          <span class="cat-label font-headline" style="font-size: 11px; font-weight: 800; color: #1E293B; margin-top: 4px;">Fashion</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Popular Combo Packs (Zepto/Blinkit Horizontal Slider) -->
+    <section class="mb-8 mt-6" style="padding: 0 20px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <div style="width: 3.5px; height: 16px; background: #118A4E; border-radius: 4px;"></div>
+          <h3 class="font-headline" style="font-size: 14px; font-weight: 900; color: #1E293B; text-transform: uppercase; letter-spacing: 0.02em; margin: 0;">Popular Combo Packs</h3>
+        </div>
       </div>
       
-      <!-- Grid Layout of Categories -->
-      <div class="grid grid-cols-5 gap-1.5 select-none px-margin-mobile">
-        <!-- All Pill -->
-        <button class="category-pill active" onclick="filterCategory('all', this)">
-          <div class="cat-icon-wrapper bg-gradient-to-tr from-emerald-500/10 to-teal-500/10 border border-emerald-100/50">
-            <span class="material-symbols-outlined text-emerald-800 text-[26px]">apps</span>
+      <!-- Horizontal Scroll Track -->
+      <div class="flex gap-4 overflow-x-auto no-scrollbar" style="padding-bottom: 4px;">
+        <!-- Combo 1 -->
+        <div style="min-width: 240px; background: #ffffff; border: 1.5px solid #F3F4F6; border-radius: 20px; padding: 14px; display: flex; gap: 12px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+          <div style="width: 70px; height: 70px; background: #F9FAFB; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img src="product_tea.png" style="width: 60px; height: 60px; object-fit: contain;" alt="Tea & Samosa" />
           </div>
-          <span class="cat-label">All</span>
-        </button>
-
-        <!-- Comfort Pill -->
-        <button class="category-pill" onclick="filterCategory('comfort', this)">
-          <div class="cat-icon-wrapper bg-gradient-to-tr from-amber-500/10 to-orange-500/10 border border-amber-100/50">
-            <span class="material-symbols-outlined text-amber-700 text-[26px]">weekend</span>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 7.5px; font-weight: 900; color: #C5221F; background: #FCE8E6; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Best Seller</span>
+              <h4 style="font-size: 12px; font-weight: 800; color: #1E293B; margin-top: 4px; line-height: 1.25;">IRCTC Chai Samosa Break</h4>
+              <p style="font-size: 9px; color: #64748B; margin-top: 2px; font-weight: 500;">Masala tea + 2 samosas</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px;">
+              <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹50</span>
+              <button onclick="addToCart(105)" style="background: #ffffff; border: 1.5px solid #118A4E; color: #118A4E; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 4px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;">Add</button>
+            </div>
           </div>
-          <span class="cat-label">Comfort</span>
-        </button>
-
-        <!-- Drinks Pill -->
-        <button class="category-pill" onclick="filterCategory('beverages', this)">
-          <div class="cat-icon-wrapper bg-gradient-to-tr from-sky-500/10 to-blue-500/10 border border-sky-100/50">
-            <span class="material-symbols-outlined text-sky-700 text-[26px]">local_cafe</span>
-          </div>
-          <span class="cat-label">Drinks</span>
-        </button>
-
-        <!-- Hygiene Pill -->
-        <button class="category-pill" onclick="filterCategory('hygiene', this)">
-          <div class="cat-icon-wrapper bg-gradient-to-tr from-emerald-500/10 to-green-500/10 border border-emerald-100/50">
-            <span class="material-symbols-outlined text-emerald-700 text-[26px]">clean_hands</span>
-          </div>
-          <span class="cat-label">Hygiene</span>
-        </button>
-
-        <!-- Tech Pill -->
-        <button class="category-pill" onclick="filterCategory('tech', this)">
-          <div class="cat-icon-wrapper bg-gradient-to-tr from-purple-500/10 to-indigo-500/10 border border-purple-100/50">
-            <span class="material-symbols-outlined text-purple-700 text-[26px]">devices</span>
-          </div>
-          <span class="cat-label">Tech</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Marketing Asset Banner (Emerald gradient) -->
-    <section class="px-margin-mobile mb-8">
-      <div class="relative w-full h-40 bg-primary rounded-[2rem] overflow-hidden shadow-lg border border-white/10">
-        <div class="absolute inset-0">
-          <img alt="Professional Delivery Service" class="w-full h-full object-cover object-right opacity-50" src="splash_hero.png">
-          <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent"></div>
         </div>
-        <div class="relative z-10 h-full flex flex-col justify-center p-6 max-w-[70%]">
-          <span class="text-[9px] font-bold text-secondary uppercase tracking-[0.2em] mb-1">Station Special</span>
-          <h2 class="text-base font-headline font-extrabold text-white leading-tight mb-3">Essentials in 15 mins at your next stop</h2>
-          <button class="w-fit bg-secondary text-primary font-bold text-[9px] px-4 py-2 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all uppercase tracking-wider" onclick="scrollToProducts()">
-            Order Now
-          </button>
+
+        <!-- Combo 2 -->
+        <div style="min-width: 240px; background: #ffffff; border: 1.5px solid #F3F4F6; border-radius: 20px; padding: 14px; display: flex; gap: 12px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+          <div style="width: 70px; height: 70px; background: #F9FAFB; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img src="product_neckpillow.png" style="width: 60px; height: 60px; object-fit: contain;" alt="Comfort Kit" />
+          </div>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 7.5px; font-weight: 900; color: #A142F4; background: #F3E8FD; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Travel Pack</span>
+              <h4 style="font-size: 12px; font-weight: 800; color: #1E293B; margin-top: 4px; line-height: 1.25;">Overnight Sleep Kit</h4>
+              <p style="font-size: 9px; color: #64748B; margin-top: 2px; font-weight: 500;">Pillow + eye mask + plugs</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px;">
+              <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹99</span>
+              <button onclick="addToCart(102)" style="background: #ffffff; border: 1.5px solid #118A4E; color: #118A4E; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 4px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combo 3 -->
+        <div style="min-width: 240px; background: #ffffff; border: 1.5px solid #F3F4F6; border-radius: 20px; padding: 14px; display: flex; gap: 12px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+          <div style="width: 70px; height: 70px; background: #F9FAFB; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img src="product_earphones.png" style="width: 60px; height: 60px; object-fit: contain;" alt="Audio combo" />
+          </div>
+          <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span style="font-size: 7.5px; font-weight: 900; color: #1E293B; background: #E5E7EB; padding: 2px 6px; border-radius: 4px; text-transform: uppercase;">Tech Combo</span>
+              <h4 style="font-size: 12px; font-weight: 800; color: #1E293B; margin-top: 4px; line-height: 1.25;">Gadget Charger Set</h4>
+              <p style="font-size: 9px; color: #64748B; margin-top: 2px; font-weight: 500;">Charger + USB-C Cable</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 6px;">
+              <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹448</span>
+              <button onclick="addToCart(403)" style="background: #ffffff; border: 1.5px solid #118A4E; color: #118A4E; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 4px 14px; border-radius: 999px; cursor: pointer; transition: all 0.2s;">Add</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
