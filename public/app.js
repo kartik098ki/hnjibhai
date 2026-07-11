@@ -1144,7 +1144,6 @@ function renderUnconfirmedPNRResult(d) {
     </div>
   `;
   document.getElementById('pnr-results').classList.remove('hidden');
-  document.getElementById('testimonials-section')?.classList.add('hidden');
   setTimeout(() => {
     document.getElementById('pnr-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
@@ -1245,13 +1244,8 @@ function initPnrPage() {
     }
   }
 
-  // Toggle testimonials section visibility based on results container state
-  const results = document.getElementById('pnr-results');
-  if (results && !results.classList.contains('hidden')) {
-    document.getElementById('testimonials-section')?.classList.add('hidden');
-  } else {
-    document.getElementById('testimonials-section')?.classList.remove('hidden');
-  }
+  // Testimonials should always remain visible on PNR/onboarding page
+  document.getElementById('testimonials-section')?.classList.remove('hidden');
 }
 
 function isValidTrainNumber(trainNo) {
@@ -1722,8 +1716,8 @@ function renderLiveTrainResult(d, trainNo) {
     resultsLive.innerHTML = innerHTML;
   }
   
-  // Hide testimonials when train details / timeline are displayed
-  document.getElementById('testimonials-section')?.classList.add('hidden');
+  // Keep testimonials visible
+  document.getElementById('testimonials-section')?.classList.remove('hidden');
   
   // Smooth scroll container into view, then current station node
   setTimeout(() => {
@@ -3234,6 +3228,36 @@ function googleSignIn() {
 function simulateGoogleLogin() {
   closeGoogleLoginModal();
   googleSignIn();
+}
+
+function simulateDemoLogin() {
+  closeGoogleLoginModal();
+  showLoading('Logging into demo account...');
+  setTimeout(() => {
+    appState.user = {
+      name: "Kartik Guleria",
+      email: "kartik@example.com",
+      phone: localStorage.getItem('railquick_global_phone') || "+91 98765 43210",
+      avatarUrl: "",
+      avatar: "K",
+      provider: "demo",
+      clerkId: "demo_user_123",
+      loginAt: new Date().toISOString()
+    };
+    saveState();
+    hideLoading();
+    showToast("Logged in successfully (Demo Session)!");
+    initAccountPage();
+    
+    const returnPage = localStorage.getItem('railquick_return_after_login') || 'page-shop';
+    localStorage.removeItem('railquick_return_after_login');
+    
+    if (appState.cart.length > 0 && returnPage === 'page-cart') {
+      navigateTo('page-cart');
+    } else {
+      navigateTo('page-shop');
+    }
+  }, 1000);
 }
 
 function showPhoneLogin() { showPhoneLoginPrompt(); }

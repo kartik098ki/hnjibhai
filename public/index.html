@@ -2692,6 +2692,18 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
               <p class="text-xs text-gray-400 font-medium">Connecting to sign-in...</p>
             </div>
           </div>
+
+          <!-- Demo Login fallback for testing -->
+          <div class="w-full max-w-sm mt-4 px-2">
+            <div class="relative flex py-2 items-center justify-center mb-3">
+              <div class="w-full border-t border-slate-200/60"></div>
+              <span class="absolute bg-[#f6f8f7] px-3 text-[9px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none select-none">Or</span>
+            </div>
+            <button class="w-full bg-[#0C8346] hover:bg-emerald-700 text-white rounded-2xl py-3.5 px-4 flex items-center justify-center gap-2 text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md btn-tactile" onclick="simulateDemoLogin()">
+              <span class="material-symbols-outlined text-sm">login</span>
+              Continue with Demo Login
+            </button>
+          </div>
           
 
           <!-- Security Badge -->
