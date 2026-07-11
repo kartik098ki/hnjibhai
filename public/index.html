@@ -1730,11 +1730,11 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         <!-- PNR Input Panel (No copy icon) -->
         <div id="panel-pnr" class="pnr-panel space-y-5">
           <div class="relative">
-            <label class="absolute -top-2 left-4 bg-white px-2 text-[10px] font-bold text-primary uppercase tracking-wider z-10">PNR Number</label>
-            <input class="w-full bg-white border border-outline-variant rounded-xl py-3.5 px-4 font-headline font-semibold text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm hover:border-primary/50 text-sm" placeholder="Enter 10 digit PNR" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-450 text-lg pointer-events-none">tag</span>
+            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 pl-11 pr-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
           </div>
-          <button class="w-full bg-primary text-white py-3 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-[0.98] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="checkPNRStatus()">
-            Check Status
+          <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="checkPNRStatus()">
+            Check Live Status
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
           
@@ -1742,7 +1742,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             <div class="w-full border-t border-slate-100/80"></div>
             <span class="absolute bg-white px-3 text-[9px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none select-none">Or</span>
           </div>
-          <button type="button" class="w-full bg-slate-50 border border-slate-200/50 text-slate-700 py-3 rounded-xl font-headline font-black hover:bg-slate-100 active:scale-[0.98] transition-all text-xs flex justify-center items-center gap-2 shadow-sm" onclick="navigateTo('page-shop')">
+          <button type="button" class="w-full bg-slate-50 border border-slate-200/50 text-slate-700 py-3.5 rounded-2xl font-headline font-black hover:bg-slate-100 active:scale-[0.97] transition-all text-xs flex justify-center items-center gap-2 shadow-sm" onclick="navigateTo('page-shop')">
             <span class="material-symbols-outlined text-sm">search</span>
             Browse Travel Store
           </button>
@@ -1751,12 +1751,12 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         <!-- Live Status Panel -->
         <div id="panel-live" class="pnr-panel hidden space-y-5">
           <div class="relative">
-            <label class="absolute -top-2 left-4 bg-white px-2 text-[10px] font-bold text-primary uppercase tracking-wider z-10">Train Name or Number</label>
-            <input class="w-full bg-white border border-outline-variant rounded-xl py-3 px-4 font-headline font-semibold text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all shadow-sm hover:border-primary/50 text-sm" placeholder="Enter Train Number or Name (e.g. 12301)" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
-            <div id="live-train-suggestions" class="absolute left-0 right-0 mt-1 bg-white border border-outline-variant rounded-xl shadow-lg max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-gray-50"></div>
+            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-455 text-lg pointer-events-none">search</span>
+            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 pl-11 pr-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Train Name or 5-digit Number" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
+            <div id="live-train-suggestions" class="absolute left-0 right-0 mt-1.5 bg-white border border-slate-100 rounded-2xl shadow-xl max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-slate-100/50"></div>
           </div>
           
-          <button class="w-full bg-primary text-white py-3 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-[0.98] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="verifyTrainAndShowDates()">
+          <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="verifyTrainAndShowDates()">
             Find Train Route
             <span class="material-symbols-outlined text-sm">explore</span>
           </button>
