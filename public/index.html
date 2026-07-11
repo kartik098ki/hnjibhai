@@ -684,7 +684,7 @@
 input, textarea, select { font-size: 16px !important; }
 
 /* Enhanced modal animations */
-.modal-overlay { transition: opacity 0.3s ease; }
+.modal-overlay { transition: opacity 0.3s ease; z-index: 1000 !important; }
 .modal-card { 
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -693,6 +693,7 @@ input, textarea, select { font-size: 16px !important; }
   display: flex !important;
   flex-direction: column !important;
   scrollbar-width: none !important;
+  padding-bottom: calc(20px + var(--rq-safe-bottom, 16px)) !important;
 }
 .modal-card::-webkit-scrollbar {
   display: none !important;
@@ -3185,23 +3186,23 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   </button>
 
   <!-- Loader Overlay -->
-  <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black/60 backdrop-blur-md flex flex-col items-center justify-center z-[100] hidden transition-opacity duration-300">
-    <div class="bg-white/95 border border-slate-100 rounded-3xl p-6 shadow-2xl flex flex-col items-center max-w-[280px] w-full text-center space-y-4 animate-scale-in">
-      <!-- Circular rotating loader spinner with center train icon -->
+  <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black/75 backdrop-blur-md flex flex-col items-center justify-center z-[1000] hidden transition-opacity duration-300">
+    <div class="flex flex-col items-center space-y-4 text-center">
+      <!-- Circular rotating loader spinner with center train icon (Premium White Glow) -->
       <div class="relative w-14 h-14 flex items-center justify-center shrink-0">
-        <div class="absolute inset-0 rounded-full border-[3px] border-slate-100 border-t-primary animate-spin"></div>
-        <span class="material-symbols-outlined text-primary text-xl relative z-10">train</span>
+        <div class="absolute inset-0 rounded-full border-[3px] border-white/20 border-t-secondary animate-spin"></div>
+        <span class="material-symbols-outlined text-secondary text-xl relative z-10">train</span>
       </div>
-      <div class="space-y-1.5 w-full">
-        <div class="loading-text text-xs font-black text-on-surface transition-all duration-300" id="loading-text" style="transition: opacity 0.2s ease-in-out;">Fetching Status...</div>
-        <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Please hold on</div>
+      <div class="space-y-1.5 w-full px-6">
+        <div class="loading-text text-sm font-black text-white transition-all duration-300" id="loading-text" style="transition: opacity 0.2s ease-in-out;">Fetching Status...</div>
+        <div class="text-[9px] text-white/55 font-black uppercase tracking-widest">Please hold on</div>
       </div>
     </div>
   </div>
 
   <!-- ==================== PLATFORM FINDER MODAL ==================== -->
-  <div id="modal-util-platform" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('platform')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+  <div id="modal-util-platform" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[1000] flex items-end justify-center hidden" onclick="closeUtilModal('platform')">
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-5 pb-6 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-3.5 modal-card" onclick="event.stopPropagation()">
       <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
       <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('platform')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
@@ -3210,8 +3211,14 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       </h3>
       <p class="text-[10px] text-gray-500 leading-normal">Search by train number to find scheduled and real-time platforms at upcoming halt stations.</p>
       
-      <!-- Suggestion chips -->
-      <div class="space-y-1.5">
+      <!-- Input placed on top for immediate phone keyboard focus and visibility -->
+      <div class="flex gap-2">
+        <input type="text" id="platform-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12002)" />
+        <button onclick="runPlatformFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">Search</button>
+      </div>
+
+      <!-- Suggestion chips placed below input -->
+      <div class="space-y-1">
         <span class="text-[8px] font-black uppercase text-slate-400 tracking-wider">Popular Trains</span>
         <div class="flex gap-1.5 flex-wrap">
           <button onclick="prefillPlatformSearch('12002')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12002 Shatabdi</button>
@@ -3220,10 +3227,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
       </div>
 
-      <div class="flex gap-2">
-        <input type="text" id="platform-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12002)" />
-        <button onclick="runPlatformFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">Search</button>
-      </div>
       <div id="platform-results" class="space-y-2 mt-2 max-h-[220px] overflow-y-auto pr-1 hidden">
         <!-- Results injected here -->
       </div>
@@ -3231,8 +3234,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   </div>
 
   <!-- ==================== REFUND CALCULATOR MODAL ==================== -->
-  <div id="modal-util-refund" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('refund')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+  <div id="modal-util-refund" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[1000] flex items-end justify-center hidden" onclick="closeUtilModal('refund')">
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-5 pb-6 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-3.5 modal-card" onclick="event.stopPropagation()">
       <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
       <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('refund')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
@@ -3276,8 +3279,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   </div>
 
   <!-- ==================== TIMETABLE MODAL ==================== -->
-  <div id="modal-util-timetable" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('timetable')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+  <div id="modal-util-timetable" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[1000] flex items-end justify-center hidden" onclick="closeUtilModal('timetable')">
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-5 pb-6 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-3.5 modal-card" onclick="event.stopPropagation()">
       <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
       <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('timetable')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
@@ -3286,8 +3289,14 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       </h3>
       <p class="text-[10px] text-gray-500 leading-normal">Enter a train number to view the scheduled station arrival, halt, and distance milestones.</p>
       
-      <!-- Suggestion chips -->
-      <div class="space-y-1.5">
+      <!-- Input container placed on top -->
+      <div class="flex gap-2">
+        <input type="text" id="timetable-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12301)" />
+        <button onclick="runTimetableFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">View Schedule</button>
+      </div>
+
+      <!-- Suggestion chips placed below input -->
+      <div class="space-y-1">
         <span class="text-[8px] font-black uppercase text-slate-400 tracking-wider">Popular Trains</span>
         <div class="flex gap-1.5 flex-wrap">
           <button onclick="prefillTimetableSearch('12002')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12002 Shatabdi</button>
@@ -3296,10 +3305,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
       </div>
 
-      <div class="flex gap-2">
-        <input type="text" id="timetable-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12301)" />
-        <button onclick="runTimetableFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">View Schedule</button>
-      </div>
       <div id="timetable-results" class="space-y-1 mt-2 max-h-[220px] overflow-y-auto pr-1 hidden">
         <!-- Timetable timeline stops -->
       </div>
@@ -3307,8 +3312,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   </div>
 
   <!-- ==================== HELPLINE MODAL ==================== -->
-  <div id="modal-util-helpline" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('helpline')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+  <div id="modal-util-helpline" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[1000] flex items-end justify-center hidden" onclick="closeUtilModal('helpline')">
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-5 pb-6 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-3.5 modal-card" onclick="event.stopPropagation()">
       <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
       <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('helpline')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
