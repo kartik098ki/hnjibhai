@@ -1791,48 +1791,34 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
           <span class="material-symbols-outlined text-secondary text-lg">explore</span>
           Travel Utility Services
         </h3>
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-4 gap-2.5">
           <!-- Platform Finder -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('platform')">
-            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">directions_railway</span>
+          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('platform')">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
+              <span class="material-symbols-outlined text-base">directions_railway</span>
             </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Platform</span>
-          </div>
-          <!-- Seat Map -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('seatmap')">
-            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">airline_seat_recline_extra</span>
-            </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Seat Map</span>
+            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Platform</span>
           </div>
           <!-- Refund Calculator -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('refund')">
-            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">currency_rupee</span>
+          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('refund')">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
+              <span class="material-symbols-outlined text-base">currency_rupee</span>
             </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Refund Calc</span>
+            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Refund Calc</span>
           </div>
           <!-- Timetable Schedule -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('timetable')">
-            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">schedule</span>
+          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('timetable')">
+            <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
+              <span class="material-symbols-outlined text-base">schedule</span>
             </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Timetable</span>
+            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Timetable</span>
           </div>
           <!-- Helpline 139 Direct Dial -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="window.location.href='tel:139'; showToast('Dialing Helpline 139...', 'info')">
-            <div class="w-10 h-10 rounded-lg bg-red-50 text-red-600 flex items-center justify-center mb-1.5 transition-all group-hover:bg-red-650 group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">call</span>
+          <div class="flex flex-col items-center justify-center text-center p-2.5 bg-white border border-outline-variant/40 rounded-2xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="window.location.href='tel:139'; showToast('Dialing Helpline 139...', 'info')">
+            <div class="w-9 h-9 rounded-xl bg-red-50 text-red-650 flex items-center justify-center mb-1.5 transition-all group-hover:bg-red-600 group-hover:text-white shadow-inner shrink-0">
+              <span class="material-symbols-outlined text-base">call</span>
             </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Helpline 139</span>
-          </div>
-          <!-- Wake Alarm -->
-          <div class="flex flex-col items-center justify-center text-center p-3 bg-white border border-outline-variant/40 rounded-xl cursor-pointer group hover:border-primary/40 transition-colors shadow-sm active:scale-95 duration-200" onclick="openUtilModal('alarm')">
-            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-1.5 transition-all group-hover:bg-primary group-hover:text-white shadow-inner shrink-0">
-              <span class="material-symbols-outlined text-lg">notifications_active</span>
-            </div>
-            <span class="text-[9.5px] font-bold text-on-surface tracking-tight leading-tight">Wake Alarm</span>
+            <span class="text-[8.5px] font-extrabold text-on-surface tracking-tight leading-tight">Helpline 139</span>
           </div>
         </div>
       </section>
@@ -2136,10 +2122,10 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
           <span class="material-symbols-outlined text-white text-base">arrow_back</span>
         </button>
         <div class="flex flex-col">
-          <span class="text-[7.5px] font-black text-white/55 uppercase tracking-[0.25em] leading-none mb-1.5">GPS Satellite Tracker</span>
+          <span class="text-[7.5px] font-black text-white/55 uppercase tracking-[0.25em] leading-none mb-1.5">Live Train Status Tracker</span>
           <h1 class="text-2xl font-black text-white tracking-tight leading-none mb-2" id="live-tracking-header-title" style="font-family: 'Outfit', sans-serif !important; font-weight: 900 !important; font-size: 23px !important; letter-spacing: -0.03em !important;">Live Train Status</h1>
           <p class="text-xs text-white/80 font-medium leading-relaxed max-w-[240px]" id="live-tracking-header-subtitle">
-            Real-time GPS tracking and transit schedules for running trains.
+            Real-time tracking and transit schedules for running trains.
           </p>
         </div>
       </div>
@@ -2161,7 +2147,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
         <button class="w-full bg-primary hover:bg-primary-light text-white font-headline font-black text-xs py-3.5 rounded-2xl active:scale-95 transition-all shadow-[0_5px_15px_rgba(15,169,104,0.15)] flex items-center justify-center gap-1.5" onclick="searchLiveTrainDirectly()">
           Track Train Position
-          <span class="material-symbols-outlined text-[13px]">gps_fixed</span>
+          <span class="material-symbols-outlined text-[13px]">my_location</span>
         </button>
       </div>
 
@@ -3201,17 +3187,13 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   <!-- Loader Overlay -->
   <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black/60 backdrop-blur-md flex flex-col items-center justify-center z-[100] hidden transition-opacity duration-300">
     <div class="bg-white/95 border border-slate-100 rounded-3xl p-6 shadow-2xl flex flex-col items-center max-w-[280px] w-full text-center space-y-4 animate-scale-in">
-      <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center relative overflow-hidden">
-        <span class="material-symbols-outlined text-primary text-3xl animate-bounce">train</span>
-        <div class="absolute bottom-1 left-2 right-2 h-1 bg-primary/20 rounded-full overflow-hidden">
-          <div class="h-full w-1/2 bg-primary rounded-full animate-pulse"></div>
-        </div>
+      <!-- Circular rotating loader spinner with center train icon -->
+      <div class="relative w-14 h-14 flex items-center justify-center shrink-0">
+        <div class="absolute inset-0 rounded-full border-[3px] border-slate-100 border-t-primary animate-spin"></div>
+        <span class="material-symbols-outlined text-primary text-xl relative z-10">train</span>
       </div>
-      <div class="w-full px-4">
-        <div class="railway-track-loader"></div>
-      </div>
-      <div class="space-y-1">
-        <div class="loading-text text-xs font-black text-on-surface" id="loading-text">Fetching Status...</div>
+      <div class="space-y-1.5 w-full">
+        <div class="loading-text text-xs font-black text-on-surface transition-all duration-300" id="loading-text" style="transition: opacity 0.2s ease-in-out;">Fetching Status...</div>
         <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Please hold on</div>
       </div>
     </div>
@@ -3242,7 +3224,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         <input type="text" id="platform-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12002)" />
         <button onclick="runPlatformFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">Search</button>
       </div>
-      <div id="platform-results" class="space-y-2 mt-2 hidden">
+      <div id="platform-results" class="space-y-2 mt-2 max-h-[220px] overflow-y-auto pr-1 hidden">
         <!-- Results injected here -->
       </div>
     </div>

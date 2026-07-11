@@ -726,7 +726,7 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
           <div class="flex justify-between items-center mb-4">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-800/40 border border-emerald-700/30 text-white text-[9px] font-black uppercase tracking-widest backdrop-blur-sm">
               <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-              GPS Satellite Live
+              Active Live Status
             </div>
             <div class="text-[9px] font-mono font-bold text-white/50">Updated: ${d.lastUpdate || 'Just now'}</div>
           </div>
@@ -1656,7 +1656,7 @@ function renderVerifiedTrainCard(trainNo, trainInfo) {
       <!-- Date Selector Section -->
       <div class="space-y-2.5 pt-2">
         <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest block px-0.5">Select Train Start Date</label>
-        <div id="live-date-pills" class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div id="live-date-pills" class="flex gap-2.5 overflow-x-auto pb-1.5 scrollbar-none -mx-5 px-5">
           ${pillsHTML}
         </div>
       </div>
