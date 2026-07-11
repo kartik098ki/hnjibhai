@@ -1242,36 +1242,38 @@ body { background-color: #10151d; }
 }
 #page-pnr header {
   min-height: auto !important;
-  padding-top: calc(16px + var(--rq-safe-top)) !important;
-  padding-bottom: 36px !important;
+  padding-top: calc(14px + var(--rq-safe-top)) !important;
+  padding-bottom: 14px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
-  background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.08), transparent 45%), radial-gradient(circle at 10% 90%, rgba(0,0,0,0.12), transparent 55%), linear-gradient(135deg, #0C8346 0%, #065F32 50%, #034523 100%) !important;
-  border-bottom-left-radius: 28px !important;
-  border-bottom-right-radius: 28px !important;
-  box-shadow: 0 8px 24px rgba(0, 77, 60, 0.16) !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #edf2f7 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
 }
 #page-pnr header button {
-  width: 38px !important;
-  height: 38px !important;
+  width: 34px !important;
+  height: 34px !important;
   border-radius: 999px !important;
-  background: rgba(255,255,255,0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 4px 10px rgba(0,0,0,0.08) !important;
+  background: #f8fafc !important;
+  border: 1px solid #edf2f7 !important;
+  box-shadow: none !important;
   transition: all 0.2s ease !important;
 }
 #page-pnr header h1 {
   font-family: 'Outfit', sans-serif !important;
-  font-size: 23px !important;
-  line-height: 1.15 !important;
-  letter-spacing: -0.03em !important;
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
   font-weight: 900 !important;
+  color: #1e293b !important;
 }
 #page-pnr header p {
-  font-size: 11.5px !important;
-  color: rgba(255,255,255,0.85) !important;
-  margin-top: 5px !important;
-  line-height: 1.35 !important;
+  font-size: 9.5px !important;
+  color: #64748b !important;
+  margin-top: 3px !important;
+  line-height: 1.25 !important;
 }
 #page-pnr main {
   margin-top: 20px !important;
@@ -1730,8 +1732,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         <!-- PNR Input Panel (No copy icon) -->
         <div id="panel-pnr" class="pnr-panel space-y-5">
           <div class="relative">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-450 text-lg pointer-events-none">tag</span>
-            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 pl-11 pr-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
+            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 px-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Enter 10-digit PNR Number" type="text" inputmode="numeric" pattern="\d*" maxlength="10" id="pnr-input" oninput="validatePNR(this)" />
           </div>
           <button class="w-full bg-primary text-white py-3.5 rounded-2xl font-headline font-black hover:bg-primary-light active:scale-[0.97] transition-all shadow-[0_8px_20px_rgb(0,77,60,0.15)] uppercase tracking-wider text-xs flex justify-center items-center gap-2" onclick="checkPNRStatus()">
             Check Live Status
