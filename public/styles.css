@@ -1,103 +1,257 @@
 /* =====================================================
-   RAILQUICK — Premium UI/UX Custom Style Overrides
+   RAILQUICK — Premium UI/UX Custom Style Overrides & Design System
    ===================================================== */
 
-/* Hide scrollbars across the app */
+/* Base & Scrollbar Overrides */
 ::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 * {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   box-sizing: border-box;
 }
 
-/* Custom interactive active states */
-.active-nav-btn {
-  color: #0FA968 !important;
+/* 8px Spacing System Helpers & Spacing utilities */
+.space-8 { margin: 8px; }
+.gap-8 { gap: 8px; }
+
+/* Easing similar to iOS (Spring-based motion) */
+.transition-spring {
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.2, 1) !important;
 }
 
-.active-nav-btn .nav-icon {
-  background-color: rgba(15, 169, 104, 0.1);
-  color: #0FA968 !important;
+/* Tactile Button Press Animation */
+.btn-tactile {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+.btn-tactile:active {
+  transform: scale(0.96) !important;
+}
+.btn-tactile:hover {
+  transform: translateY(-1px);
 }
 
-/* Custom fade effects */
-.fade-in-item {
-  animation: fadeIn 0.4s ease forwards;
+/* Hover Lift Card */
+.card-premium {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.02), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+.card-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  border-color: rgba(12, 131, 70, 0.15);
 }
 
-@keyframes fadeIn {
+/* Glassmorphism Bottom Sheet Overlay */
+.modal-overlay {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Custom Modal Card transition with spring physics */
+.modal-card {
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.1) !important;
+  max-height: 88vh !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  scrollbar-width: none !important;
+}
+.modal-overlay:not(.hidden) .modal-card {
+  transform: translateY(0) !important;
+}
+
+/* CSS-based Custom Railway Loader (Moving Train & Pulsing Track) */
+.railway-track-loader {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background: rgba(15, 23, 42, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.railway-track-loader::after {
+  content: '';
+  position: absolute;
+  left: -40%;
+  top: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #0C8346, transparent);
+  animation: trainRun 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes trainRun {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+.pulsing-station {
+  animation: stationPulse 2s infinite ease-in-out;
+}
+@keyframes stationPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.4); opacity: 0.95; }
+}
+
+/* GPS Pulse Radar Scanner */
+.gps-pulse-circle {
+  position: absolute;
+  border: 1px solid rgba(12, 131, 70, 0.4);
+  border-radius: 50%;
+  animation: gpsPulse 2.5s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gps-pulse-circle-2 {
+  animation-delay: 0.8s;
+}
+.gps-pulse-circle-3 {
+  animation-delay: 1.6s;
+}
+@keyframes gpsPulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Wavy Torn Paper Receipt design */
+.receipt-paper {
+  background: #ffffff;
+  position: relative;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.04));
+  border-radius: 16px 16px 0 0;
+}
+.receipt-wavy-edge {
+  height: 10px;
+  background-image: radial-gradient(circle, transparent, transparent 50%, #ffffff 50%, #ffffff), 
+                    radial-gradient(circle, #ffffff, #ffffff 50%, transparent 50%, transparent);
+  background-size: 12px 20px;
+  background-position: 0 -10px, 0 0;
+  background-repeat: repeat-x;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+/* Interactive Seat Map Blueprints */
+.seat-node {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.seat-node.selected-seat {
+  border-color: #0C8346 !important;
+  background-color: rgba(12, 131, 70, 0.08) !important;
+  transform: scale(1.03) !important;
+  box-shadow: 0 4px 12px rgba(12, 131, 70, 0.15) !important;
+}
+.seat-node.selected-seat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid #0C8346;
+  border-radius: 12px;
+  pointer-events: none;
+  animation: seatHighlightRing 1.2s infinite ease-in-out;
+}
+@keyframes seatHighlightRing {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* Seat Berth Type Color Coding classes */
+.seat-lower { background: #E6F6EC; border-color: rgba(16, 185, 129, 0.2); color: #065F46; }
+.seat-middle { background: #EFF6FF; border-color: rgba(59, 130, 246, 0.2); color: #1E40AF; }
+.seat-upper { background: #FAF5FF; border-color: rgba(16, 185, 129, 0.2); color: #581C87; } /* Match SL/3AC/2AC/1AC styles */
+.seat-side-lower { background: #FEF3C7; border-color: rgba(245, 158, 11, 0.2); color: #92400E; }
+.seat-side-upper { background: #FFF1F2; border-color: rgba(244, 63, 94, 0.2); color: #9F1239; }
+
+.seat-lower:hover { background: #DEF7EC; border-color: rgba(16, 185, 129, 0.4); }
+.seat-middle:hover { background: #DBEAFE; border-color: rgba(59, 130, 246, 0.4); }
+.seat-upper:hover { background: #F3E8FF; border-color: rgba(168, 85, 247, 0.4); }
+.seat-side-lower:hover { background: #FEEB97; border-color: rgba(245, 158, 11, 0.4); }
+.seat-side-upper:hover { background: #FFE4E6; border-color: rgba(244, 63, 94, 0.4); }
+
+/* Success stamp animation */
+.success-stamp {
+  border: 3px double #059669;
+  color: #059669;
+  background: rgba(5, 150, 105, 0.05);
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: rotate(-12deg) scale(1.6);
+  opacity: 0;
+  animation: stampRotateIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes stampRotateIn {
+  to { transform: rotate(-8deg) scale(1); opacity: 0.85; }
+}
+
+/* Premium Marquee testimonials fade */
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
+}
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  z-index: 10;
+  pointer-events: none;
+}
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, transparent);
+}
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, transparent);
+}
+
+/* Animated success checklist checkmark */
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #0C8346;
+  fill: none;
+  animation: strokeCheck 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: strokeCheck 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+@keyframes strokeCheck {
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Page transitions */
+.tab-page {
+  animation: pageFadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes pageFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Premium Tab Switcher Styles */
-#pnr-tabs-container {
-  background-color: #f1f5f9 !important;
-  border: 1px solid rgba(226, 232, 240, 0.8) !important;
-  border-radius: 9999px !important;
-  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04) !important;
-  padding: 6px !important;
-  height: 52px !important; /* Fixed elegant height */
+/* Skeleton Loading pulse */
+.skeleton-bar {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulseAnim 1.5s infinite linear;
 }
-#pnr-tab-indicator {
-  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  background: linear-gradient(135deg, #0FA968 0%, #007858 100%) !important;
-  border-radius: 9999px !important;
-  box-shadow: 0 4px 14px rgba(15, 169, 104, 0.35) !important;
+@keyframes skeletonPulseAnim {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
-.shadow-floating {
-  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08), 0 -2px 8px rgba(0, 0, 0, 0.04) !important;
-}
-
-/* Scrollable Timeline to Prevent Card Stretching */
-.live-station-list {
-  max-height: 380px !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding-right: 6px !important;
-}
-
-/* Custom Scrollbar for Timeline */
-.live-station-list::-webkit-scrollbar {
-  width: 4px !important;
-  display: block !important;
-}
-.live-station-list::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.02) !important;
-  border-radius: 999px !important;
-}
-.live-station-list::-webkit-scrollbar-thumb {
-  background: rgba(15, 169, 104, 0.18) !important;
-  border-radius: 999px !important;
-}
-.live-station-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(15, 169, 104, 0.35) !important;
-}
-
-/* Blur effect on past and far-upcoming nodes by default */
-.live-station-node.station-past-blur,
-.live-station-node.station-upcoming-blur {
-  opacity: 0.32 !important;
-  filter: blur(2px) !important;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  cursor: pointer !important;
-}
-
-/* Unblur and reveal when clicked */
-#timeline-list.reveal-past .station-past-blur,
-#timeline-list.reveal-upcoming .station-upcoming-blur {
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-/* Hide scrollbar on testimonials marquee */
-#customer-marquee {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important;  /* IE and Edge */
-}
-#customer-marquee::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
-}
-

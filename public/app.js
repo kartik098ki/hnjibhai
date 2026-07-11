@@ -3065,26 +3065,68 @@ let toastTimeout;
 function showToast(msg, type = 'success') {
   clearTimeout(toastTimeout);
   const toast = document.getElementById('toast');
+  const iconContainer = document.getElementById('toast-icon-container');
   const icon = document.getElementById('toast-icon');
   const text = document.getElementById('toast-msg');
-  const icons = { success: '✓', warning: '!', info: 'i', error: '✕' };
   
-  if (!toast || !icon || !text) return;
+  const icons = { 
+    success: 'check', 
+    warning: 'warning', 
+    info: 'info', 
+    error: 'close' 
+  };
   
-  icon.textContent = icons[type] || '✓';
-  icon.style.background = type === 'warning' ? '#D4AF37' : type === 'error' ? '#EF4444' : type === 'info' ? '#3B82F6' : '#004D3C';
+  const bgColors = {
+    success: '#10B981', // Emerald 500
+    warning: '#F59E0B', // Amber 500
+    info: '#3B82F6',    // Blue 500
+    error: '#EF4444'    // Red 500
+  };
+  
+  if (!toast || !icon || !text || !iconContainer) return;
+  
+  icon.textContent = icons[type] || 'check';
+  iconContainer.style.backgroundColor = bgColors[type] || '#10B981';
   text.textContent = msg;
+  
   toast.classList.remove('hidden');
   
-  toastTimeout = setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+  // Force reflow
+  void toast.offsetHeight;
+  
+  toast.style.opacity = '1';
+  toast.style.transform = 'translate(-50%, 0)';
+  
+  toastTimeout = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translate(-50%, 2rem)';
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 300);
+  }, 3500);
 }
 
 // ===== LOADING INDICATORS =====
-function showLoading(text = 'Loading...') {
-  document.getElementById('loading-text').textContent = text;
-  document.getElementById('loading-overlay').classList.remove('hidden');
+function showLoading(text = 'Fetching Status...') {
+  const overlay = document.getElementById('loading-overlay');
+  const loaderText = document.getElementById('loading-text');
+  if (!overlay || !loaderText) return;
+  
+  loaderText.textContent = text;
+  overlay.classList.remove('hidden');
+  overlay.classList.add('flex');
+  void overlay.offsetHeight;
+  overlay.style.opacity = '1';
 }
-function hideLoading() { document.getElementById('loading-overlay').classList.add('hidden'); }
+function hideLoading() {
+  const overlay = document.getElementById('loading-overlay');
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+  }, 300);
+}
 
 // ===== DATE INITIALIZATION =====
 function setDefaultDates() { 
@@ -3715,7 +3757,7 @@ function retryClerkInit() {
   // Re-inject primary CDN script
   const script = document.createElement('script');
   script.async = true;
-  script.crossOrigin = 'anonymous';
+script.crossOrigin = 'anonymous';
   script.setAttribute('data-clerk-publishable-key', CLERK_PUBLISHABLE_KEY);
   script.src = 'https://smooth-jackal-18.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js';
   script.onload = () => { window.__clerkScriptLoaded = true; };
@@ -3725,30 +3767,69 @@ function retryClerkInit() {
   initClerk();
 }
 
-// Boot Clerk as soon as the DOM is ready (or immediately if already ready)
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => initClerk());
-} else {
-  initClerk();
-}
-
 // ===== TRAVEL UTILITY MODALS HANDLERS =====
 
 function openUtilModal(type) {
   const modal = document.getElementById(`modal-util-${type}`);
   if (modal) {
     modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modal.style.opacity = '0';
+    const card = modal.querySelector('.modal-card');
+    if (card) card.style.transform = 'translateY(100%)';
     
-    // Auto-init specific layouts if needed
+    // Force a reflow
+    void modal.offsetHeight;
+    
+    modal.style.opacity = '1';
+    modal.style.transition = 'opacity 0.3s ease';
+    if (card) {
+      card.style.transform = 'translateY(0)';
+      card.style.transition = 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
+    }
+    
     if (type === 'seatmap') {
       selectCoachLayout('SL');
+    } else if (type === 'alarm') {
+      populateAlarmStations();
     }
   }
 }
 
 function closeUtilModal(type) {
   const modal = document.getElementById(`modal-util-${type}`);
-  if (modal) modal.classList.add('hidden');
+  if (modal) {
+    const card = modal.querySelector('.modal-card');
+    modal.style.opacity = '0';
+    if (card) card.style.transform = 'translateY(100%)';
+    
+    // Clear alarm countdown if active
+    if (type === 'alarm' && appState.alarmIntervalId) {
+      clearInterval(appState.alarmIntervalId);
+    }
+    
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 300);
+  }
+}
+
+// Prefill search shortcuts for Platform & Timetable
+function prefillPlatformSearch(no) {
+  const input = document.getElementById('platform-train-input');
+  if (input) {
+    input.value = no;
+    runPlatformFinder();
+  }
+}
+
+function prefillTimetableSearch(no) {
+  const input = document.getElementById('timetable-train-input');
+  if (input) {
+    input.value = no;
+    runTimetableFinder();
+  }
 }
 
 // 1. Platform Finder (Dual Live API & Schedule search with station filter)
@@ -3826,18 +3907,29 @@ function renderFilteredPlatforms(query) {
     (r.stationCode || r.stnCode || '').toLowerCase().includes(query.toLowerCase())
   );
 
-  let routeHTML = filteredRoute.map(r => {
+  let routeHTML = filteredRoute.map((r, idx) => {
     const pf = r.platform || '—';
     const isPlatformLive = isLive && r.status === 'current';
+    const isHalt = r.haltTime && r.haltTime > 0;
+    const haltLabel = isHalt ? `${r.haltTime} min halt` : '';
+    
     return `
-      <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-gray-100 text-xs shadow-sm hover:border-primary/20 transition-colors">
-        <div class="flex flex-col min-w-0">
-          <span class="font-bold text-slate-800 truncate">${r.stationName || r.stnName} (${r.stationCode || r.stnCode})</span>
-          <span class="text-[9px] text-gray-400 mt-0.5">Arr: ${r.arrival || r.arrivalTime || 'Source'} • Dep: ${r.departure || r.departureTime || 'Dest'}</span>
+      <div class="relative pl-6 pb-5 last:pb-1 text-xs flex items-start gap-3">
+        <!-- Railway track line timeline -->
+        <div class="absolute left-[7px] top-1.5 bottom-0 w-[2px] bg-slate-200 last:hidden"></div>
+        <div class="absolute left-0.5 top-1 w-3.5 h-3.5 rounded-full border-2 ${isPlatformLive ? 'bg-emerald-500 border-emerald-400 ring-4 ring-emerald-500/20' : 'bg-white border-primary'} flex items-center justify-center z-10 shrink-0">
+          ${isPlatformLive ? '<span class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>' : ''}
         </div>
-        <div class="flex flex-col items-end shrink-0">
-          <span class="${isPlatformLive ? 'bg-emerald-500 text-white animate-pulse' : 'bg-primary/5 text-primary'} font-black font-mono text-xs px-2.5 py-0.5 rounded-lg border ${isPlatformLive ? 'border-emerald-600' : 'border-primary/10'}">PF ${pf}</span>
-          <span class="text-[8px] text-gray-400 font-bold mt-0.5">${isPlatformLive ? '● LIVE NOW' : 'Scheduled'}</span>
+        <div class="flex-grow flex justify-between items-center bg-white p-3.5 rounded-2xl border ${isPlatformLive ? 'border-emerald-300 shadow-premium-glow' : 'border-slate-100'} hover:border-primary/20 transition-all duration-200 shadow-sm">
+          <div class="flex flex-col min-w-0">
+            <span class="font-black text-slate-800 truncate">${r.stationName || r.stnName} (${r.stationCode || r.stnCode})</span>
+            <span class="text-[9px] text-slate-450 mt-1 font-bold">Arr: ${r.arrival || r.arrivalTime || 'Source'} • Dep: ${r.departure || r.departureTime || 'Dest'}</span>
+            ${isHalt ? `<span class="inline-flex items-center text-[7.5px] bg-slate-100 text-slate-500 font-black px-1.5 py-0.5 rounded-md mt-1 w-fit uppercase tracking-wider">${haltLabel}</span>` : ''}
+          </div>
+          <div class="flex flex-col items-end shrink-0">
+            <span class="${isPlatformLive ? 'bg-emerald-500 text-white animate-pulse' : 'bg-primary/5 text-primary'} font-black font-mono text-xs px-2.5 py-0.5 rounded-lg border ${isPlatformLive ? 'border-emerald-600' : 'border-primary/10'}">PF ${pf}</span>
+            <span class="text-[8px] text-slate-400 font-bold mt-1 uppercase tracking-wider">${isPlatformLive ? '● LIVE NOW' : 'Scheduled'}</span>
+          </div>
         </div>
       </div>
     `;
@@ -3848,13 +3940,13 @@ function renderFilteredPlatforms(query) {
   }
 
   resultsDiv.innerHTML = `
-    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 space-y-3">
+    <div class="bg-slate-50 border border-slate-100 rounded-3xl p-4 space-y-3">
       <div class="flex justify-between items-start border-b border-slate-200/60 pb-2">
         <div class="min-w-0">
           <strong class="text-primary font-black text-xs block truncate">${trainInfo.train_name} (#${trainInfo.train_no})</strong>
           <span class="text-[9px] text-gray-400 font-bold block mt-0.5">${isLive ? 'Real-time Live Platforms' : 'Scheduled platforms at halts'}</span>
         </div>
-        ${isLive ? '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider animate-pulse">Live API</span>' : '<span class="bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider">Scheduled</span>'}
+        ${isLive ? '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider animate-pulse">Live API</span>' : '<span class="bg-slate-100 text-slate-655 border border-slate-200 px-2 py-0.5 rounded-md text-[8px] font-black uppercase tracking-wider">Scheduled</span>'}
       </div>
       
       <!-- Station Search Filter -->
@@ -3863,7 +3955,7 @@ function renderFilteredPlatforms(query) {
         <input type="text" placeholder="Search station (e.g. Kanpur)..." class="w-full bg-white border border-outline-variant/60 rounded-xl pl-9 pr-3 py-2 text-[10px] font-medium focus:outline-none focus:border-primary transition-all" value="${query}" oninput="renderFilteredPlatforms(this.value)" />
       </div>
 
-      <div class="space-y-2 max-h-[180px] overflow-y-auto pr-1 scrollbar-none">
+      <div class="space-y-2 max-h-[190px] overflow-y-auto pr-1 scrollbar-none pt-1">
         ${routeHTML}
       </div>
     </div>
@@ -3913,64 +4005,92 @@ function calculateRefund() {
 
   fee = Math.min(fee + gst, fare);
   const refundAmount = Math.max(fare - fee, 0);
+  const pct = (refundAmount / fare) * 100;
 
   resultsDiv.classList.remove('hidden');
   resultsDiv.innerHTML = `
-    <div class="text-xs space-y-4 animate-fade-in mt-2">
-      <!-- Premium Bill Receipt -->
-      <div class="bg-white border border-outline-variant/60 rounded-2xl p-4 shadow-sm space-y-2.5">
-        <div class="flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest border-b pb-2">
-          <span>Fare Breakup Receipt</span>
-          <span class="text-primary font-mono">EST-${Math.floor(1000 + Math.random()*9000)}</span>
+    <div class="text-xs space-y-4 animate-scale-in mt-3">
+      <!-- Refund Ratio Progress Bar -->
+      <div class="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm space-y-2">
+        <div class="flex justify-between items-center text-[10px] font-black text-slate-405 uppercase tracking-wider">
+          <span>Estimated Refund Ratio</span>
+          <span class="text-primary font-mono font-black">${pct.toFixed(0)}%</span>
         </div>
-        
-        <div class="flex justify-between items-center text-slate-600 font-semibold">
-          <span>Total Fare Paid:</span>
-          <span class="font-mono text-slate-800 font-bold">₹${fare.toFixed(2)}</span>
-        </div>
-        
-        <div class="flex justify-between items-center text-slate-500">
-          <span>IRCTC Fee (${chargeRate}):</span>
-          <span class="text-red-500 font-mono">-₹${(fee - gst).toFixed(2)}</span>
-        </div>
-
-        ${gst > 0 ? `
-        <div class="flex justify-between items-center text-slate-500">
-          <span>GST on Cancellation Fee (5%):</span>
-          <span class="text-red-500 font-mono">-₹${gst.toFixed(2)}</span>
-        </div>
-        ` : ''}
-
-        <div class="border-t border-dashed border-slate-200 my-2 pt-2.5 flex justify-between items-center font-black text-on-surface text-sm">
-          <span class="text-primary">Estimated Refund:</span>
-          <span class="text-emerald-600 font-mono text-base">₹${refundAmount.toFixed(2)}</span>
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden relative">
+          <div class="h-full bg-gradient-to-r from-red-500 via-amber-400 to-emerald-500 rounded-full transition-all duration-500" style="width: ${pct}%"></div>
         </div>
       </div>
 
+      <!-- Premium Bill Receipt -->
+      <div class="receipt-paper border border-slate-100/80 rounded-t-3xl pt-5 px-5 pb-7 relative overflow-hidden bg-white shadow-lg">
+        <!-- Success Stamp Overlay -->
+        <div class="absolute right-4 top-12 z-20 success-stamp px-3 py-1.5 rounded-lg border-2 border-emerald-600/70 border-double text-[9px] font-black uppercase text-emerald-600 tracking-wider">
+          Approved Est
+        </div>
+        
+        <div class="flex justify-between items-center text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-3">
+          <span>Fare cancellation Breakdown</span>
+          <span class="text-primary font-mono">REC-${Math.floor(1000 + Math.random()*9000)}</span>
+        </div>
+        
+        <div class="space-y-3 pt-4 text-xs font-semibold">
+          <div class="flex justify-between items-center text-slate-600 font-bold">
+            <span>Ticket Fare Paid:</span>
+            <span class="font-mono text-slate-800 font-black">₹${fare.toFixed(2)}</span>
+          </div>
+          
+          <div class="flex justify-between items-center text-slate-500">
+            <span>Cancellation Fee (${chargeRate}):</span>
+            <span class="text-red-500 font-mono font-bold">-₹${(fee - gst).toFixed(2)}</span>
+          </div>
+
+          ${gst > 0 ? `
+          <div class="flex justify-between items-center text-slate-500">
+            <span>GST on Cancellation Fee (5%):</span>
+            <span class="text-red-500 font-mono font-bold">-₹${gst.toFixed(2)}</span>
+          </div>
+          ` : ''}
+
+          <div class="border-t border-dashed border-slate-200 my-3 pt-3.5 flex justify-between items-center font-black text-on-surface text-sm">
+            <span class="text-primary">Estimated Refund:</span>
+            <span class="text-emerald-600 font-mono text-base font-black">₹${refundAmount.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <!-- Barcode Design -->
+        <div class="mt-6 flex flex-col items-center justify-center space-y-1.5 opacity-60">
+          <div class="h-8 flex gap-[1px]" style="background-image: repeating-linear-gradient(90deg, #1e293b, #1e293b 1px, transparent 1px, transparent 4px, #1e293b 4px, #1e293b 6px, transparent 6px, transparent 7px); width: 140px;"></div>
+          <span class="text-[7.5px] font-mono tracking-widest text-slate-400">IRCTC-${Math.floor(100000 + Math.random()*900000)}</span>
+        </div>
+
+        <!-- Torn Edge Design -->
+        <div class="receipt-wavy-edge"></div>
+      </div>
+
       <!-- Refund Timeline Steps -->
-      <div class="bg-white border border-outline-variant/60 rounded-2xl p-4 shadow-sm">
-        <div class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-3">Refund Journey Timeline</div>
+      <div class="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm">
+        <div class="text-[9px] font-black text-slate-400 uppercase tracking-wider mb-3">Cancellation Refund Workflow</div>
         <div class="space-y-4 relative pl-4 before:content-[''] before:absolute before:left-1.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
           <div class="relative text-[10px]">
             <span class="absolute left-[-16.5px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white shadow-sm animate-pulse"></span>
             <div class="font-bold text-slate-800">1. Instant Cancellation Request</div>
-            <p class="text-[8px] text-slate-400 mt-0.5">Submitted immediately to IRCTC server.</p>
+            <p class="text-[8px] text-slate-400 mt-0.5">Seat released immediately to current inventory.</p>
           </div>
           <div class="relative text-[10px]">
             <span class="absolute left-[-16.5px] top-1 w-2.5 h-2.5 rounded-full bg-slate-300 border border-white shadow-sm"></span>
-            <div class="font-bold text-slate-600">2. Seat Release & Verification</div>
-            <p class="text-[8px] text-slate-400 mt-0.5">Seat inventory is returned to pool database.</p>
+            <div class="font-bold text-slate-650">2. Verification &amp; Clearance</div>
+            <p class="text-[8px] text-slate-400 mt-0.5">TDR verifications check for charting schedules.</p>
           </div>
           <div class="relative text-[10px]">
             <span class="absolute left-[-16.5px] top-1 w-2.5 h-2.5 rounded-full bg-slate-300 border border-white shadow-sm"></span>
-            <div class="font-bold text-slate-600">3. Bank Settlement (3-5 Working Days)</div>
-            <p class="text-[8px] text-slate-400 mt-0.5">Payment processed to original source mode.</p>
+            <div class="font-bold text-slate-655">3. Settlement (3-5 Working Days)</div>
+            <p class="text-[8px] text-slate-400 mt-0.5">Amount credited to original payment gateway.</p>
           </div>
         </div>
       </div>
       
       <p class="text-[8.5px] text-slate-400 text-center leading-normal px-2">
-        *Note: This is an IRCTC-compliant estimate. Actual refund amounts may vary depending on booking agents and banks.
+        *Estimation based on standard rules. Final refund processed via IRCTC.
       </p>
     </div>
   `;
@@ -4031,25 +4151,34 @@ function renderFilteredTimetable(query) {
     const dep = r.departure || r.departureTime || 'Destination';
     const isFirst = idx === 0 && query === '';
     const isLast = idx === route.length - 1 && query === '';
+    const haltVal = r.haltTime || r.halt || 0;
+    const distance = r.distance || 0;
+    const platform = r.platform || '—';
+    
     const markerHTML = isFirst ? `
-      <span class="absolute left-[-21px] top-1.5 w-3 h-3 rounded-full bg-emerald-600 border-2 border-white ring-2 ring-emerald-500/35"></span>
+      <span class="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-emerald-600 border-2 border-white ring-4 ring-emerald-500/20 z-10 flex items-center justify-center"></span>
     ` : isLast ? `
-      <span class="absolute left-[-21px] top-1.5 w-3 h-3 rounded-full bg-red-600 border-2 border-white ring-2 ring-red-500/35"></span>
+      <span class="absolute left-[-22px] top-1.5 w-3.5 h-3.5 rounded-full bg-red-650 border-2 border-white ring-4 ring-red-500/20 z-10 flex items-center justify-center"></span>
     ` : `
-      <span class="absolute left-[-21px] top-1.5 w-3 h-3 rounded-full bg-white border-2 border-primary"></span>
+      <span class="absolute left-[-22px] top-1.5 w-3 h-3 rounded-full bg-white border-2 border-primary z-10 flex items-center justify-center"></span>
     `;
     
     return `
-      <div class="relative pl-5 pb-4 last:pb-0 text-xs">
+      <div class="relative pl-5 pb-5 last:pb-1 text-xs">
         ${markerHTML}
-        <div class="flex justify-between items-start">
-          <div class="min-w-0">
-            <span class="font-bold text-slate-800 block">${r.stnName || r.stationName} (${r.stnCode || r.stationCode})</span>
-            <span class="text-[9px] text-gray-400 font-bold mt-0.5">Platform ${r.platform || '—'} • Distance ${r.distance || '0'} km</span>
+        <div class="flex justify-between items-start bg-slate-50/50 hover:bg-slate-50 p-3 rounded-2xl border border-slate-100/50 hover:border-slate-200/50 transition-all duration-200">
+          <div class="min-w-0 flex-grow">
+            <span class="font-black text-slate-800 block truncate text-xs">${r.stnName || r.stationName} (${r.stnCode || r.stationCode})</span>
+            <div class="flex items-center gap-2 mt-1.5 text-[8.5px] font-bold text-slate-400">
+              <span class="bg-primary/5 text-primary px-1.5 py-0.5 rounded-md border border-primary/5">PF ${platform}</span>
+              <span>•</span>
+              <span>${distance} km</span>
+              ${haltVal > 0 ? `<span>•</span><span class="text-secondary font-black">${haltVal} min halt</span>` : ''}
+            </div>
           </div>
-          <div class="text-right">
-            <span class="font-mono font-black text-slate-900 block">${isFirst ? 'DEP ' + dep : isLast ? 'ARR ' + arr : arr + ' / ' + dep}</span>
-            <span class="text-[8px] text-slate-400 uppercase tracking-wider font-bold block mt-0.5">${isFirst ? 'Origin' : isLast ? 'Destination' : 'Arrival / Departure'}</span>
+          <div class="text-right shrink-0">
+            <span class="font-mono font-black text-slate-900 block text-xs">${isFirst ? 'DEP ' + dep : isLast ? 'ARR ' + arr : arr + ' / ' + dep}</span>
+            <span class="text-[8px] text-slate-400 uppercase tracking-wider font-extrabold block mt-1">${isFirst ? 'Origin' : isLast ? 'Destination' : 'Halt stop'}</span>
           </div>
         </div>
       </div>
@@ -4061,7 +4190,7 @@ function renderFilteredTimetable(query) {
   }
 
   resultsDiv.innerHTML = `
-    <div class="bg-white border border-outline-variant/60 rounded-2xl p-4 space-y-3">
+    <div class="bg-white border border-outline-variant/60 rounded-3xl p-4 space-y-3">
       <div class="border-b pb-2">
         <strong class="text-primary font-black text-xs block">${info.train_name} (#${info.train_no})</strong>
         <span class="text-[9px] text-gray-400 font-bold block mt-0.5">${info.from_stn_name || 'Origin'} ➔ ${info.to_stn_name || 'Destination'} (${info.travel_time || ''})</span>
@@ -4073,7 +4202,8 @@ function renderFilteredTimetable(query) {
         <input type="text" placeholder="Search station..." class="w-full bg-[#F4F6F5]/70 border border-outline-variant/60 rounded-xl pl-9 pr-3 py-2 text-[10px] font-medium focus:outline-none focus:border-primary transition-all" value="${query}" oninput="renderFilteredTimetable(this.value)" />
       </div>
 
-      <div class="relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-150 text-xs space-y-4 max-h-[160px] overflow-y-auto scrollbar-none pt-1">
+      <!-- Scrollable timeline route -->
+      <div class="relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-150 text-xs space-y-4 max-h-[170px] overflow-y-auto scrollbar-none pt-1">
         ${stopsHTML}
       </div>
     </div>
@@ -4099,58 +4229,137 @@ function selectCoachLayout(coachType) {
   let seats = [];
   if (coachType === 'SL' || coachType === '3AC') {
     seats = [
-      { num: 1, berth: 'Lower (L)', window: true },
-      { num: 2, berth: 'Middle (M)', window: false },
-      { num: 3, berth: 'Upper (U)', window: false },
-      { num: 4, berth: 'Lower (L)', window: false },
-      { num: 5, berth: 'Middle (M)', window: false },
-      { num: 6, berth: 'Upper (U)', window: true },
-      { num: 7, berth: 'Side Lower (SL)', window: true },
-      { num: 8, berth: 'Side Upper (SU)', window: true }
+      { num: 1, berth: 'Lower (L)', type: 'lower', window: true },
+      { num: 2, berth: 'Middle (M)', type: 'middle', window: false },
+      { num: 3, berth: 'Upper (U)', type: 'upper', window: false },
+      { num: 4, berth: 'Lower (L)', type: 'lower', window: false },
+      { num: 5, berth: 'Middle (M)', type: 'middle', window: false },
+      { num: 6, berth: 'Upper (U)', type: 'upper', window: true },
+      { num: 7, berth: 'Side Lower (SL)', type: 'side-lower', window: true },
+      { num: 8, berth: 'Side Upper (SU)', type: 'side-upper', window: true }
     ];
   } else if (coachType === '2AC') {
     seats = [
-      { num: 1, berth: 'Lower (L)', window: true },
-      { num: 2, berth: 'Upper (U)', window: false },
-      { num: 3, berth: 'Lower (L)', window: false },
-      { num: 4, berth: 'Upper (U)', window: true },
-      { num: 5, berth: 'Side Lower (SL)', window: true },
-      { num: 6, berth: 'Side Upper (SU)', window: true }
+      { num: 1, berth: 'Lower (L)', type: 'lower', window: true },
+      { num: 2, berth: 'Upper (U)', type: 'upper', window: false },
+      { num: 3, berth: 'Lower (L)', type: 'lower', window: false },
+      { num: 4, berth: 'Upper (U)', type: 'upper', window: true },
+      { num: 5, berth: 'Side Lower (SL)', type: 'side-lower', window: true },
+      { num: 6, berth: 'Side Upper (SU)', type: 'side-upper', window: true }
     ];
   } else { // 1AC
     seats = [
-      { num: 1, berth: 'Cabin A Lower (L)', window: true },
-      { num: 2, berth: 'Cabin A Upper (U)', window: false },
-      { num: 3, berth: 'Cabin B Lower (L)', window: true },
-      { num: 4, berth: 'Cabin B Upper (U)', window: false }
+      { num: 1, berth: 'Cabin A Lower (L)', type: 'lower', window: true },
+      { num: 2, berth: 'Cabin A Upper (U)', type: 'upper', window: false },
+      { num: 3, berth: 'Cabin B Lower (L)', type: 'lower', window: true },
+      { num: 4, berth: 'Cabin B Upper (U)', type: 'upper', window: false }
     ];
   }
 
-  let gridHTML = `
-    <div class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 text-center">Compartment Layout Map (${coachType})</div>
-    <div class="grid grid-cols-4 gap-2.5">
+  let blueprintHTML = `
+    <div class="flex items-center justify-between text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3 px-1">
+      <span>Compartment Blueprint</span>
+      <span class="flex items-center gap-1 text-primary">Train Direction <span class="material-symbols-outlined text-[10px] animate-pulse">arrow_right_alt</span></span>
+    </div>
+    
+    <!-- Visual Train Coach Shell -->
+    <div class="bg-slate-100 rounded-2xl p-3.5 border border-slate-200/60 relative overflow-hidden">
+      <!-- Washrooms / Exit at Side -->
+      <div class="flex justify-between items-center text-[7.5px] font-black text-slate-400 mb-3 border-b border-slate-200 pb-1.5">
+        <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[9px] text-red-500">wc</span> WASHROOM</span>
+        <span class="flex items-center gap-0.5">DOOR <span class="material-symbols-outlined text-[9px] text-emerald-500">exit_to_app</span></span>
+      </div>
+      
+      <div class="flex flex-col gap-3">
+        <!-- Windows top -->
+        <div class="flex justify-around items-center h-1 bg-slate-300/40 rounded-full mx-6 select-none text-[6px] text-slate-400 font-bold uppercase tracking-widest">
+          <span>Window</span>
+          <span>Window</span>
+          <span>Window</span>
+        </div>
+
+        <!-- Cabin Seats visual -->
+        <div class="grid grid-cols-12 gap-2">
+          <!-- Main Compartment Block -->
+          <div class="col-span-8 bg-white/70 border border-slate-200 rounded-xl p-2.5 grid grid-cols-3 gap-2">
+            ${seats.filter(s => !s.berth.toLowerCase().includes('side')).map(s => `
+              <div id="seat-node-${s.num}" onclick="selectSeatMapNode(${s.num}, '${s.berth}', ${s.window})" 
+                   class="seat-node seat-${s.type} border border-slate-200/50 rounded-xl p-2 flex flex-col items-center justify-center bg-white cursor-pointer hover:shadow-sm active:scale-95 transition-all text-center min-h-[56px]">
+                <span class="material-symbols-outlined text-[13px]">airline_seat_recline_extra</span>
+                <span class="text-[9.5px] font-black text-slate-800 mt-0.5">#${s.num}</span>
+                <span class="text-[7px] text-slate-400 font-bold uppercase tracking-wider mt-0.5 truncate max-w-full">${s.berth.split(' ')[0]}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <!-- Corridor spacer line -->
+          <div class="col-span-1 flex items-center justify-center">
+            <div class="h-full w-[2px] bg-dashed bg-slate-300 opacity-40"></div>
+          </div>
+          
+          <!-- Side Berths Corridor Block -->
+          <div class="col-span-3 bg-white/70 border border-slate-200 rounded-xl p-2.5 flex flex-col justify-around gap-2">
+            ${seats.filter(s => s.berth.toLowerCase().includes('side')).map(s => `
+              <div id="seat-node-${s.num}" onclick="selectSeatMapNode(${s.num}, '${s.berth}', ${s.window})" 
+                   class="seat-node seat-${s.type} border border-slate-200/50 rounded-xl p-2 flex flex-col items-center justify-center bg-white cursor-pointer hover:shadow-sm active:scale-95 transition-all text-center min-h-[50px]">
+                <span class="material-symbols-outlined text-[13px]">airline_seat_recline_extra</span>
+                <span class="text-[9.5px] font-black text-slate-800 mt-0.5">#${s.num}</span>
+                <span class="text-[7px] text-slate-400 font-bold uppercase tracking-wider mt-0.5 truncate max-w-full">Side</span>
+              </div>
+            `).join('')}
+            ${seats.filter(s => s.berth.toLowerCase().includes('side')).length === 0 ? `
+              <div class="text-[8px] font-bold text-slate-400 text-center py-4 select-none">No Side</div>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- Windows bottom -->
+        <div class="flex justify-around items-center h-1 bg-slate-300/40 rounded-full mx-6 select-none text-[6px] text-slate-400 font-bold uppercase tracking-widest">
+          <span>Window</span>
+          <span>Window</span>
+        </div>
+      </div>
+      
+      <div class="flex justify-between items-center text-[7.5px] font-black text-slate-400 mt-3 border-t border-slate-200 pt-1.5 select-none">
+        <span>COACH ENTRY</span>
+        <span>DOOR <span class="material-symbols-outlined text-[9px] text-emerald-500">exit_to_app</span></span>
+      </div>
+    </div>
+
+    <!-- Legend Info -->
+    <div class="flex justify-between gap-1 mt-3 px-1 text-[7px] font-bold uppercase text-slate-400 tracking-wider select-none">
+      <span class="flex items-center gap-0.5"><span class="w-1.5 h-1.5 bg-[#E6F6EC] border border-[#10B981]/20 rounded"></span> Lower</span>
+      <span class="flex items-center gap-0.5"><span class="w-1.5 h-1.5 bg-[#EFF6FF] border border-[#3B82F6]/20 rounded"></span> Middle</span>
+      <span class="flex items-center gap-0.5"><span class="w-1.5 h-1.5 bg-[#FAF5FF] border border-[#A855F7]/20 rounded"></span> Upper</span>
+      <span class="flex items-center gap-0.5"><span class="w-1.5 h-1.5 bg-[#FEF3C7] border border-[#F59E0B]/20 rounded"></span> S.Lower</span>
+      <span class="flex items-center gap-0.5"><span class="w-1.5 h-1.5 bg-[#FFF1F2] border border-[#F43F5E]/20 rounded"></span> S.Upper</span>
+    </div>
   `;
 
-  seats.forEach(s => {
-    gridHTML += `
-      <div onclick="selectSeatMapNode(${s.num}, '${s.berth}', ${s.window})" class="seat-node border border-outline-variant rounded-xl p-2.5 flex flex-col items-center justify-center bg-white cursor-pointer active:scale-95 hover:border-primary hover:bg-primary/5 transition-all text-center">
-        <span class="material-symbols-outlined text-slate-400 text-sm">event_seat</span>
-        <span class="text-[10px] font-extrabold text-on-surface mt-0.5">#${s.num}</span>
-        <span class="text-[7px] text-slate-400 font-bold uppercase mt-0.5">${s.berth.split(' ')[0]}</span>
-      </div>
-    `;
-  });
-
-  gridHTML += '</div>';
-  container.innerHTML = gridHTML;
+  container.innerHTML = blueprintHTML;
   document.getElementById('selected-seat-info').classList.add('hidden');
 }
 
 function selectSeatMapNode(num, berth, windowSeat) {
+  document.querySelectorAll('.seat-node').forEach(node => {
+    node.classList.remove('selected-seat');
+  });
+  
+  const clickedNode = document.getElementById(`seat-node-${num}`);
+  if (clickedNode) clickedNode.classList.add('selected-seat');
+  
+  const seatInput = document.getElementById('seatmap-num-input');
+  if (seatInput) seatInput.value = num;
+
   const info = document.getElementById('selected-seat-info');
   if (info) {
     info.classList.remove('hidden');
-    info.innerHTML = `Seat #${num}: ${berth} ${windowSeat ? '• ✓ Window Seat' : '• Corridor Seat'}`;
+    info.innerHTML = `
+      <div class="flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-sm">event_seat</span>
+        <span>Berth Selected — <strong>Seat #${num}</strong>: ${berth} ${windowSeat ? '· Window Seat (W)' : '· Corridor Seat'}</span>
+      </div>
+    `;
   }
 }
 
@@ -4186,21 +4395,83 @@ function findSeatPosition() {
     windowSeat = true;
   }
   
+  document.querySelectorAll('.seat-node').forEach(node => {
+    node.classList.remove('selected-seat');
+  });
+  
+  const foundNode = document.getElementById(`seat-node-${seat}`);
+  if (foundNode) {
+    foundNode.classList.add('selected-seat');
+    foundNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  
   info.classList.remove('hidden');
-  info.innerHTML = `Seat #${seat}: <strong>${berth}</strong>${windowSeat ? ' · ✓ Window Seat' : ' · Corridor Seat'}`;
+  info.innerHTML = `
+    <div class="flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-sm">event_seat</span>
+      <span>Seat Located — <strong>Seat #${seat}</strong>: ${berth} ${windowSeat ? '· Window Seat (W)' : '· Corridor Seat'}</span>
+    </div>
+  `;
 }
 
 // 5. Food Station Alarm
+function populateAlarmStations() {
+  const select = document.getElementById('alarm-station-select');
+  if (!select) return;
+  
+  const route = appState.liveStatusTimeline || appState.platformFinderRoute || appState.timetableRoute || [];
+  if (route.length > 0) {
+    select.innerHTML = route.map(r => {
+      const name = r.stationName || r.stnName || 'Station';
+      const code = r.stationCode || r.stnCode || '';
+      const depTime = r.departure || r.departureTime || '';
+      return `<option value="${name} (${code})">${name} (${code}) ${depTime ? ' - Dep ' + depTime : ''}</option>`;
+    }).join('');
+  } else {
+    select.innerHTML = `
+      <option value="Kanpur Central (CNB)">Kanpur Central (CNB) - In 45 mins</option>
+      <option value="New Delhi (NDLS)">New Delhi (NDLS) - Completed</option>
+      <option value="Patna Junction (PNBE)">Patna Junction (PNBE) - In 5 hours</option>
+      <option value="Howrah Junction (HWH)">Howrah Junction (HWH) - In 9 hours</option>
+    `;
+  }
+}
+
 function setStationAlarm() {
-  const station = document.getElementById('alarm-station-select').value;
+  const selectEl = document.getElementById('alarm-station-select');
+  if (!selectEl) return;
+  const station = selectEl.value;
   const statusDiv = document.getElementById('alarm-active-status');
+  const targetText = document.getElementById('alarm-status-target');
+  const countdownText = document.getElementById('alarm-countdown');
+  const distanceText = document.getElementById('alarm-distance');
   
   if (statusDiv) statusDiv.classList.remove('hidden');
-  showToast('✓ Alert alarm set successfully!');
+  if (targetText) targetText.textContent = station;
+  
+  showToast('✓ GPS Wake Alarm set successfully!', 'success');
 
-  // Trigger sound alarm chime after 10 seconds (demo trigger)
+  let minsLeft = 45;
+  let kmAway = 38.5;
+  if (countdownText) countdownText.textContent = `${minsLeft} mins`;
+  if (distanceText) distanceText.textContent = `${kmAway.toFixed(1)} km`;
+  
+  const alarmInterval = setInterval(() => {
+    if (minsLeft > 5) {
+      minsLeft -= 5;
+      kmAway -= 4.2;
+      if (countdownText) countdownText.textContent = `${minsLeft} mins`;
+      if (distanceText) distanceText.textContent = `${Math.max(kmAway, 0.5).toFixed(1)} km`;
+    } else {
+      clearInterval(alarmInterval);
+    }
+  }, 15000);
+  
+  appState.alarmIntervalId = alarmInterval;
+
+  // Trigger sound alarm chime after 8 seconds (demo trigger)
   setTimeout(() => {
-    showToast('🚨 ALARM: Train approaching delivery station!', 'success');
+    showToast('🚨 GPS ALERT: Approaching ' + station + '!', 'success');
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const oscillator = audioCtx.createOscillator();
@@ -4226,11 +4497,9 @@ function setStationAlarm() {
       }, 300);
     } catch(e) {}
     
-    alert(`🚨 RailQuick Station Reminder:\nYour train is approaching ${station} in 15 minutes! Please be ready at your seat for delivery.`);
-  }, 10000);
+    alert(`🚨 RailQuick GPS Wake Alarm:\nYour train is approaching ${station} in 15 minutes! Please prepare for your delivery at your seat.`);
+  }, 8000);
 }
-
-// ===== SEARCH OVERLAY HANDLERS =====
 
 function openSearchOverlay() {
   navigateTo('page-search');

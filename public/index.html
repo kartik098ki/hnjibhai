@@ -74,7 +74,7 @@
       }
     }
   </script>
-
+  <link rel="stylesheet" href="styles.css">
   <style>
     /* Base wrapper styling */
     html, body {
@@ -688,6 +688,14 @@ input, textarea, select { font-size: 16px !important; }
 .modal-card { 
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 85vh !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  scrollbar-width: none !important;
+}
+.modal-card::-webkit-scrollbar {
+  display: none !important;
 }
 .modal-overlay:not(.hidden) .modal-card {
   transform: translateY(0);
@@ -1242,38 +1250,37 @@ body { background-color: #10151d; }
 }
 #page-pnr header {
   min-height: auto !important;
-  padding-top: calc(14px + var(--rq-safe-top)) !important;
-  padding-bottom: 14px !important;
+  padding-top: calc(20px + var(--rq-safe-top)) !important;
+  padding-bottom: 32px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
-  background: #ffffff !important;
-  border-bottom: 1px solid #edf2f7 !important;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+  background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.08), transparent 45%), radial-gradient(circle at 10% 90%, rgba(0,0,0,0.12), transparent 55%), linear-gradient(135deg, #0C8346 0%, #065F32 50%, #034523 100%) !important;
+  border-bottom-left-radius: 28px !important;
+  border-bottom-right-radius: 28px !important;
+  box-shadow: 0 8px 24px rgba(0, 77, 60, 0.16) !important;
 }
 #page-pnr header button {
-  width: 34px !important;
-  height: 34px !important;
+  width: 38px !important;
+  height: 38px !important;
   border-radius: 999px !important;
-  background: #f8fafc !important;
-  border: 1px solid #edf2f7 !important;
-  box-shadow: none !important;
+  background: rgba(255,255,255,0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 4px 10px rgba(0,0,0,0.08) !important;
   transition: all 0.2s ease !important;
 }
 #page-pnr header h1 {
   font-family: 'Outfit', sans-serif !important;
-  font-size: 17px !important;
-  line-height: 1.2 !important;
-  letter-spacing: -0.02em !important;
+  font-size: 23px !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.03em !important;
   font-weight: 900 !important;
-  color: #1e293b !important;
+  color: #ffffff !important;
 }
 #page-pnr header p {
-  font-size: 9.5px !important;
-  color: #64748b !important;
-  margin-top: 3px !important;
-  line-height: 1.25 !important;
+  font-size: 11px !important;
+  color: rgba(255,255,255,0.85) !important;
+  margin-top: 5px !important;
+  line-height: 1.35 !important;
 }
 #page-pnr main {
   margin-top: 20px !important;
@@ -1752,8 +1759,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         <!-- Live Status Panel -->
         <div id="panel-live" class="pnr-panel hidden space-y-5">
           <div class="relative">
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-455 text-lg pointer-events-none">search</span>
-            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 pl-11 pr-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Train Name or 5-digit Number" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
+            <input class="w-full bg-slate-50 border border-slate-200/50 rounded-2xl py-3.5 px-4 font-headline font-semibold text-slate-800 focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm shadow-inner" placeholder="Train Name or 5-digit Number" type="text" id="live-train-input" oninput="handleLiveTrainInput(this)" autocomplete="off" />
             <div id="live-train-suggestions" class="absolute left-0 right-0 mt-1.5 bg-white border border-slate-100 rounded-2xl shadow-xl max-h-[160px] overflow-y-auto hidden z-30 divide-y divide-slate-100/50"></div>
           </div>
           
@@ -1826,110 +1832,150 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
       </section>
 
-      <!-- What Our Customers Say Carousel -->
+      <!-- What Our Customers Say Carousel (Premium Marquee) -->
       <section class="mt-8 mb-8 overflow-hidden">
-        <h3 class="text-base font-headline font-black text-center text-[#8B1E1A] uppercase tracking-wide mb-6">
-          What Our Customers Says
+        <h3 class="text-xs font-bold text-on-surface-variant/70 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-lg">reviews</span>
+          What Our Customers Say
         </h3>
-        <div class="relative w-full overflow-hidden">
-          <div id="customer-marquee" class="flex gap-4 overflow-x-auto pb-4 scroll-smooth px-4" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;">
-            <!-- Testimonial 1 -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Laxmi Thapa</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
-              </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                I would like to give 100% assured delicious food guarantee from their side. We loved to have food from RailQuick. Great delivery speed and super clean pack.
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
-            </div>
-            <!-- Testimonial 2 -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Amit Sharma</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
-              </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                Ordering hot dinner on my train journey was never this easy. The food reached exactly on time at Kanpur platform. High recommendation!
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
-            </div>
-            <!-- Testimonial 3 -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Pooja Patel</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
-              </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                Amazing tea and hygiene kit delivered at my berth. The packaging was leakage-proof and the delivery boy was very polite. Will order again!
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
-            </div>
+        <div class="marquee-wrapper relative w-full overflow-hidden">
+          <div id="customer-marquee" class="flex gap-4 overflow-x-auto pb-4 scroll-smooth px-2" style="scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;">
             
-            <!-- Duplicated Testimonial 1 for Seamless Infinite Loop -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
+            <!-- Testimonial 1 -->
+            <div class="shrink-0 w-[290px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-50 text-primary flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-primary/5">
+                      R
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-black text-on-surface">Rohit</h4>
+                      <div class="text-[8px] font-bold text-slate-400">Passenger at Delhi Station</div>
+                    </div>
+                  </div>
+                  <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
+                    <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                  </div>
                 </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Laxmi Thapa</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
+                <p class="text-[10.5px] text-slate-600 leading-relaxed italic mb-4">
+                  "Local vendors often sell low-quality or fake products. I would always prefer ordering from RailQuick because it solves this exact problem."
+                </p>
               </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                I would like to give 100% assured delicious food guarantee from their side. We loved to have food from RailQuick. Great delivery speed and super clean pack.
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
-            </div>
-            <!-- Duplicated Testimonial 2 for Seamless Infinite Loop -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Amit Sharma</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
+              <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
+                <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
+                <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
               </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                Ordering hot dinner on my train journey was never this easy. The food reached exactly on time at Kanpur platform. High recommendation!
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
             </div>
-            <!-- Duplicated Testimonial 3 for Seamless Infinite Loop -->
-            <div class="shrink-0 w-[280px] bg-white border border-gray-100 rounded-3xl p-5 shadow-sm relative flex flex-col justify-between">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-                  <span class="material-symbols-outlined text-lg">person</span>
+
+            <!-- Testimonial 2 -->
+            <div class="shrink-0 w-[290px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-blue-500/5">
+                      S
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-black text-on-surface">Shreya</h4>
+                      <div class="text-[8px] font-bold text-slate-400">Solo Traveler</div>
+                    </div>
+                  </div>
+                  <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
+                    <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                  </div>
                 </div>
-                <div>
-                  <h4 class="text-xs font-bold text-on-surface">Pooja Patel</h4>
-                  <div class="flex text-amber-400 text-[10px] mt-0.5">★ ★ ★ ★ ★</div>
-                </div>
+                <p class="text-[10.5px] text-slate-600 leading-relaxed italic mb-4">
+                  "I'll definitely use this service. No overpricing, no different or fake products — that's what travelers actually need."
+                </p>
               </div>
-              <p class="text-[10px] text-gray-500 leading-relaxed italic mb-4">
-                Amazing tea and hygiene kit delivered at my berth. The packaging was leakage-proof and the delivery boy was very polite. Will order again!
-              </p>
-              <span class="absolute bottom-4 right-5 text-2xl font-serif text-[#E07A5F] leading-none">”</span>
+              <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
+                <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
+                <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+              </div>
             </div>
+
+            <!-- Testimonial 3 -->
+            <div class="shrink-0 w-[290px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-purple-500/5">
+                      V
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-black text-on-surface">Varun</h4>
+                      <div class="text-[8px] font-bold text-slate-400">Regular Commuter</div>
+                    </div>
+                  </div>
+                  <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
+                    <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                  </div>
+                </div>
+                <p class="text-[10.5px] text-slate-600 leading-relaxed italic mb-4">
+                  "Finding trusted products during a train journey is always a problem. RailQuick makes it simple, reliable, and stress-free."
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
+                <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
+                <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+              </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="shrink-0 w-[290px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-amber-500/5">
+                      G
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-black text-on-surface">Gaurav</h4>
+                      <div class="text-[8px] font-bold text-slate-400">Business Traveler</div>
+                    </div>
+                  </div>
+                  <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
+                    <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                  </div>
+                </div>
+                <p class="text-[10.5px] text-slate-600 leading-relaxed italic mb-4">
+                  "Knowing that the products are verified gives confidence. I don't mind ordering if I know I'm getting genuine items."
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
+                <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
+                <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+              </div>
+            </div>
+
+            <!-- Testimonial 5 -->
+            <div class="shrink-0 w-[290px] bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between card-premium">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold font-headline text-sm shadow-inner border border-rose-500/5">
+                      A
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-black text-on-surface">Ayush</h4>
+                      <div class="text-[8px] font-bold text-slate-400">Student Traveler</div>
+                    </div>
+                  </div>
+                  <div class="bg-primary/5 text-primary text-[7px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-primary/10 flex items-center gap-0.5 shrink-0">
+                    <span class="material-symbols-outlined text-[8px]">verified</span> Verified
+                  </div>
+                </div>
+                <p class="text-[10.5px] text-slate-600 leading-relaxed italic mb-4">
+                  "This feels like a service Indian Railways passengers have needed for a long time."
+                </p>
+              </div>
+              <div class="flex justify-between items-center mt-2 pt-2 border-t border-slate-50">
+                <div class="flex text-amber-400 text-[10px] gap-0.5">★ ★ ★ ★ ★</div>
+                <span class="text-3xl font-serif text-primary/10 leading-none select-none">”</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -2998,10 +3044,14 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     </div>
   </div>
 
-  <!-- Toast Notification System -->
-  <div id="toast" class="toast fixed bottom-[72px] left-1/2 -translate-x-1/2 bg-on-surface text-white px-5 py-3 rounded-2xl flex items-center gap-3 z-[100] shadow-floating hidden" style="max-width: 380px;">
-    <span id="toast-icon" class="w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">✓</span>
-    <span id="toast-msg" class="text-xs font-bold tracking-tight">Added to cart!</span>
+  <!-- Toast Notification System (Premium Slide + Fade Alerts) -->
+  <div id="toast" class="toast fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3.5 rounded-2xl flex items-center gap-3 z-[100] shadow-2xl transition-all duration-300 transform translate-y-8 opacity-0 hidden" style="max-width: 380px; min-width: 280px;">
+    <div id="toast-icon-container" class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
+      <span id="toast-icon" class="material-symbols-outlined text-xs font-bold">check</span>
+    </div>
+    <div class="flex-grow">
+      <span id="toast-msg" class="text-xs font-bold tracking-tight block">Added to cart!</span>
+    </div>
   </div>
 
   <!-- Sticky Cart FAB on Shopping Front -->
@@ -3023,23 +3073,48 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   </button>
 
   <!-- Loader Overlay -->
-  <div id="loading-overlay" class="loading-overlay absolute inset-0 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center z-[100] hidden">
-    <div class="loading-spinner w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-    <div class="loading-text text-white text-xs font-bold mt-4 animate-pulse" id="loading-text">Loading...</div>
+  <div id="loading-overlay" class="loading-overlay fixed inset-0 bg-black/60 backdrop-blur-md flex flex-col items-center justify-center z-[100] hidden transition-opacity duration-300">
+    <div class="bg-white/95 border border-slate-100 rounded-3xl p-6 shadow-2xl flex flex-col items-center max-w-[280px] w-full text-center space-y-4 animate-scale-in">
+      <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center relative overflow-hidden">
+        <span class="material-symbols-outlined text-primary text-3xl animate-bounce">train</span>
+        <div class="absolute bottom-1 left-2 right-2 h-1 bg-primary/20 rounded-full overflow-hidden">
+          <div class="h-full w-1/2 bg-primary rounded-full animate-pulse"></div>
+        </div>
+      </div>
+      <div class="w-full px-4">
+        <div class="railway-track-loader"></div>
+      </div>
+      <div class="space-y-1">
+        <div class="loading-text text-xs font-black text-on-surface" id="loading-text">Fetching Status...</div>
+        <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Please hold on</div>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== PLATFORM FINDER MODAL ==================== -->
   <div id="modal-util-platform" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('platform')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('platform')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('platform')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">directions_railway</span>
         Platform Finder
       </h3>
-      <p class="text-[10px] text-gray-500">Search by train number to find scheduled platforms at major stations.</p>
+      <p class="text-[10px] text-gray-500 leading-normal">Search by train number to find scheduled and real-time platforms at upcoming halt stations.</p>
+      
+      <!-- Suggestion chips -->
+      <div class="space-y-1.5">
+        <span class="text-[8px] font-black uppercase text-slate-400 tracking-wider">Popular Trains</span>
+        <div class="flex gap-1.5 flex-wrap">
+          <button onclick="prefillPlatformSearch('12002')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12002 Shatabdi</button>
+          <button onclick="prefillPlatformSearch('12301')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12301 Rajdhani</button>
+          <button onclick="prefillPlatformSearch('12259')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12259 Duronto</button>
+        </div>
+      </div>
+
       <div class="flex gap-2">
-        <input type="text" id="platform-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary" placeholder="Enter Train Number (e.g. 12002)" />
-        <button onclick="runPlatformFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-all">Search</button>
+        <input type="text" id="platform-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12002)" />
+        <button onclick="runPlatformFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">Search</button>
       </div>
       <div id="platform-results" class="space-y-2 mt-2 hidden">
         <!-- Results injected here -->
@@ -3047,17 +3122,16 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     </div>
   </div>
 
-
-
   <!-- ==================== REFUND CALCULATOR MODAL ==================== -->
   <div id="modal-util-refund" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('refund')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('refund')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('refund')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">currency_rupee</span>
         Cancellation Refund Estimator
       </h3>
-      <p class="text-[10px] text-gray-500">Estimate refunds for standard ticket cancellations based on IRCTC cancellation rules.</p>
+      <p class="text-[10px] text-gray-500 leading-normal">Estimate refunds for standard ticket cancellations based on official IRCTC cancellation rules.</p>
       
       <div class="grid grid-cols-2 gap-3 text-xs">
         <div class="flex flex-col gap-1">
@@ -3071,7 +3145,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
         <div class="flex flex-col gap-1">
           <label class="font-bold text-gray-500">Paid Ticket Fare</label>
-          <input type="number" id="refund-fare-input" class="bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-3 py-2.5" placeholder="₹ Amount" value="650" />
+          <input type="number" id="refund-fare-input" class="bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-3 py-2.5 font-mono font-bold" placeholder="₹ Amount" value="650" />
         </div>
       </div>
 
@@ -3081,30 +3155,42 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
           <option value="48h">More than 48 hours before train departure</option>
           <option value="12h">Between 12 to 48 hours before departure</option>
           <option value="4h">Between 4 to 12 hours before departure</option>
-          <option value="chart">Less than 4 hours / Chart prepared</option>
+          <option value="chart">Less than 4 hours / Chart prepared / RAC / Waitlist</option>
         </select>
       </div>
 
-      <button onclick="calculateRefund()" class="w-full bg-primary text-white py-3.5 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-95 transition-all uppercase tracking-wider text-xs shadow-md">Calculate Refund</button>
+      <button onclick="calculateRefund()" class="w-full bg-primary text-white py-3.5 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-95 transition-spring uppercase tracking-wider text-xs shadow-md btn-tactile">Calculate Refund</button>
 
       <div id="refund-results" class="bg-slate-50 border border-slate-100 rounded-2xl p-4 hidden">
-        <!-- Result breakdown injected here -->
+        <!-- Result breakdown invoice receipt injected here -->
       </div>
     </div>
   </div>
 
   <!-- ==================== TIMETABLE MODAL ==================== -->
   <div id="modal-util-timetable" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('timetable')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('timetable')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('timetable')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">schedule</span>
         Train Timetable &amp; Schedule
       </h3>
-      <p class="text-[10px] text-gray-500">Enter a train number to view the scheduled station arrival and halt stops.</p>
+      <p class="text-[10px] text-gray-500 leading-normal">Enter a train number to view the scheduled station arrival, halt, and distance milestones.</p>
+      
+      <!-- Suggestion chips -->
+      <div class="space-y-1.5">
+        <span class="text-[8px] font-black uppercase text-slate-400 tracking-wider">Popular Trains</span>
+        <div class="flex gap-1.5 flex-wrap">
+          <button onclick="prefillTimetableSearch('12002')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12002 Shatabdi</button>
+          <button onclick="prefillTimetableSearch('12301')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12301 Rajdhani</button>
+          <button onclick="prefillTimetableSearch('12259')" class="bg-slate-50 border border-slate-200/50 hover:bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-[9px] font-bold btn-tactile">12259 Duronto</button>
+        </div>
+      </div>
+
       <div class="flex gap-2">
-        <input type="text" id="timetable-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary" placeholder="Enter Train Number (e.g. 12301)" />
-        <button onclick="runTimetableFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-all">View Schedule</button>
+        <input type="text" id="timetable-train-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-primary transition-spring" placeholder="Enter Train Number (e.g. 12301)" />
+        <button onclick="runTimetableFinder()" class="bg-primary text-white text-xs font-bold px-5 py-3 rounded-xl hover:bg-primary-light transition-spring btn-tactile">View Schedule</button>
       </div>
       <div id="timetable-results" class="space-y-1 mt-2 max-h-[220px] overflow-y-auto pr-1 hidden">
         <!-- Timetable timeline stops -->
@@ -3114,8 +3200,9 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== HELPLINE MODAL ==================== -->
   <div id="modal-util-helpline" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('helpline')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('helpline')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('helpline')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">call</span>
         Emergency &amp; General Helplines
@@ -3125,35 +3212,35 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       <div class="space-y-3">
         <div class="flex justify-between items-center bg-[#F4F6F5] p-3.5 rounded-2xl border border-slate-100">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center"><span class="material-symbols-outlined text-lg">emergency</span></div>
+            <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center shadow-inner"><span class="material-symbols-outlined text-lg">emergency</span></div>
             <div>
               <div class="text-xs font-bold text-on-surface">Integrated Rail Helpline</div>
               <div class="text-[9px] text-slate-500">Security, medical, catering, complaints</div>
             </div>
           </div>
-          <button onclick="window.location.href='tel:139'; showToast('Dialing 139...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50">Dial 139</button>
+          <button onclick="window.location.href='tel:139'; showToast('Dialing 139...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50 btn-tactile">Dial 139</button>
         </div>
 
         <div class="flex justify-between items-center bg-[#F4F6F5] p-3.5 rounded-2xl border border-slate-100">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center"><span class="material-symbols-outlined text-lg">clean_hands</span></div>
+            <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner"><span class="material-symbols-outlined text-lg">clean_hands</span></div>
             <div>
               <div class="text-xs font-bold text-on-surface">Coach Cleaning Support</div>
               <div class="text-[9px] text-slate-500">Request sweeping/washroom sanitation</div>
             </div>
           </div>
-          <button onclick="window.location.href='sms:58888?body=CLEAN%20' + (appState.pnrData ? appState.pnrData.pnrNumber : 'PNR'); showToast('Sending Clean SMS to 58888...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50">SMS Clean</button>
+          <button onclick="window.location.href='sms:58888?body=CLEAN%20' + (appState.pnrData ? appState.pnrData.pnrNumber : 'PNR'); showToast('Sending Clean SMS to 58888...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50 btn-tactile">SMS Clean</button>
         </div>
 
         <div class="flex justify-between items-center bg-[#F4F6F5] p-3.5 rounded-2xl border border-slate-100">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center"><span class="material-symbols-outlined text-lg">female</span></div>
+            <div class="w-9 h-9 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center shadow-inner"><span class="material-symbols-outlined text-lg">female</span></div>
             <div>
               <div class="text-xs font-bold text-on-surface">Women Safety Helpline</div>
               <div class="text-[9px] text-slate-500">Immediate GRP escort assistance</div>
             </div>
           </div>
-          <button onclick="window.location.href='tel:182'; showToast('Dialing 182...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50">Dial 182</button>
+          <button onclick="window.location.href='tel:182'; showToast('Dialing 182...', 'info')" class="bg-white border border-outline-variant px-3 py-1.5 rounded-xl font-bold text-xs text-primary shadow-sm hover:bg-slate-50 btn-tactile">Dial 182</button>
         </div>
       </div>
     </div>
@@ -3161,27 +3248,35 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== SEAT MAP MODAL ==================== -->
   <div id="modal-util-seatmap" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('seatmap')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('seatmap')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('seatmap')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">airline_seat_recline_extra</span>
         Coach Seat Map Layout
       </h3>
+      
+      <!-- Coach Type Pill Switcher -->
       <div class="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-        <button onclick="selectCoachLayout('SL')" class="coach-tab-btn active bg-primary text-white px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0">Sleeper (SL)</button>
-        <button onclick="selectCoachLayout('3AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0">3-Tier AC (3AC)</button>
-        <button onclick="selectCoachLayout('2AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0">2-Tier AC (2AC)</button>
-        <button onclick="selectCoachLayout('1AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0">1st Class (1AC)</button>
+        <button onclick="selectCoachLayout('SL')" class="coach-tab-btn active bg-primary text-white px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0 btn-tactile">Sleeper (SL)</button>
+        <button onclick="selectCoachLayout('3AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0 btn-tactile">3-Tier AC (3AC)</button>
+        <button onclick="selectCoachLayout('2AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0 btn-tactile">2-Tier AC (2AC)</button>
+        <button onclick="selectCoachLayout('1AC')" class="coach-tab-btn bg-gray-100 text-gray-500 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase shrink-0 btn-tactile">1st Class (1AC)</button>
       </div>
+
       <!-- Interactive Seat Finder -->
       <div class="flex gap-2">
-        <input type="number" id="seatmap-num-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-primary" placeholder="Enter Seat Number (1-72)" min="1" max="72" oninput="findSeatPosition()" />
-        <button onclick="findSeatPosition()" class="bg-primary text-white text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-primary-light transition-all">Check</button>
+        <input type="number" id="seatmap-num-input" class="flex-1 bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-primary transition-spring font-mono font-bold" placeholder="Enter Seat Number (1-72)" min="1" max="72" oninput="findSeatPosition()" />
+        <button onclick="findSeatPosition()" class="bg-primary text-white text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-primary-light transition-spring btn-tactile">Check</button>
       </div>
-      <div id="seatmap-layout-container" class="border border-dashed border-gray-200 rounded-2xl p-4 bg-[#F8F9FA] min-h-[160px] flex flex-col justify-center">
-        <!-- Render seat grid dynamically -->
+
+      <!-- Coach Blueprint visualization container -->
+      <div id="seatmap-layout-container" class="border border-slate-100 rounded-3xl p-4 bg-[#F8F9FA] min-h-[220px] flex flex-col justify-center transition-all duration-300">
+        <!-- Render seat grid blueprint dynamically inside app.js -->
       </div>
-      <div id="selected-seat-info" class="text-center text-[10px] font-bold text-primary bg-primary/5 py-2 rounded-xl hidden">
+
+      <!-- Selected Seat Info Card -->
+      <div id="selected-seat-info" class="text-center text-[10.5px] font-black text-primary bg-primary/5 py-3 rounded-2xl border border-primary/10 hidden animate-scale-in">
         Select a seat to view berth position details
       </div>
     </div>
@@ -3189,30 +3284,52 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== DELIVERY STATION ALARM MODAL ==================== -->
   <div id="modal-util-alarm" class="modal-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-end justify-center hidden" onclick="closeUtilModal('alarm')">
-    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 animate-slide-up" onclick="event.stopPropagation()">
-      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold" onclick="closeUtilModal('alarm')">✕</button>
+    <div class="bg-white rounded-t-[2.5rem] w-full max-w-[412px] p-6 pb-8 shadow-2xl relative border-t border-gray-100 flex flex-col space-y-4 modal-card" onclick="event.stopPropagation()">
+      <div class="w-12 h-1 bg-slate-200/80 rounded-full mx-auto mb-1 shrink-0"></div>
+      <button class="w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-400 absolute top-4 right-4 text-sm font-bold btn-tactile" onclick="closeUtilModal('alarm')">✕</button>
       <h3 class="text-base font-headline font-black text-on-surface flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-xl">notifications_active</span>
         Meal Station Alarm Reminder
       </h3>
-      <p class="text-[10px] text-gray-500">Alerts you 15 minutes before the train reaches your delivery station so you're ready at your seat.</p>
+      <p class="text-[10px] text-gray-500 leading-normal">Alerts you 15 minutes before the train reaches your delivery station so you're ready at your seat.</p>
       
       <div class="flex flex-col gap-1.5 text-xs">
         <label class="font-bold text-gray-500">Select Station Alert Target</label>
-        <select id="alarm-station-select" class="bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 focus:outline-none focus:border-primary w-full">
+        <select id="alarm-station-select" class="bg-[#F4F6F5]/70 border border-outline-variant rounded-xl px-4 py-3 focus:outline-none focus:border-primary w-full font-bold text-slate-800">
           <option value="Kanpur Central (CNB)">Kanpur Central (CNB) - In 45 mins</option>
           <option value="New Delhi (NDLS)">New Delhi (NDLS) - Completed</option>
           <option value="Patna Junction (PNBE)">Patna Junction (PNBE) - In 5 hours</option>
         </select>
       </div>
 
-      <button onclick="setStationAlarm()" class="w-full bg-primary text-white py-3.5 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-95 transition-all uppercase tracking-wider text-xs shadow-md">Schedule Alert</button>
+      <button onclick="setStationAlarm()" class="w-full bg-primary text-white py-3.5 rounded-xl font-headline font-bold hover:bg-primary-light active:scale-95 transition-spring uppercase tracking-wider text-xs shadow-md btn-tactile">Schedule Alert</button>
 
-      <div id="alarm-active-status" class="bg-emerald-50 border border-emerald-100/50 rounded-2xl p-4 flex items-center gap-3 hidden">
-        <span class="material-symbols-outlined text-emerald-600 text-xl animate-bounce">alarm_on</span>
-        <div>
-          <div class="text-xs font-bold text-emerald-900">Station alert scheduled!</div>
-          <div class="text-[9px] text-emerald-600" id="alarm-status-desc">Reminding 15 mins before target arrival.</div>
+      <!-- Alarm Active Status Card with GPS pulse tracking -->
+      <div id="alarm-active-status" class="bg-slate-50 border border-slate-100 rounded-3xl p-5 relative overflow-hidden hidden transition-all duration-300">
+        <!-- Pulse Radar Animation -->
+        <div class="absolute right-6 top-1/2 -translate-y-1/2 w-16 h-16 flex items-center justify-center">
+          <div class="gps-pulse-circle w-12 h-12"></div>
+          <div class="gps-pulse-circle gps-pulse-circle-2 w-12 h-12"></div>
+          <div class="gps-pulse-circle gps-pulse-circle-3 w-12 h-12"></div>
+          <span class="material-symbols-outlined text-primary text-xl z-10 animate-pulse">radar</span>
+        </div>
+        <div class="relative z-10 space-y-2 max-w-[240px]">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span class="text-[9px] font-black uppercase text-emerald-600 tracking-wider">GPS Radar Tracking Active</span>
+          </div>
+          <h4 class="text-xs font-black text-on-surface truncate" id="alarm-status-target">Kanpur Central (CNB)</h4>
+          <p class="text-[9.5px] text-slate-500 leading-normal" id="alarm-status-desc">Alerting you 15 minutes before arrival. Keep your volume high.</p>
+          <div class="flex items-center gap-4 mt-2">
+            <div>
+              <div class="text-[9px] text-slate-400 font-bold uppercase">Estimated Time</div>
+              <div class="text-xs font-black text-on-surface font-mono" id="alarm-countdown">-- mins remaining</div>
+            </div>
+            <div>
+              <div class="text-[9px] text-slate-400 font-bold uppercase">Distance</div>
+              <div class="text-xs font-black text-on-surface font-mono" id="alarm-distance">-- km away</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
