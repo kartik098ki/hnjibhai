@@ -1,0 +1,103 @@
+/* =====================================================
+   RAILQUICK — Premium UI/UX Custom Style Overrides
+   ===================================================== */
+
+/* Hide scrollbars across the app */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+}
+
+/* Custom interactive active states */
+.active-nav-btn {
+  color: #0FA968 !important;
+}
+
+.active-nav-btn .nav-icon {
+  background-color: rgba(15, 169, 104, 0.1);
+  color: #0FA968 !important;
+}
+
+/* Custom fade effects */
+.fade-in-item {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Premium Tab Switcher Styles */
+#pnr-tabs-container {
+  background-color: #f1f5f9 !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  border-radius: 9999px !important;
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.04) !important;
+  padding: 6px !important;
+  height: 52px !important; /* Fixed elegant height */
+}
+#pnr-tab-indicator {
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  background: linear-gradient(135deg, #0FA968 0%, #007858 100%) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 14px rgba(15, 169, 104, 0.35) !important;
+}
+.shadow-floating {
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08), 0 -2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Scrollable Timeline to Prevent Card Stretching */
+.live-station-list {
+  max-height: 380px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 6px !important;
+}
+
+/* Custom Scrollbar for Timeline */
+.live-station-list::-webkit-scrollbar {
+  width: 4px !important;
+  display: block !important;
+}
+.live-station-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border-radius: 999px !important;
+}
+.live-station-list::-webkit-scrollbar-thumb {
+  background: rgba(15, 169, 104, 0.18) !important;
+  border-radius: 999px !important;
+}
+.live-station-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 169, 104, 0.35) !important;
+}
+
+/* Blur effect on past and far-upcoming nodes by default */
+.live-station-node.station-past-blur,
+.live-station-node.station-upcoming-blur {
+  opacity: 0.32 !important;
+  filter: blur(2px) !important;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+}
+
+/* Unblur and reveal when clicked */
+#timeline-list.reveal-past .station-past-blur,
+#timeline-list.reveal-upcoming .station-upcoming-blur {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Hide scrollbar on testimonials marquee */
+#customer-marquee {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;  /* IE and Edge */
+}
+#customer-marquee::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
