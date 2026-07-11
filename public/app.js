@@ -1058,30 +1058,104 @@ function toggleDashboardTimeline() {
 }
 
 function renderPNRResult(d) {
-  renderJourneyDashboard('pnr-results', d, appState.pnrLiveData);
+  const paxHTML = (d.passengerList || []).map(p => `<div class="flex justify-between items-center bg-[#F8F9FA] border border-outline-variant/60 rounded-xl px-4 py-3 text-xs"><span class="font-bold text-on-surface">${p.serialNumber}</span><span class="text-primary font-bold">${p.currentStatus}</span></div>`).join('');
+  const isPrepared = (d.chartPrepared || '').toLowerCase().includes('prepared');
+  const chartBadge = isPrepared ? `<span class="bg-emerald-50 text-primary border border-emerald-100 text-[10px] font-bold px-2.5 py-1 rounded-lg">Chart Prepared</span>` : `<span class="bg-red-50 text-red-600 border border-red-100 text-[10px] font-bold px-2.5 py-1 rounded-lg">Chart Not Prepared</span>`;
+  
+  document.getElementById('pnr-results').innerHTML = `<div class="bg-white border border-outline-variant/60 rounded-[2rem] overflow-hidden shadow-premium"><div class="gradient-header p-5 text-white flex justify-between items-start"><div><h3 class="font-serif-display text-xl text-white font-bold">${d.trainName || 'Train'}</h3><p class="font-mono text-[10px] text-white/70 mt-1">Train #${d.trainNumber || '—'}</p></div><div><p class="text-[9px] font-bold text-white/50 uppercase tracking-widest text-right">Journey Date</p><p class="text-xs font-bold text-secondary mt-0.5 text-right">${d.dateOfJourney || '—'}</p></div></div><div class="p-5 space-y-4"><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">PNR Number</span><strong class="text-on-surface font-mono font-bold">${d.pnrNumber}</strong></div><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Class / Category</span><strong class="text-on-surface">${d.reservationClass || '—'}</strong></div><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Chart Status</span>${chartBadge}</div><div class="border-t border-dashed border-gray-100 pt-3"><div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Passenger Seat Allocations</div><div class="space-y-2">${paxHTML}</div></div>${d.fare ? `<div class="border-t border-gray-100 pt-3 flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Total Ticket Fare</span><strong class="text-secondary font-black text-sm">₹${d.fare}</strong></div>` : ''}</div></div>`;
+  document.getElementById('pnr-results').classList.remove('hidden');
 }
 
 function renderUnconfirmedPNRResult(d) {
-  renderJourneyDashboard('pnr-results', d, appState.pnrLiveData);
-  
-  const container = document.getElementById('pnr-results');
-  if (container) {
-    const warningHTML = `
-      <div class="bg-rose-50 border border-rose-100 rounded-3xl p-4 flex gap-3.5 relative overflow-hidden mb-5 animate-fade-in">
-        <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0 shadow-sm">
-          <span class="material-symbols-outlined text-rose-600 text-xl font-bold">warning</span>
+  const paxHTML = (d.passengerList || []).map(p => `
+    <div class="flex justify-between items-center bg-[#FFF1F2] border border-rose-100 rounded-2xl px-4 py-3.5 shadow-sm">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-rose-500 text-base">person</span>
+        <span class="font-bold text-slate-800 text-xs">${p.serialNumber}</span>
+      </div>
+      <div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-lg">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+        <span class="text-rose-600 font-extrabold font-mono text-[10px] uppercase tracking-wider">${p.currentStatus}</span>
+      </div>
+    </div>
+  `).join('');
+
+  const routeHTML = `
+    <div class="bg-slate-50 border border-slate-100 rounded-3xl p-4 shadow-inner">
+      <div class="flex justify-between items-center text-xs text-slate-650 font-bold mb-3 pb-3 border-b border-dashed border-slate-205">
+        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">directions_railway</span>Route Summary</span>
+        <span class="font-mono text-slate-800">${d.pnrNumber}</span>
+      </div>
+      <div class="flex justify-between items-center text-slate-850">
+        <div class="flex flex-col">
+          <span class="text-[9px] text-slate-400 uppercase font-black tracking-wider">From</span>
+          <span class="text-xs font-black truncate max-w-[120px] mt-0.5">${d.source ? d.source.split('(')[0].trim() : '—'}</span>
+          <span class="text-[9px] font-mono font-bold text-slate-400 mt-0.5">${d.source && d.source.includes('(') ? d.source.split('(')[1].replace(')', '') : ''}</span>
         </div>
-        <div>
-          <h4 class="text-xs font-black text-rose-950">Seat-side delivery unavailable</h4>
-          <p class="text-[10px] text-rose-705 font-semibold leading-relaxed mt-1">We can only deliver essentials directly to your seat for confirmed tickets (CNF/RAC). Waitlisted bookings do not have seat assignments yet.</p>
+        <div class="flex flex-col items-center px-4 flex-1">
+          <div class="w-full h-[1px] bg-slate-200 relative flex items-center justify-center">
+            <span class="material-symbols-outlined absolute text-[14px] text-slate-400 bg-slate-50 px-1">arrow_forward</span>
+          </div>
+        </div>
+        <div class="flex flex-col text-right">
+          <span class="text-[9px] text-slate-400 uppercase font-black tracking-wider">To</span>
+          <span class="text-xs font-black truncate max-w-[120px] mt-0.5">${d.destination ? d.destination.split('(')[0].trim() : '—'}</span>
+          <span class="text-[9px] font-mono font-bold text-slate-400 mt-0.5">${d.destination && d.destination.includes('(') ? d.destination.split('(')[1].replace(')', '') : ''}</span>
         </div>
       </div>
-    `;
-    container.innerHTML = warningHTML + container.innerHTML;
-  }
-  
+    </div>
+  `;
+
+  document.getElementById('pnr-results').innerHTML = `
+    <div class="bg-white border border-rose-200 rounded-[2.5rem] overflow-hidden shadow-premium p-1 relative animate-scale-in">
+      <div class="absolute -top-16 -right-16 w-36 h-36 bg-rose-500/5 blur-2xl rounded-full"></div>
+      
+      <!-- Premium Warning Header Banner -->
+      <div class="bg-gradient-to-tr from-rose-700 via-rose-600 to-pink-600 rounded-[2.25rem] p-5 text-white flex justify-between items-start shadow-[0_8px_20px_rgba(225,29,72,0.15)] relative overflow-hidden">
+        <div class="absolute inset-0 bg-glass opacity-10 pointer-events-none"></div>
+        <div>
+          <h3 class="font-serif-display text-lg text-white font-extrabold">${d.trainName || 'Train'}</h3>
+          <p class="font-mono text-[9px] text-rose-105 uppercase tracking-widest mt-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">train</span> Train #${d.trainNumber || '—'}
+          </p>
+        </div>
+        <div class="bg-white/20 border border-white/10 px-3 py-1 rounded-xl text-[9px] font-black uppercase tracking-wider shadow-inner">
+          WL / RAC Status
+        </div>
+      </div>
+      
+      <div class="p-5 space-y-5">
+        <!-- Warning Callout Box -->
+        <div class="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 flex gap-3.5 relative overflow-hidden">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0 shadow-sm">
+            <span class="material-symbols-outlined text-rose-600 text-xl font-bold">warning</span>
+          </div>
+          <div>
+            <h4 class="text-xs font-black text-rose-955">Seat-side delivery unavailable</h4>
+            <p class="text-[10px] text-rose-700 font-semibold leading-relaxed mt-1">We can only deliver essentials directly to your seat for confirmed tickets (CNF/RAC). Waitlisted bookings do not have seat assignments.</p>
+          </div>
+        </div>
+
+        ${routeHTML}
+
+        <!-- Passenger Allocations -->
+        <div class="space-y-2.5 pt-1">
+          <div class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">assignment_ind</span> Passenger Current Booking Details
+          </div>
+          ${paxHTML}
+        </div>
+        
+        <!-- Helpful suggestion footer -->
+        <div class="text-center pt-2 border-t border-slate-100 text-[10px] text-slate-500 font-semibold leading-relaxed px-3">
+          If your booking changes to CNF/RAC later, please search your PNR again to proceed with ordering.
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('pnr-results').classList.remove('hidden');
   setTimeout(() => {
-    container?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('pnr-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
 }
 
