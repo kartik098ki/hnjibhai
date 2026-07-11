@@ -1708,7 +1708,10 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-white/5 blur-2xl rounded-full -ml-16 -mb-16 pointer-events-none"></div>
       
       <!-- Action Bar -->
-      <div class="flex items-start relative z-10">
+      <div class="flex items-start gap-4 relative z-10">
+        <button id="pnr-back-btn" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/15 active:scale-90 transition-all border border-white/20 hover:bg-white/20 mt-0.5" style="display: none;">
+          <span class="material-symbols-outlined text-white text-base">arrow_back</span>
+        </button>
         <div class="flex flex-col">
           <span class="text-[7.5px] font-black text-white/55 uppercase tracking-[0.25em] leading-none mb-1.5">RailQuick Services</span>
           <h1 class="text-2xl font-black text-white tracking-tight leading-none mb-2">PNR &amp; Train Tracking</h1>
@@ -1753,7 +1756,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             <div class="w-full border-t border-slate-100/80"></div>
             <span class="absolute bg-white px-3 text-[9px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none select-none">Or</span>
           </div>
-          <button type="button" class="w-full bg-slate-50 border border-slate-200/50 text-slate-700 py-3.5 rounded-2xl font-headline font-black hover:bg-slate-100 active:scale-[0.97] transition-all text-xs flex justify-center items-center gap-2 shadow-sm" onclick="navigateTo('page-shop')">
+          <button type="button" class="w-full bg-slate-50 border border-slate-200/50 text-slate-700 py-3.5 rounded-2xl font-headline font-black hover:bg-slate-100 active:scale-[0.97] transition-all text-xs flex justify-center items-center gap-2 shadow-sm" onclick="completeOnboarding()">
             <span class="material-symbols-outlined text-sm">search</span>
             Browse Travel Store
           </button>

@@ -1184,31 +1184,38 @@ function initPnrPage() {
     }
   }
 
-  if (headerTitle) headerTitle.textContent = 'PNR & Train Status';
-  if (headerDesc) headerDesc.textContent = 'Live updates • Hassle-free journey';
-
-  if (appState.isPnrConfirmed && appState.pnrData) {
+  if (appState.hasOnboarded) {
+    // Inside the app: Make it a dedicated Live Status Tracking app only
+    if (headerTitle) headerTitle.textContent = 'Live Train Tracker';
+    if (headerDesc) headerDesc.textContent = 'Track train schedules and real-time halts';
     if (tabHeaders) tabHeaders.style.display = 'none';
-    if (tabPnrBtn) tabPnrBtn.style.display = 'none';
-    if (panelPnr) panelPnr.style.display = '';
-    if (panelLive) panelLive.style.display = '';
     
+    // Switch internally to live status tab and hide the PNR panel entirely
     switchPNRTab('live');
+    if (panelPnr) panelPnr.style.display = 'none';
+    if (panelLive) panelLive.style.display = '';
 
     const liveTrainInput = document.getElementById('live-train-input');
-    if (liveTrainInput && appState.pnrData.trainNumber) {
-      liveTrainInput.value = appState.pnrData.trainNumber;
+    const trainNo = (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') 
+      ? appState.pnrData.trainNumber 
+      : (appState.pnrLiveData?.trainNo || appState.pnrLiveData?.trainNumber || '');
+    if (liveTrainInput && trainNo && !liveTrainInput.value) {
+      liveTrainInput.value = trainNo;
     }
     
     if (resultsEl) {
-      resultsEl.classList.remove('hidden');
       if (appState.pnrLiveData) {
-        renderLiveTrainResult(appState.pnrLiveData, appState.pnrData.trainNumber);
+        resultsEl.classList.remove('hidden');
+        renderLiveTrainResult(appState.pnrLiveData, trainNo);
       } else {
-        fetchLiveStatusForPnrPage(appState.pnrData.trainNumber);
+        resultsEl.classList.add('hidden');
+        resultsEl.innerHTML = '';
       }
     }
   } else {
+    // Onboarding Mode: Normal PNR / Live Status switcher tabs
+    if (headerTitle) headerTitle.textContent = 'PNR & Train Status';
+    if (headerDesc) headerDesc.textContent = 'Live updates • Hassle-free journey';
     if (tabHeaders) tabHeaders.style.display = 'flex';
     if (tabPnrBtn) tabPnrBtn.style.display = '';
     if (panelPnr) panelPnr.style.display = '';
@@ -1216,7 +1223,6 @@ function initPnrPage() {
     
     if (appState.pnrLiveData) {
       switchPNRTab('live');
-      
       const liveTrainInput = document.getElementById('live-train-input');
       const trainNo = (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') 
         ? appState.pnrData.trainNumber 
@@ -1224,7 +1230,6 @@ function initPnrPage() {
       if (liveTrainInput && trainNo) {
         liveTrainInput.value = trainNo;
       }
-      
       if (resultsEl) {
         resultsEl.classList.remove('hidden');
         renderLiveTrainResult(appState.pnrLiveData, trainNo);
@@ -3671,6 +3676,10 @@ function updateBottomNav(pageId) {
   // Bottom navigation visibility mapping
   const navPages = ['page-shop', 'page-pnr', 'page-live-tracking', 'page-orders', 'page-account', 'page-category-view', 'page-search'];
   let canShowNav = navPages.includes(pageId);
+  
+  if (pageId === 'page-pnr' && !appState.hasOnboarded) {
+    canShowNav = false;
+  }
   
   if (canShowNav) {
     nav.classList.remove('hidden-nav');
