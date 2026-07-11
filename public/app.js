@@ -309,10 +309,11 @@ async function checkPNRStatus() {
     }
     if (!liveData && mapped.trainNumber) liveData = getMockLiveStatus(mapped.trainNumber);
     
+    appState.pnrData = mapped; 
+    appState.pnrLiveData = liveData; 
+    
     const isConfirmed = isTicketConfirmed(mapped);
     if (isConfirmed) {
-      appState.pnrData = mapped; 
-      appState.pnrLiveData = liveData; 
       appState.isPnrConfirmed = true;
       appState.hasOnboarded = true;
       saveState();
@@ -320,26 +321,25 @@ async function checkPNRStatus() {
       renderPNRResult(mapped); 
       showContinueBar(mapped); 
       updateShopTopbar(); 
-      showToast('Ticket is confirmed! Entering app...', 'success');
-      setTimeout(() => navigateTo('page-shop'), 1500);
+      showToast('✓ PNR status verified! Live dashboard loaded.', 'success');
     } else {
-      appState.pnrData = null;
-      appState.pnrLiveData = null;
       appState.isPnrConfirmed = false;
+      appState.hasOnboarded = true;
       saveState();
       hideLoading();
       renderUnconfirmedPNRResult(mapped);
-      showToast('Your ticket is not confirmed!', 'error');
+      showToast('✓ Waitlisted PNR verified! Live dashboard loaded.', 'warning');
     }
   } catch (err) {
     console.warn('API Offline, running fallback mock:', err.message);
     const mock = getMockPNRData(pnr);
     const liveData = getMockLiveStatus(mock.trainNumber);
     
+    appState.pnrData = mock; 
+    appState.pnrLiveData = liveData; 
+    
     const isConfirmed = isTicketConfirmed(mock);
     if (isConfirmed) {
-      appState.pnrData = mock; 
-      appState.pnrLiveData = liveData; 
       appState.isPnrConfirmed = true;
       appState.hasOnboarded = true;
       saveState();
@@ -347,16 +347,14 @@ async function checkPNRStatus() {
       renderPNRResult(mock); 
       showContinueBar(mock); 
       updateShopTopbar(); 
-      showToast('Mock ticket confirmed! Entering app...', 'success');
-      setTimeout(() => navigateTo('page-shop'), 1500);
+      showToast('✓ Simulated PNR verified! Live dashboard loaded.', 'success');
     } else {
-      appState.pnrData = null;
-      appState.pnrLiveData = null;
       appState.isPnrConfirmed = false;
+      appState.hasOnboarded = true;
       saveState();
       hideLoading();
       renderUnconfirmedPNRResult(mock);
-      showToast('Your ticket is not confirmed!', 'error');
+      showToast('✓ Simulated Waitlisted PNR loaded.', 'warning');
     }
   }
 }
@@ -735,105 +733,343 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
     </div>`;
 }
 
-function renderPNRResult(d) {
-  const paxHTML = (d.passengerList || []).map(p => `<div class="flex justify-between items-center bg-[#F8F9FA] border border-outline-variant/60 rounded-xl px-4 py-3 text-xs"><span class="font-bold text-on-surface">${p.serialNumber}</span><span class="text-primary font-bold">${p.currentStatus}</span></div>`).join('');
-  const isPrepared = (d.chartPrepared || '').toLowerCase().includes('prepared');
-  const chartBadge = isPrepared ? `<span class="bg-emerald-50 text-primary border border-emerald-100 text-[10px] font-bold px-2.5 py-1 rounded-lg">Chart Prepared</span>` : `<span class="bg-red-50 text-red-600 border border-red-100 text-[10px] font-bold px-2.5 py-1 rounded-lg">Chart Not Prepared</span>`;
+function renderJourneyDashboard(containerId, pnrData, liveData) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const trainNo = pnrData?.trainNumber || liveData?.trainNo || '—';
+  const trainName = pnrData?.trainName || liveData?.trainName || 'Express Train';
+  const statusNote = liveData?.statusNote || 'Running';
+  const isDelayed = statusNote.toLowerCase().includes('late') || statusNote.toLowerCase().includes('delay');
   
-  document.getElementById('pnr-results').innerHTML = `<div class="bg-white border border-outline-variant/60 rounded-[2rem] overflow-hidden shadow-premium"><div class="gradient-header p-5 text-white flex justify-between items-start"><div><h3 class="font-serif-display text-xl text-white font-bold">${d.trainName || 'Train'}</h3><p class="font-mono text-[10px] text-white/70 mt-1">Train #${d.trainNumber || '—'}</p></div><div><p class="text-[9px] font-bold text-white/50 uppercase tracking-widest text-right">Journey Date</p><p class="text-xs font-bold text-secondary mt-0.5 text-right">${d.dateOfJourney || '—'}</p></div></div><div class="p-5 space-y-4"><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">PNR Number</span><strong class="text-on-surface font-mono font-bold">${d.pnrNumber}</strong></div><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Class / Category</span><strong class="text-on-surface">${d.reservationClass || '—'}</strong></div><div class="flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Chart Status</span>${chartBadge}</div><div class="border-t border-dashed border-gray-100 pt-3"><div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Passenger Seat Allocations</div><div class="space-y-2">${paxHTML}</div></div>${d.fare ? `<div class="border-t border-gray-100 pt-3 flex justify-between items-center text-xs"><span class="text-gray-400 font-medium">Total Ticket Fare</span><strong class="text-secondary font-black text-sm">₹${d.fare}</strong></div>` : ''}</div></div>`;
-  document.getElementById('pnr-results').classList.remove('hidden');
+  // Passenger Info mapping
+  let paxHTML = '';
+  let coachSeatTitle = 'Onboard Delivery';
+  if (pnrData?.passengerList && pnrData.passengerList.length > 0) {
+    paxHTML = pnrData.passengerList.map(p => `
+      <div class="flex justify-between items-center bg-slate-50 border border-slate-200/50 rounded-2xl px-4 py-3 text-xs shadow-sm">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-slate-400 text-sm">person</span>
+          <span class="font-bold text-slate-800">${p.serialNumber}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-[9px] font-black font-mono uppercase px-2.5 py-0.5 rounded-lg border ${p.currentStatus.includes('CNF') || p.currentStatus.includes('CONFIRMED') ? 'text-emerald-700 bg-emerald-50 border-emerald-100' : 'text-amber-700 bg-amber-50 border-amber-100'}">
+            ${p.currentStatus}
+          </span>
+          ${p.coach ? `<span class="bg-primary/5 text-primary border border-primary/10 px-2 py-0.5 rounded-lg text-[9.5px] font-mono font-black">${p.coach} / Seat ${p.berth}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+    
+    const p0 = pnrData.passengerList[0];
+    if (p0 && p0.coach) {
+      coachSeatTitle = `Coach ${p0.coach}, Seat ${p0.berth}`;
+    }
+  }
+
+  // Live stations timeline calculations
+  const rawTimeline = liveData?.timeline || [];
+  const currentStnCode = liveData?.currentStationCode;
+  
+  const timeline = rawTimeline.filter(s => {
+    const isStoppage = s.type === 'stoppage' || s.stoppage === true;
+    const hasTimes = s.arrival?.scheduled || s.departure?.scheduled || s.arrival || s.departure;
+    const isCurrent = s.status === 'current' || 
+                     (s.stationCode && currentStnCode && s.stationCode.toUpperCase() === currentStnCode.toUpperCase());
+    return isStoppage || (hasTimes && s.stationCode !== '—') || isCurrent;
+  });
+
+  let currentIdx = timeline.findIndex(x => 
+    x.status === 'current' ||
+    (x.stationCode && currentStnCode && x.stationCode.toUpperCase() === currentStnCode.toUpperCase())
+  );
+  if (currentIdx === -1 && statusNote.toLowerCase().includes('yet to start')) {
+    currentIdx = 0;
+  }
+
+  const current = currentIdx >= 0 ? timeline[currentIdx] : null;
+  const previous = currentIdx > 0 ? timeline[currentIdx - 1] : null;
+  const next = currentIdx >= 0 && currentIdx < timeline.length - 1 ? timeline[currentIdx + 1] : null;
+  const progress = getLiveProgressPercent(liveData || { timeline });
+  
+  const stateText = isDelayed ? 'Running Late' : 'On Schedule';
+  const stateClass = isDelayed ? 'bg-amber-100 text-amber-800 border-amber-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+  const timelineHTML = buildPremiumStationTimelineHTML(liveData || { timeline }, statusNote, isDelayed);
+
+  // Horizontally scrollable product carousels
+  const beveragesHTML = getCarouselHTML('Snacks & Beverages', 'Refreshments on train', 'beverages');
+  const comfortHTML = getCarouselHTML('Travel Comfort Essentials', 'Pillows, sleep masks & kits', 'comfort');
+  const hygieneHTML = getCarouselHTML('Hygiene & Tech Accessories', 'Sanitizers, wipes & chargers', 'hygiene_tech');
+
+  container.innerHTML = `
+    <div class="space-y-6 animate-scale-in">
+      <!-- 1. Beautiful Journey Summary Card at the Top -->
+      <div class="rounded-[2.5rem] bg-gradient-to-br from-emerald-950 to-emerald-900 border border-emerald-800/40 p-5 text-white relative overflow-hidden shadow-xl">
+        <div class="absolute -top-8 -right-8 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-28 h-28 bg-secondary/5 blur-3xl rounded-full pointer-events-none"></div>
+        
+        <div class="flex justify-between items-start mb-4 relative z-10">
+          <div class="min-w-0">
+            <!-- Train Details Header Badge -->
+            <div class="bg-white/10 px-2.5 py-1 rounded-lg flex items-center gap-1.5 mb-2 max-w-fit border border-white/5 shadow-sm">
+              <span class="material-symbols-outlined text-[12px] text-secondary">train</span>
+              <span class="text-[9px] font-black text-white uppercase tracking-wider">${trainNo} · ${trainName}</span>
+            </div>
+            
+            <div class="inline-flex items-center gap-1.5 text-[8.5px] font-black uppercase tracking-[0.18em] text-emerald-300">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              </span>
+              GPS Satellite Live Tracking
+            </div>
+          </div>
+          <span class="shrink-0 border text-[9px] font-black px-2.5 py-1 rounded-full ${stateClass}">${stateText}</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 py-3.5 border-t border-b border-white/10 mb-4 relative z-10">
+          <div>
+            <span class="text-[8px] font-black text-white/45 uppercase tracking-wider block">Boarding Station</span>
+            <div class="text-[11px] font-bold text-white truncate">${pnrData?.source || (timeline[0] ? `${timeline[0].stationName} (${timeline[0].stationCode})` : '—')}</div>
+          </div>
+          <div class="text-right">
+            <span class="text-[8px] font-black text-white/45 uppercase tracking-wider block">Destination Station</span>
+            <div class="text-[11px] font-bold text-white truncate">${pnrData?.destination || (timeline[timeline.length - 1] ? `${timeline[timeline.length - 1].stationName} (${timeline[timeline.length - 1].stationCode})` : '—')}</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-xs relative z-10">
+          <div>
+            <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Current Stop</span>
+            <div class="font-extrabold text-[10px] text-emerald-300 truncate">${current ? current.stationName : 'Not Started'}</div>
+          </div>
+          <div>
+            <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Coach & Seat</span>
+            <div class="font-extrabold text-[10px] text-emerald-300 truncate">${coachSeatTitle}</div>
+          </div>
+          <div>
+            <span class="text-[7.5px] font-black text-white/40 uppercase tracking-wider block mb-0.5">Next Station ETA</span>
+            <div class="font-extrabold text-[10px] text-emerald-300 truncate">${next ? (next.arrival?.scheduled || next.arrival?.actual || '—') : 'Destination'}</div>
+          </div>
+        </div>
+
+        <!-- Progress Tracker Bar -->
+        <div class="mt-5 relative z-10">
+          <div class="flex justify-between items-center text-[8.5px] font-bold text-white/70 mb-1.5">
+            <span>${previous ? previous.stationName : 'Origin'}</span>
+            <span class="text-secondary">${progress}% Journey Covered</span>
+            <span>${next ? next.stationName : 'Destination'}</span>
+          </div>
+          <div class="h-3.5 bg-white/20 rounded-full overflow-hidden flex items-center justify-center relative">
+            <div class="h-full bg-secondary absolute left-0 top-0 transition-all duration-500" style="width:${progress}%"></div>
+            <span class="relative z-10 text-[8px] font-black text-white">${progress}%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Order Essentials for Your Journey (Blinkit/Zepto Horizontal Product Carousels) -->
+      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-6">
+        <div class="flex items-center gap-2.5 border-b border-slate-50 pb-3">
+          <div class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-[15px]">shopping_bag</span>
+          </div>
+          <div>
+            <h3 class="text-xs font-black text-slate-800 leading-tight">Order Essentials for Your Journey</h3>
+            <p class="text-[9px] text-slate-405 font-bold">Delivery directly to your seat at upcoming stations</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          ${beveragesHTML}
+          ${comfortHTML}
+          ${hygieneHTML}
+        </div>
+      </div>
+
+      <!-- 3. Passenger Seat Allocations (Only if PNR data has passenger allocations) -->
+      ${paxHTML ? `
+      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3">
+        <div class="flex items-center gap-2 border-b border-slate-50 pb-2">
+          <span class="material-symbols-outlined text-primary text-base">assignment_ind</span>
+          <span class="text-xs font-black text-slate-800">Passenger Seat Bookings</span>
+        </div>
+        <div class="space-y-2.5">
+          ${paxHTML}
+        </div>
+      </div>` : ''}
+
+      <!-- 4. Quick Travel Utilities Grid -->
+      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center gap-2 border-b border-slate-50 pb-2">
+          <span class="material-symbols-outlined text-primary text-base">construction</span>
+          <span class="text-xs font-black text-slate-800">Quick Travel Utilities</span>
+        </div>
+        <div class="grid grid-cols-5 gap-1.5">
+          <div onclick="prefillPlatformSearch('${trainNo}')" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-105 rounded-2xl cursor-pointer transition-all duration-200 text-center active:scale-95 border border-slate-100/50">
+            <span class="material-symbols-outlined text-primary text-[15px] mb-1">directions_railway</span>
+            <span class="text-[8px] font-bold text-slate-700 leading-tight truncate w-full">Platform</span>
+          </div>
+          <div onclick="openUtilModal('seatmap')" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-105 rounded-2xl cursor-pointer transition-all duration-200 text-center active:scale-95 border border-slate-100/50">
+            <span class="material-symbols-outlined text-primary text-[15px] mb-1">airline_seat_recline_extra</span>
+            <span class="text-[8px] font-bold text-slate-700 leading-tight truncate w-full">Seat Map</span>
+          </div>
+          <div onclick="openUtilModal('refund')" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-105 rounded-2xl cursor-pointer transition-all duration-200 text-center active:scale-95 border border-slate-100/50">
+            <span class="material-symbols-outlined text-primary text-[15px] mb-1">currency_rupee</span>
+            <span class="text-[8px] font-bold text-slate-700 leading-tight truncate w-full">Refund</span>
+          </div>
+          <div onclick="prefillTimetableSearch('${trainNo}')" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-105 rounded-2xl cursor-pointer transition-all duration-200 text-center active:scale-95 border border-slate-100/50">
+            <span class="material-symbols-outlined text-primary text-[15px] mb-1">schedule</span>
+            <span class="text-[8px] font-bold text-slate-700 leading-tight truncate w-full">Timetable</span>
+          </div>
+          <div onclick="openUtilModal('alarm')" class="flex flex-col items-center justify-center p-2 bg-slate-50 hover:bg-slate-105 rounded-2xl cursor-pointer transition-all duration-200 text-center active:scale-95 border border-slate-100/50">
+            <span class="material-symbols-outlined text-primary text-[15px] mb-1">alarm</span>
+            <span class="text-[8px] font-bold text-slate-700 leading-tight truncate w-full">GPS Alarm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Collapsible Live Journey Timeline -->
+      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3">
+        <button onclick="toggleDashboardTimeline()" class="w-full flex justify-between items-center text-xs text-slate-700 font-bold focus:outline-none">
+          <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-primary text-base">route</span>Live Station Timeline</span>
+          <span id="timeline-toggle-icon" class="material-symbols-outlined text-slate-400 text-base transition-transform duration-300">expand_more</span>
+        </button>
+        <div id="dashboard-timeline-content" class="hidden transition-all duration-300 pt-3 border-t border-slate-100">
+          <div class="live-station-list font-medium">${timelineHTML}</div>
+        </div>
+      </div>
+
+      <!-- 6. Customer Testimonial Slide -->
+      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-3">
+        <div class="text-[9px] font-black text-slate-400 uppercase tracking-wider">What Travelers Say</div>
+        <div class="bg-slate-50 border border-slate-100/60 rounded-2xl p-4 text-[10px] italic text-slate-650 relative overflow-hidden">
+          <span class="absolute right-3 top-3 text-[48px] font-serif leading-none text-slate-200/50 select-none">“</span>
+          <p class="relative z-10 leading-relaxed font-medium">"Local vendors often sell low-quality or fake products. I always order from RailQuick because it solves this exact problem and delivers verified products right to my seat."</p>
+          <div class="mt-3 flex items-center justify-between text-[8px] font-bold uppercase tracking-wider text-slate-400 not-italic">
+            <span>— Rohit (Verified Passenger)</span>
+            <span class="text-amber-500">★★★★★</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.classList.remove('hidden');
+}
+
+function getCarouselHTML(title, subtitle, categoryFilter) {
+  let filtered = [];
+  if (categoryFilter === 'comfort') {
+    filtered = PRODUCTS.filter(p => p.category === 'comfort');
+  } else if (categoryFilter === 'beverages') {
+    filtered = PRODUCTS.filter(p => p.category === 'beverages');
+  } else {
+    filtered = PRODUCTS.filter(p => p.category === 'hygiene' || p.category === 'tech');
+  }
+  
+  const cardsHTML = filtered.map(p => getDashboardProductCardHTML(p)).join('');
+  
+  return `
+    <div class="space-y-2 pb-2">
+      <div class="flex justify-between items-end px-1 select-none">
+        <div>
+          <span class="text-[8.5px] font-black text-primary uppercase tracking-wider block">${title}</span>
+          <h4 class="text-[10px] font-extrabold text-slate-500 mt-0.5">${subtitle}</h4>
+        </div>
+      </div>
+      
+      <div class="flex overflow-x-auto gap-3.5 pb-2.5 scrollbar-none px-0.5 snap-x snap-mandatory">
+        ${cardsHTML}
+      </div>
+    </div>
+  `;
+}
+
+function getDashboardProductCardHTML(p) {
+  const inCart = appState.cart.find(c => c.id === p.id);
+  const qty = inCart ? inCart.qty : 0;
+  const ratingText = p.rating ? `★ ${p.rating}` : '★ 4.8';
+  const weightText = p.weight ? p.weight : '1 unit';
+  
+  const cardClass = qty > 0
+    ? 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-primary/40 bg-primary/[0.01] shadow-premium-glow flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0'
+    : 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0';
+    
+  const buttonHTML = qty > 0
+    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
+         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
+         <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
+         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
+       </div>`
+    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
+
+  return `
+    <div class="${cardClass}" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
+      <!-- Rating Badge -->
+      <div class="absolute left-2.5 top-2.5 bg-black/5 backdrop-blur-md rounded-lg px-1.5 py-0.5 text-[7.5px] font-black text-slate-650 flex items-center gap-0.5 select-none z-10">
+        ${ratingText}
+      </div>
+      <!-- Image Container -->
+      <div class="w-full aspect-square bg-[#F7F9F8] rounded-2xl p-2.5 mb-2 flex items-center justify-center overflow-hidden shrink-0">
+        <img src="img/${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-350" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop';">
+      </div>
+      <!-- Body -->
+      <div class="flex flex-col flex-grow">
+        <h4 class="text-[10px] font-extrabold text-slate-800 line-clamp-2 leading-tight min-h-[26px] mb-0.5">${p.name}</h4>
+        <span class="text-[8px] font-bold text-slate-400 mb-2">${weightText}</span>
+        
+        <div class="flex justify-between items-center mt-auto gap-1">
+          <span class="text-xs font-black text-slate-850 font-mono">₹${p.price}</span>
+          <div class="qty-btn-wrapper" data-product-id="${p.id}">
+            ${buttonHTML}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleDashboardTimeline() {
+  const content = document.getElementById('dashboard-timeline-content');
+  const icon = document.getElementById('timeline-toggle-icon');
+  if (content && icon) {
+    const isHidden = content.classList.contains('hidden');
+    if (isHidden) {
+      content.classList.remove('hidden');
+      icon.style.transform = 'rotate(180deg)';
+    } else {
+      content.classList.add('hidden');
+      icon.style.transform = 'rotate(0deg)';
+    }
+  }
+}
+
+function renderPNRResult(d) {
+  renderJourneyDashboard('pnr-results', d, appState.pnrLiveData);
 }
 
 function renderUnconfirmedPNRResult(d) {
-  const paxHTML = (d.passengerList || []).map(p => `
-    <div class="flex justify-between items-center bg-[#FFF1F2] border border-rose-100 rounded-2xl px-4 py-3.5 shadow-sm">
-      <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-rose-500 text-base">person</span>
-        <span class="font-bold text-slate-800 text-xs">${p.serialNumber}</span>
-      </div>
-      <div class="flex items-center gap-1.5 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-lg">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
-        <span class="text-rose-600 font-extrabold font-mono text-[10px] uppercase tracking-wider">${p.currentStatus}</span>
-      </div>
-    </div>
-  `).join('');
-
-  const routeHTML = `
-    <div class="bg-slate-50 border border-slate-100 rounded-3xl p-4 shadow-inner">
-      <div class="flex justify-between items-center text-xs text-slate-600 font-bold mb-3 pb-3 border-b border-dashed border-slate-200">
-        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">directions_railway</span>Route Summary</span>
-        <span class="font-mono text-slate-800">${d.pnrNumber}</span>
-      </div>
-      <div class="flex justify-between items-center text-slate-800">
-        <div class="flex flex-col">
-          <span class="text-[9px] text-slate-400 uppercase font-black tracking-wider">From</span>
-          <span class="text-xs font-black truncate max-w-[120px] mt-0.5">${d.source ? d.source.split('(')[0].trim() : '—'}</span>
-          <span class="text-[9px] font-mono font-bold text-slate-400 mt-0.5">${d.source && d.source.includes('(') ? d.source.split('(')[1].replace(')', '') : ''}</span>
+  renderJourneyDashboard('pnr-results', d, appState.pnrLiveData);
+  
+  const container = document.getElementById('pnr-results');
+  if (container) {
+    const warningHTML = `
+      <div class="bg-rose-50 border border-rose-100 rounded-3xl p-4 flex gap-3.5 relative overflow-hidden mb-5 animate-fade-in">
+        <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0 shadow-sm">
+          <span class="material-symbols-outlined text-rose-600 text-xl font-bold">warning</span>
         </div>
-        <div class="flex flex-col items-center px-4 flex-1">
-          <div class="w-full h-[1px] bg-slate-200 relative flex items-center justify-center">
-            <span class="material-symbols-outlined absolute text-[14px] text-slate-400 bg-slate-50 px-1">arrow_forward</span>
-          </div>
-        </div>
-        <div class="flex flex-col text-right">
-          <span class="text-[9px] text-slate-400 uppercase font-black tracking-wider">To</span>
-          <span class="text-xs font-black truncate max-w-[120px] mt-0.5">${d.destination ? d.destination.split('(')[0].trim() : '—'}</span>
-          <span class="text-[9px] font-mono font-bold text-slate-400 mt-0.5">${d.destination && d.destination.includes('(') ? d.destination.split('(')[1].replace(')', '') : ''}</span>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('pnr-results').innerHTML = `
-    <div class="bg-white border border-rose-200 rounded-[2.5rem] overflow-hidden shadow-premium p-1 relative">
-      <div class="absolute -top-16 -right-16 w-36 h-36 bg-rose-500/5 blur-2xl rounded-full"></div>
-      
-      <!-- Premium Warning Header Banner -->
-      <div class="bg-gradient-to-tr from-rose-700 via-rose-600 to-pink-600 rounded-[2.25rem] p-5 text-white flex justify-between items-start shadow-[0_8px_20px_rgba(225,29,72,0.15)] relative overflow-hidden">
-        <div class="absolute inset-0 bg-glass opacity-10 pointer-events-none"></div>
         <div>
-          <h3 class="font-serif-display text-lg text-white font-extrabold">${d.trainName || 'Train'}</h3>
-          <p class="font-mono text-[9px] text-rose-100 uppercase tracking-widest mt-1.5 flex items-center gap-1">
-            <span class="material-symbols-outlined text-[12px]">train</span> Train #${d.trainNumber || '—'}
-          </p>
-        </div>
-        <div class="bg-white/20 border border-white/10 px-3 py-1 rounded-xl text-[9px] font-black uppercase tracking-wider shadow-inner">
-          WL / RAC Status
+          <h4 class="text-xs font-black text-rose-950">Seat-side delivery unavailable</h4>
+          <p class="text-[10px] text-rose-705 font-semibold leading-relaxed mt-1">We can only deliver essentials directly to your seat for confirmed tickets (CNF/RAC). Waitlisted bookings do not have seat assignments yet.</p>
         </div>
       </div>
-      
-      <div class="p-5 space-y-5">
-        <!-- Warning Callout Box -->
-        <div class="bg-rose-50/50 border border-rose-100 rounded-2xl p-4 flex gap-3.5 relative overflow-hidden">
-          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0 shadow-sm">
-            <span class="material-symbols-outlined text-rose-600 text-xl font-bold">warning</span>
-          </div>
-          <div>
-            <h4 class="text-xs font-black text-rose-950">Seat-side delivery unavailable</h4>
-            <p class="text-[10px] text-rose-700 font-semibold leading-relaxed mt-1">We can only deliver essentials directly to your seat for confirmed tickets (CNF/RAC). Waitlisted bookings do not have seat assignments.</p>
-          </div>
-        </div>
-
-        ${routeHTML}
-
-        <!-- Passenger Allocations -->
-        <div class="space-y-2.5 pt-1">
-          <div class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-1">
-            <span class="material-symbols-outlined text-[12px]">assignment_ind</span> Passenger Current Booking Details
-          </div>
-          ${paxHTML}
-        </div>
-        
-        <!-- Helpful suggestion footer -->
-        <div class="text-center pt-2 border-t border-slate-100 text-[10px] text-slate-500 font-semibold leading-relaxed px-3">
-          If your booking changes to CNF/RAC later, please search your PNR again to proceed with ordering.
-        </div>
-      </div>
-    </div>
-  `;
-  document.getElementById('pnr-results').classList.remove('hidden');
+    `;
+    container.innerHTML = warningHTML + container.innerHTML;
+  }
+  
   setTimeout(() => {
-    document.getElementById('pnr-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    container?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
 }
 
@@ -1376,28 +1612,26 @@ async function checkLiveStatus() {
 }
 
 function renderLiveTrainResult(d, trainNo) {
-  const statusNote = d.statusNote || 'Running';
-  const isDelayed = statusNote.toLowerCase().includes('late') || statusNote.toLowerCase().includes('delay');
-  const timelineHTML = buildPremiumStationTimelineHTML(d, statusNote, isDelayed);
-
-  const containerHTML = generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML);
-
   const resultsPnr = document.getElementById('pnr-results');
   const resultsLive = document.getElementById('live-tracking-results');
-  const innerHTML = `
-    <div class="fade-in-item">
-      ${containerHTML}
-    </div>`;
+  
+  const mockPnr = {
+    trainNumber: trainNo,
+    trainName: d.trainName || 'Express Train',
+    passengerList: [],
+    source: d.timeline?.[0] ? `${d.timeline[0].stationName} (${d.timeline[0].stationCode})` : '—',
+    destination: d.timeline?.[d.timeline.length - 1] ? `${d.timeline[d.timeline.length - 1].stationName} (${d.timeline[d.timeline.length - 1].stationCode})` : '—'
+  };
 
   if (resultsPnr) {
-    resultsPnr.innerHTML = innerHTML;
+    renderJourneyDashboard('pnr-results', mockPnr, d);
     resultsPnr.classList.remove('hidden');
   }
   if (resultsLive) {
-    resultsLive.innerHTML = innerHTML;
+    renderJourneyDashboard('live-tracking-results', mockPnr, d);
   }
   
-  // Smooth scroll container into view, then current station node
+  // Smooth scroll container into view
   setTimeout(() => {
     let scrollTarget = null;
     if (appState.currentPage === 'page-pnr' && resultsPnr && !resultsPnr.classList.contains('hidden')) {
@@ -1409,21 +1643,6 @@ function renderLiveTrainResult(d, trainNo) {
     if (scrollTarget) {
       scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    
-    // Slightly later, scroll the current node to center inside the scroll container without shifting parent pages
-    setTimeout(() => {
-      const listContainer = document.querySelector('.live-station-list');
-      const currentNode = listContainer ? listContainer.querySelector('.live-station-node.current') : null;
-      if (listContainer && currentNode) {
-        const containerHeight = listContainer.clientHeight;
-        const nodeOffsetTop = currentNode.offsetTop;
-        const nodeHeight = currentNode.clientHeight;
-        listContainer.scrollTo({
-          top: nodeOffsetTop - (containerHeight / 2) + (nodeHeight / 2),
-          behavior: 'smooth'
-        });
-      }
-    }, 280);
   }, 100);
 }
 
@@ -3817,6 +4036,7 @@ function closeUtilModal(type) {
 
 // Prefill search shortcuts for Platform & Timetable
 function prefillPlatformSearch(no) {
+  openUtilModal('platform');
   const input = document.getElementById('platform-train-input');
   if (input) {
     input.value = no;
@@ -3825,6 +4045,7 @@ function prefillPlatformSearch(no) {
 }
 
 function prefillTimetableSearch(no) {
+  openUtilModal('timetable');
   const input = document.getElementById('timetable-train-input');
   if (input) {
     input.value = no;
