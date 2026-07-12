@@ -2064,8 +2064,8 @@ function updateShopTopbar() {
   } else {
     if (labelEl) {
       labelEl.innerHTML = `
-        <span style="font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: #117A4A; display: block; margin-bottom: 4px;">Deliver in</span>
-        <span style="font-size: 26px; font-weight: 950; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.02em;">Express Transit</span>
+        <span style="font-size: 28px; font-weight: 950; color: #1A1A1A; line-height: 1.05; letter-spacing: -0.02em; display: block;">Deliver in</span>
+        <span style="display:block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #117A4A; margin-top: 4px;">Live Train Delivery</span>
       `;
     }
     if (headerEl) {
