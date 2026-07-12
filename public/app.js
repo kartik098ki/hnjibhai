@@ -387,6 +387,9 @@ async function checkPNRStatus() {
       document.getElementById('pnr-results').innerHTML = '';
       document.getElementById('pnr-results').classList.add('hidden');
       showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
+      setTimeout(() => {
+        navigateTo('page-shop');
+      }, 1500);
     }
   } catch (err) {
     console.warn('API Offline, running fallback mock:', err.message);
@@ -421,6 +424,7 @@ async function checkPNRStatus() {
       document.getElementById('pnr-results').innerHTML = '';
       document.getElementById('pnr-results').classList.add('hidden');
       showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
+      setTimeout(() => navigateTo('page-shop'), 1500);
     }
   }
 }
@@ -2014,22 +2018,25 @@ function updateShopTopbar() {
   const toEl = document.getElementById('shop-pnr-to');
   const strip = document.getElementById('train-strip');
 
-  if (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—' && appState.isPnrConfirmed) {
+  if (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') {
     const d = appState.pnrData;
     const pax = d.passengerList && d.passengerList[0];
-    const coach = pax ? pax.coach : '—';
-    const seat = pax ? pax.berth : '—';
+    const coach = pax ? pax.coach : '';
+    const seat = pax ? pax.berth : '';
     const berth = pax ? pax.berthCode : '';
 
     if (labelEl) {
-      labelEl.innerHTML = `Deliver in<span style="display:block;font-size:14px;font-weight:900;color:#117A4A;margin-top:6px;letter-spacing:0;">${d.trainName}</span>`;
+      labelEl.innerHTML = `
+        <span style="font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: #117A4A; display: block; margin-bottom: 4px;">Deliver in</span>
+        <span style="font-size: 26px; font-weight: 950; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.02em;">${d.trainName}</span>
+      `;
     }
     if (headerEl) {
       headerEl.style.marginTop = "12px";
       headerEl.innerHTML = `
         <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
           <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">train</span>
-          <span>Train No: ${d.trainNumber} · Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}</span>
+          <span>Train No: ${d.trainNumber} ${coach ? `· Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}` : '· Seat: Click to Verify'}</span>
         </div>
         <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#9CA3AF;font-weight:500;margin-top:3px;">
           <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">route</span>
@@ -2038,8 +2045,12 @@ function updateShopTopbar() {
       `;
     }
 
-    if (seatEl) seatEl.textContent = `Seat ${coach}-${seat} ${berth ? `(${berth})` : ''}`;
-    if (statusEl) statusEl.textContent = 'Verified';
+    if (seatEl) {
+      seatEl.textContent = coach ? `Seat ${coach}-${seat} ${berth ? `(${berth})` : ''}` : 'Seat —';
+    }
+    if (statusEl) {
+      statusEl.textContent = appState.isPnrConfirmed ? 'Verified' : 'Waitlisted';
+    }
     if (fromEl) fromEl.textContent = d.source.split('(')[0].trim();
     if (toEl) toEl.textContent = d.destination.split('(')[0].trim();
     
@@ -2051,7 +2062,12 @@ function updateShopTopbar() {
       }
     }
   } else {
-    if (labelEl) labelEl.textContent = 'Deliver in';
+    if (labelEl) {
+      labelEl.innerHTML = `
+        <span style="font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: #117A4A; display: block; margin-bottom: 4px;">Deliver in</span>
+        <span style="font-size: 26px; font-weight: 950; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.02em;">Express Transit</span>
+      `;
+    }
     if (headerEl) {
       headerEl.className = "mt-3";
       headerEl.innerHTML = `
@@ -2440,6 +2456,20 @@ function addToCart(productId) {
   updateSingleProductCardDOM(productId);
   
   if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function addComboToCart(productIds) {
+  productIds.forEach(id => {
+    const product = PRODUCTS.find(p => p.id === id);
+    if (!product) return;
+    const existing = appState.cart.find(c => c.id === id);
+    if (existing) existing.qty++; else appState.cart.push({ ...product, qty: 1 });
+  });
+  saveState(); 
+  updateCartFAB();
+  productIds.forEach(id => updateSingleProductCardDOM(id));
+  showToast('Combo pack added to cart!', 'success');
+  if (navigator.vibrate) navigator.vibrate(50);
 }
 
 function changeProductQty(id, delta) {
@@ -3814,12 +3844,11 @@ function isTrainDateValid(dateStr) {
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
   
-  // If PNR is not confirmed, clear guest tracking and force PNR page!
-  if (!appState.isPnrConfirmed) {
+  // If they haven't onboarded, clear states and force PNR page
+  if (!appState.hasOnboarded) {
     appState.pnrData = null;
     appState.pnrLiveData = null;
     appState.currentPage = 'page-pnr';
-    appState.hasOnboarded = false;
     saveState();
   }
 
@@ -3827,9 +3856,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollChromeBehavior();
   startCustomerMarquee();
   
-  const shouldGoToHome = appState.hasOnboarded && appState.isPnrConfirmed;
+  const shouldGoToHome = appState.hasOnboarded;
 
   if (shouldGoToHome) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    
     const splashEl = document.getElementById('page-splash');
     if (splashEl) splashEl.classList.remove('active');
     let targetPage = appState.currentPage || 'page-shop';
