@@ -2109,58 +2109,92 @@ function resetAppStateAndLogin() {
   showToast('Session reset. Please enter PNR or Train.', 'info');
 }
 
+function renderSingleProductCardHTML(p) {
+  const inCart = appState.cart.find(c => c.id === p.id);
+  const qty = inCart ? inCart.qty : 0;
+  const weightText = p.weight ? p.weight : 'Standard Size';
+  
+  const buttonHTML = qty > 0
+    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
+         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
+         <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
+         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
+       </div>`
+    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
+
+  const cardClass = qty > 0 
+    ? 'border-primary/40 bg-primary/[0.01] shadow-premium-glow' 
+    : 'border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)]';
+
+  return `
+    <div class="product-card-premium bg-white rounded-[2rem] p-3.5 border ${cardClass} flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
+      <span class="product-badge">${productBadge(p)}</span>
+      <div class="product-img-wrap w-full aspect-square bg-slate-50 rounded-[1.5rem] p-3 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
+        <img alt="${p.name}" class="max-h-full max-w-full object-contain" src="${p.img}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&h=200&fit=crop';">
+      </div>
+      <div class="flex flex-col flex-grow">
+        <h4 class="text-[11px] font-bold text-slate-800 line-clamp-2 mb-1.5 leading-tight min-h-[30px]">${p.name}</h4>
+        <p class="text-[9px] font-semibold text-slate-400 mb-1">${weightText}</p>
+        <div class="flex justify-between items-center mt-auto gap-2">
+          <span class="text-sm font-black text-primary">₹${p.price}</span>
+          <div class="qty-btn-wrapper" data-product-id="${p.id}">
+            ${buttonHTML}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderProducts(products) {
   const grid = document.getElementById('products-grid');
   if (!grid) return;
   
-  const filtered = products.filter(p => {
-    const matchesCat = appState.currentFilter === 'all' || p.category === appState.currentFilter;
-    const matchesQuery = !appState.searchQuery || p.name.toLowerCase().includes(appState.searchQuery) || p.category.toLowerCase().includes(appState.searchQuery);
-    return matchesCat && matchesQuery;
-  });
+  const matchesCat = appState.currentFilter === 'all';
+  const matchesQuery = !appState.searchQuery;
 
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="col-span-2 text-center py-16 text-gray-400 text-xs font-semibold">No products found.</div>`;
-    return;
-  }
+  if (matchesCat && matchesQuery) {
+    const snacks = products.filter(p => p.category === 'beverages' || p.id === 103 || p.id === 104 || p.id === 105);
+    const comfort = products.filter(p => p.category === 'hygiene' || p.id === 101 || p.id === 102);
+    const tech = products.filter(p => p.category === 'tech');
 
-  grid.innerHTML = filtered.map(p => {
-    const inCart = appState.cart.find(c => c.id === p.id);
-    const qty = inCart ? inCart.qty : 0;
-    const weightText = p.weight ? p.weight : 'Standard Size';
-    
-    // Width-locked custom rounded-full elements (same w-20 h-8 footprint for both states)
-    const buttonHTML = qty > 0
-      ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
-           <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
-           <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
-           <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
-         </div>`
-      : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
+    const sections = [
+      { title: 'Hot Snacks & Beverages', items: snacks, accentColor: '#10B981' },
+      { title: 'Travel Comfort & Hygiene', items: comfort, accentColor: '#3B82F6' },
+      { title: 'Tech & Electronics Accessories', items: tech, accentColor: '#8B5CF6' }
+    ];
 
-    // Active Card highlights when qty > 0 (glowing shadow, subtle scale, soft green borders)
-    const cardClass = qty > 0 
-      ? 'border-primary/40 bg-primary/[0.01] shadow-premium-glow' 
-      : 'border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)]';
-
-    return `
-      <div class="product-card-premium bg-white rounded-[2rem] p-3.5 border ${cardClass} flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
-        <span class="product-badge">${productBadge(p)}</span>
-        <div class="product-img-wrap w-full aspect-square bg-slate-50 rounded-[1.5rem] p-3 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
-          <img alt="${p.name}" class="max-h-full max-w-full object-contain" src="${p.img}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&h=200&fit=crop';">
-        </div>
-        <div class="flex flex-col flex-grow">
-          <h4 class="text-[11px] font-bold text-slate-800 line-clamp-2 mb-1.5 leading-tight min-h-[30px]">${p.name}</h4>
-          <p class="text-[9px] font-semibold text-slate-400 mb-1">${weightText}</p>
-          <div class="flex justify-between items-center mt-auto gap-2">
-            <span class="text-sm font-black text-primary">₹${p.price}</span>
-            <div class="qty-btn-wrapper" data-product-id="${p.id}">
-              ${buttonHTML}
-            </div>
+    grid.innerHTML = sections.map(sec => {
+      if (!sec.items.length) return '';
+      const itemsHTML = sec.items.map(p => renderSingleProductCardHTML(p)).join('');
+      return `
+        <div class="mb-8">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 12px; padding: 0 4px;">
+            <div style="width: 3.5px; height: 14px; background: ${sec.accentColor}; border-radius: 2px;"></div>
+            <h4 style="font-size: 11.5px; font-weight: 850; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin: 0;">${sec.title}</h4>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            ${itemsHTML}
           </div>
         </div>
-      </div>`;
-  }).join('');
+      `;
+    }).join('');
+  } else {
+    const filtered = products.filter(p => {
+      const matchCategory = appState.currentFilter === 'all' || p.category === appState.currentFilter;
+      const matchSearch = !appState.searchQuery || p.name.toLowerCase().includes(appState.searchQuery) || p.category.toLowerCase().includes(appState.searchQuery);
+      return matchCategory && matchSearch;
+    });
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="col-span-2 text-center py-16 text-gray-400 text-xs font-semibold">No products found.</div>`;
+      return;
+    }
+
+    const itemsHTML = filtered.map(p => renderSingleProductCardHTML(p)).join('');
+    grid.innerHTML = `<div class="grid grid-cols-2 gap-4">${itemsHTML}</div>`;
+  }
+}
 }
 
 function filterCategory(cat, el) {

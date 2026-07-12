@@ -402,3 +402,16 @@
               radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.02) 0%, transparent 45%),
               #FCFCFC !important;
 }
+
+/* Live Orders Feed Vertical Scroll Animation (Step-wise pauses for readability) */
+@keyframes scrollUp {
+  0%, 18% { transform: translateY(0); }
+  22%, 40% { transform: translateY(-28px); }
+  44%, 62% { transform: translateY(-56px); }
+  66%, 84% { transform: translateY(-84px); }
+  88%, 100% { transform: translateY(-112px); }
+}
+@keyframes pulseGlow {
+  0% { opacity: 0.45; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.15); }
+}

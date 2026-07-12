@@ -2283,8 +2283,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </div>
       </div>
 
-      <!-- Seat Card: Solid green card (styled nicely with a positive margin gap) -->
-      <div class="home-seat-card" id="shop-pnr-card" onclick="goToLiveStatusFromHome()" style="margin: 16px 20px 0; padding: 18px 20px; border-radius: 24px; background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important; box-shadow: 0 12px 30px rgba(10, 92, 53, 0.18) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; cursor: pointer; position: relative; z-index: 10;">
+      <!-- Seat Card: Solid green card (moved higher up) -->
+      <div class="home-seat-card" id="shop-pnr-card" onclick="goToLiveStatusFromHome()" style="margin: 4px 20px 0; padding: 18px 20px; border-radius: 24px; background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important; box-shadow: 0 12px 30px rgba(10, 92, 53, 0.18) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; cursor: pointer; position: relative; z-index: 10;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
           <div>
             <h2 id="shop-pnr-seat" style="font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; line-height: 1; font-family: var(--font-headline);">Seat —</h2>
@@ -2324,6 +2324,36 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
           <div style="flex-grow: 1; display: flex; align-items: center; font-size: 13.5px; font-weight: 700; color: #1A1A1A; user-select: none; text-align: left; margin-left: 8px;">
             <span style="color: #6B7280; font-weight: 500;">Search&nbsp;</span>
             <span id="search-placeholder-text" style="color: #117A4A;">"hot samosa"</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Orders Feed Ticker (Auto-scrolling upwards) -->
+      <div style="padding: 0 20px; margin-top: 14px; position: relative; z-index: 10;">
+        <div style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important; border-radius: 18px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); border: 1.5px solid rgba(255, 255, 255, 0.08); overflow: hidden; height: 48px;">
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <span style="display: inline-block; width: 6px; height: 6px; background-color: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981; animation: pulseGlow 1.5s infinite alternate;"></span>
+            <span style="font-size: 8.5px; font-weight: 900; color: #10B981; text-transform: uppercase; letter-spacing: 0.12em;">LIVE STATUS</span>
+          </div>
+          <div style="flex-grow: 1; height: 28px; overflow: hidden; position: relative; margin-left: 12px;">
+            <div style="display: flex; flex-direction: column; animation: scrollUp 14s infinite ease-in-out;">
+              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
+                Seat <span style="color: #34D399; margin: 0 4px;">S-4 (Coach S2)</span> ordered Samosas & Chai
+              </div>
+              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
+                Seat <span style="color: #6EE7B7; margin: 0 4px;">B-12 (Coach A1)</span> ordered Sleep Pillow Combo
+              </div>
+              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
+                Seat <span style="color: #34D399; margin: 0 4px;">S-65 (Coach S5)</span> ordered Dual Fast Adapter
+              </div>
+              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
+                Seat <span style="color: #6EE7B7; margin: 0 4px;">H-3 (Coach B2)</span> ordered Cold Mineral Water
+              </div>
+              <!-- Loop repeat -->
+              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
+                Seat <span style="color: #34D399; margin: 0 4px;">S-4 (Coach S2)</span> ordered Samosas & Chai
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2457,8 +2487,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </button>
       </div>
       
-      <!-- Grid Items (2-column layout matching design) -->
-      <div class="grid grid-cols-2 gap-4 products-grid-premium" id="products-grid"></div>
+      <!-- Grid Items (sectioned layout rendered via Javascript) -->
+      <div class="products-grid-premium" id="products-grid" style="padding-bottom: 100px;"></div>
     </section>
 
     <!-- Trust Badges -->
