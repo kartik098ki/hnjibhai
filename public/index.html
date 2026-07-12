@@ -1753,8 +1753,8 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
   <!-- ==================== PNR & TRAIN STATUS PAGE ==================== -->
   <div id="page-pnr" class="page tab-page bg-background active">
-    <!-- Header Section (Elegant & Minimal Hero) -->
-    <header class="relative overflow-hidden bg-white px-5 pt-8 pb-5 flex flex-row items-center justify-between min-h-[220px]">
+    <!-- Header Section (Elegant & Minimal Compact Hero) -->
+    <header class="relative overflow-hidden bg-white px-5 pt-6 pb-4 flex flex-row items-center justify-between min-h-[165px]">
       <!-- Radial Glow and Masked Train Image container on the right -->
       <div class="absolute right-0 top-0 bottom-0 w-[45%] overflow-hidden pointer-events-none z-0">
         <img src="pnr_hero.png" class="w-full h-full object-cover object-[70%_bottom]" style="mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);" alt="Premium Train Service" />
@@ -1762,46 +1762,25 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
 
       <div class="relative z-10 flex flex-col w-[55%] items-start">
         <!-- Action Bar & Badge -->
-        <div class="flex items-center gap-2 mb-3">
-          <button id="pnr-back-btn" class="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-[#ECECEC] active:scale-95 transition-all text-[#111827]" style="display: none;">
-            <span class="material-symbols-outlined text-base">arrow_back</span>
+        <div class="flex items-center gap-2 mb-2">
+          <button id="pnr-back-btn" class="w-7 h-7 flex items-center justify-center rounded-full bg-white border border-[#ECECEC] active:scale-95 transition-all text-[#111827]" style="display: none;">
+            <span class="material-symbols-outlined text-[14px]">arrow_back</span>
           </button>
           
-          <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-[#118A4E]/15 bg-[#E7F6EF] text-[#118A4E] font-bold text-[9px] uppercase tracking-wider">
-            <span class="material-symbols-outlined text-[10px] fill-1">shield</span>
-            Essentials Delivered
+          <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-[#118A4E]/15 bg-[#E7F6EF] text-[#118A4E] font-bold text-[8.5px] uppercase tracking-wider">
+            <span class="material-symbols-outlined text-[9px] fill-1">shield</span>
+            Travel Essentials
           </div>
         </div>
 
-        <h1 class="text-2xl font-extrabold text-[#111827] tracking-tight leading-[1.2] mb-2 font-headline">
-          Essentials,<br/>
-          <span class="text-[#118A4E]">delivered</span> to<br/>
-          your seat.
+        <h1 class="text-xl font-black text-[#111827] tracking-tight leading-[1.15] mb-1.5 font-headline">
+          Delivered to<br/>
+          <span class="text-[#118A4E]">your seat.</span>
         </h1>
         
-        <p class="text-[11px] text-[#6B7280] font-medium leading-relaxed mb-4">
-          Medicines, snacks, chargers & more — delivered at the next station.
+        <p class="text-[10px] text-[#6B7280] font-semibold leading-relaxed">
+          Tasty snacks, drinks, chargers & comfort kits.
         </p>
-
-        <!-- Tiny Feature Chips -->
-        <div class="flex flex-wrap gap-1.5 mt-0.5 w-[180px] xs:w-full">
-          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
-            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center text-[9px] font-normal shrink-0">⚡</span>
-            <span>Live Updates</span>
-          </div>
-          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
-            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center shrink-0">
-              <span class="material-symbols-outlined text-[9px] text-[#118A4E] fill-1">shield</span>
-            </span>
-            <span>100% Secure</span>
-          </div>
-          <div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F6F7F8] border border-[#ECECEC] text-[8px] font-bold text-[#111827]">
-            <span class="w-3.5 h-3.5 rounded-full bg-[#E7F6EF] text-[#118A4E] flex items-center justify-center shrink-0">
-              <span class="material-symbols-outlined text-[9px] text-[#118A4E]">location_on</span>
-            </span>
-            <span>Delivered at next station</span>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -2279,7 +2258,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         
         <!-- Right: Train hero image (absolute and large, sits under the profile button of Row 1) -->
         <div style="position: absolute; right: -12px; top: -30px; width: 58%; z-index: 2; pointer-events: none;">
-          <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06));" />
+          <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; mix-blend-mode: multiply;" />
         </div>
       </div>
 

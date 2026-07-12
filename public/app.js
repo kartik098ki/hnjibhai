@@ -2195,7 +2195,6 @@ function renderProducts(products) {
     grid.innerHTML = `<div class="grid grid-cols-2 gap-4">${itemsHTML}</div>`;
   }
 }
-}
 
 function filterCategory(cat, el) {
   appState.currentFilter = cat;
