@@ -235,8 +235,16 @@ function goToLiveStatusFromHome() {
 
 // ===== PNR & LIVE STATUS FLOWS =====
 function switchPNRTab(tab) {
-  document.getElementById('panel-pnr')?.classList.toggle('hidden', tab !== 'pnr');
-  document.getElementById('panel-live')?.classList.toggle('hidden', tab !== 'live');
+  const panelPnr = document.getElementById('panel-pnr');
+  const panelLive = document.getElementById('panel-live');
+  if (panelPnr) {
+    panelPnr.style.display = (tab === 'pnr') ? '' : 'none';
+    panelPnr.classList.toggle('hidden', tab !== 'pnr');
+  }
+  if (panelLive) {
+    panelLive.style.display = (tab === 'live') ? '' : 'none';
+    panelLive.classList.toggle('hidden', tab !== 'live');
+  }
   document.getElementById('travel-utility-section')?.classList.toggle('hidden', tab === 'live');
   const tabPnrBtn = document.getElementById('tab-pnr');
   const tabLiveBtn = document.getElementById('tab-live');
@@ -727,6 +735,12 @@ function generateTimelineContainerHTML(d, statusNote, isDelayed, timelineHTML) {
 
   return `
     <div class="space-y-5 animate-scale-in">
+      <!-- Premium Back Button Capsule -->
+      <button onclick="goBackToSearch()" class="flex items-center gap-1.5 text-emerald-700 hover:text-emerald-900 transition-colors font-headline font-black text-[9px] uppercase tracking-widest focus:outline-none bg-emerald-50 border border-emerald-100/50 px-3.5 py-1.5 rounded-full select-none mb-1">
+        <span class="material-symbols-outlined text-[11px] font-bold">arrow_back</span>
+        Search Another Train
+      </button>
+
       <div class="live-hero-map p-5 rounded-[2rem] shadow-premium">
         <div class="relative z-10 flex items-start justify-between gap-3 mb-5">
           <div class="min-w-0">
@@ -1056,7 +1070,7 @@ function getDashboardProductCardHTML(p) {
         ${ratingText}
       </div>
       <!-- Image Container -->
-      <div class="w-full aspect-square bg-[#F8F9FA] rounded-xl p-2.5 mb-2 flex items-center justify-center overflow-hidden shrink-0">
+      <div class="w-full aspect-square bg-transparent rounded-xl p-0.5 mb-2 flex items-center justify-center overflow-hidden shrink-0">
         <img src="${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-350" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop';">
       </div>
       <!-- Body -->
@@ -1740,6 +1754,14 @@ function renderLiveTrainResult(d, trainNo) {
       ${containerHTML}
     </div>`;
 
+  // Hide the search card and bottom utilities grid so results take over the screen
+  if (appState.currentPage === 'page-pnr') {
+    const searchCard = document.getElementById('pnr-search-card');
+    if (searchCard) searchCard.classList.add('hidden');
+    const botUtils = document.getElementById('travel-utility-section');
+    if (botUtils) botUtils.classList.add('hidden');
+  }
+
   if (resultsPnr) {
     resultsPnr.innerHTML = innerHTML;
     resultsPnr.classList.remove('hidden');
@@ -2160,7 +2182,7 @@ function renderSingleProductCardHTML(p) {
   return `
     <div class="product-card-premium bg-white rounded-2xl p-3.5 border ${cardClass} flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
       <span class="product-badge">${productBadge(p)}</span>
-      <div class="product-img-wrap w-full aspect-square bg-[#F8F9FA] rounded-xl p-3 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
+      <div class="product-img-wrap w-full aspect-square bg-transparent rounded-xl p-0.5 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
         <img alt="${p.name}" class="max-h-full max-w-full object-contain" src="${p.img}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&h=200&fit=crop';">
       </div>
       <div class="flex flex-col flex-grow">
