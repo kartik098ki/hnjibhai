@@ -2276,54 +2276,179 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       </div>
     </section>
 
-    <!-- Categories Strip: Transparent background, immediately below search bar with high-fidelity PNG product icons -->
-    <section style="background: transparent !important; padding: 14px 0 10px; select-none;">
-      <!-- Horizontal Scroll Track -->
-      <div class="flex gap-6 overflow-x-auto no-scrollbar px-5 justify-between">
-        <!-- All -->
-        <button class="category-pill active flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('all', this)">
-          <div class="cat-icon-wrapper" style="display: flex; align-items: center; justify-content: center;">
-            <span class="material-symbols-outlined text-[24px]">grid_view</span>
+    <!-- ===== BLINKIT-STYLE PROMO BANNER (below search bar) ===== -->
+    <section class="rq-promo-banner" style="margin: 0; padding: 20px 16px 24px; background: linear-gradient(135deg, #118A4E 0%, #0A5C35 60%, #064A2B 100%); position: relative; overflow: hidden;">
+      <!-- Decorative circles -->
+      <div style="position: absolute; top: -40px; right: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.06);"></div>
+      <div style="position: absolute; bottom: -50px; left: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.04);"></div>
+      
+      <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
+        <!-- Left: Text content -->
+        <div style="flex: 1;">
+          <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 999px; padding: 4px 10px; margin-bottom: 8px;">
+            <span style="display: inline-block; width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; animation: pulseGlow 1.5s infinite alternate;"></span>
+            <span style="font-size: 9px; font-weight: 800; color: #ffffff; letter-spacing: 0.1em; text-transform: uppercase;">Delivering Now</span>
           </div>
-          <span class="cat-label font-headline">All</span>
-        </button>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 900; color: #ffffff; line-height: 1.15; margin: 0 0 6px 0; letter-spacing: -0.02em;">Train Snacks<br/>& Essentials</h2>
+          <p style="font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 600; margin: 0 0 12px 0;">Delivered to your seat in minutes</p>
+          <button onclick="filterCategory('comfort', null)" style="display: inline-flex; align-items: center; gap: 4px; background: #ffffff; color: #118A4E; border: none; padding: 8px 16px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.2s;">
+            Order Now
+            <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
+          </button>
+        </div>
+        <!-- Right: Hero train illustration -->
+        <div style="width: 140px; flex-shrink: 0; position: relative;">
+          <img src="hero_train.png" alt="Train Delivery" style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3)); transform: scaleX(-1);" />
+        </div>
+      </div>
+    </section>
 
-        <!-- Snacks & Food -->
-        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('comfort', this)">
-          <div class="cat-icon-wrapper">
-            <img src="product_haldirams.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Snacks & Food" />
-          </div>
-          <span class="cat-label font-headline">Snacks & Food</span>
+    <!-- ===== CATEGORY CARDS (Blinkit-style with images + discount badges) ===== -->
+    <section style="background: #F8FAF9; padding: 16px 0 12px;">
+      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 900; color: #1A1A1A; margin: 0; letter-spacing: -0.01em;">Shop by Category</h3>
+        <button onclick="filterCategory('all', null)" style="font-size: 11px; font-weight: 700; color: #118A4E; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 2px;">
+          See All <span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
         </button>
+      </div>
+      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 8px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
+        
+        <!-- Category Card: Snacks & Food -->
+        <div onclick="filterCategory('comfort', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #FF6B6B, #EE5A24); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">POPULAR</div>
+          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #FFF7ED; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_haldirams.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Snacks" />
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Snacks &<br/>Food</div>
+          <div style="font-size: 9px; font-weight: 700; color: #118A4E; background: #ECFDF5; padding: 2px 8px; border-radius: 999px; display: inline-block;">From ₹30</div>
+        </div>
 
-        <!-- Drinks -->
-        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('beverages', this)">
-          <div class="cat-icon-wrapper">
-            <img src="product_tea.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Drinks" />
+        <!-- Category Card: Beverages -->
+        <div onclick="filterCategory('beverages', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #118A4E, #0A5C35); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">HOT</div>
+          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #F0FDF4; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_tea.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Beverages" />
           </div>
-          <span class="cat-label font-headline">Drinks</span>
-        </button>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Chai &<br/>Drinks</div>
+          <div style="font-size: 9px; font-weight: 700; color: #118A4E; background: #ECFDF5; padding: 2px 8px; border-radius: 999px; display: inline-block;">From ₹15</div>
+        </div>
 
-        <!-- Electronics -->
-        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('tech', this)">
-          <div class="cat-icon-wrapper">
-            <img src="product_earphones.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Electronics" />
+        <!-- Category Card: Electronics -->
+        <div onclick="filterCategory('tech', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #6366F1, #4F46E5); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">DEALS</div>
+          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #EEF2FF; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_earphones.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Electronics" />
           </div>
-          <span class="cat-label font-headline">Electronics</span>
-        </button>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Tech &<br/>Gadgets</div>
+          <div style="font-size: 9px; font-weight: 700; color: #6366F1; background: #EEF2FF; padding: 2px 8px; border-radius: 999px; display: inline-block;">Up To 40% Off</div>
+        </div>
 
-        <!-- Hygiene & Care -->
-        <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('hygiene', this)">
-          <div class="cat-icon-wrapper">
-            <img src="product_sanitizer.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Hygiene & Care" />
+        <!-- Category Card: Hygiene -->
+        <div onclick="filterCategory('hygiene', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">ESSENTIALS</div>
+          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #FFFBEB; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_sanitizer.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Hygiene" />
           </div>
-          <span class="cat-label font-headline">Hygiene & Care</span>
-        </button>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Hygiene<br/>& Care</div>
+          <div style="font-size: 9px; font-weight: 700; color: #D97706; background: #FFFBEB; padding: 2px 8px; border-radius: 999px; display: inline-block;">Must-Haves</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEAL OF THE DAY HORIZONTAL SCROLL (Blinkit-style) ===== -->
+    <section style="background: #ffffff; padding: 16px 0 8px;">
+      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="font-size: 18px;">🔥</span>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 900; color: #1A1A1A; margin: 0;">Train Specials</h3>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 3px; background: #FEF2F2; padding: 3px 8px; border-radius: 999px;">
+          <span class="material-symbols-outlined" style="font-size: 12px; color: #EF4444;">timer</span>
+          <span style="font-size: 9px; font-weight: 800; color: #EF4444; letter-spacing: 0.02em;">LIMITED TIME</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 12px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
+        
+        <!-- Deal Card 1: Samosa + Chai -->
+        <div onclick="addToCartById(105)" style="min-width: 155px; background: linear-gradient(180deg, #FFF7ED 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #FFEDD5; position: relative; transition: transform 0.2s;">
+          <div style="position: absolute; top: 8px; left: 8px; background: #EF4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">30% OFF</div>
+          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_tea.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Samosa Chai Combo" />
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">Samosa & Chai<br/>Combo</div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹50</span>
+            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹70</span>
+          </div>
+        </div>
+
+        <!-- Deal Card 2: Mineral Water -->
+        <div onclick="addToCartById(201)" style="min-width: 155px; background: linear-gradient(180deg, #F0FDF4 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #DCFCE7; position: relative; transition: transform 0.2s;">
+          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">BEST PRICE</div>
+          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_water.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Mineral Water" />
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">Rail Neer<br/>Water 1L</div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹15</span>
+            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹20</span>
+          </div>
+        </div>
+
+        <!-- Deal Card 3: Power Bank -->
+        <div onclick="addToCartById(402)" style="min-width: 155px; background: linear-gradient(180deg, #EEF2FF 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #E0E7FF; position: relative; transition: transform 0.2s;">
+          <div style="position: absolute; top: 8px; left: 8px; background: #6366F1; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">45% OFF</div>
+          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_powerbank.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Power Bank" />
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">10,000mAh<br/>Power Bank</div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹799</span>
+            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹1,449</span>
+          </div>
+        </div>
+
+        <!-- Deal Card 4: Earphones -->
+        <div onclick="addToCartById(401)" style="min-width: 155px; background: linear-gradient(180deg, #FDF4FF 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F3E8FF; position: relative; transition: transform 0.2s;">
+          <div style="position: absolute; top: 8px; left: 8px; background: #A855F7; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">25% OFF</div>
+          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
+            <img src="product_earphones.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Earphones" />
+          </div>
+          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">boAt Bass<br/>Earphones</div>
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹349</span>
+            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹499</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUICK ACTIONS BAR ===== -->
+    <section style="background: #ffffff; padding: 6px 16px 14px; border-bottom: 6px solid #F1F5F0;">
+      <div style="display: flex; gap: 8px;">
+        <div onclick="navigateTo('page-pnr'); setTimeout(()=>switchPNRTab('pnr'), 100);" style="flex: 1; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border: 1px solid #A7F3D0; transition: all 0.2s;">
+          <div style="width: 36px; height: 36px; background: #118A4E; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #fff;">search</span>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 800; color: #1A1A1A;">Check PNR</div>
+            <div style="font-size: 9px; color: #6B7280; font-weight: 600;">Verify ticket status</div>
+          </div>
+        </div>
+        <div onclick="navigateTo('page-pnr'); setTimeout(()=>switchPNRTab('live'), 100);" style="flex: 1; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border: 1px solid #93C5FD; transition: all 0.2s;">
+          <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: #fff;">train</span>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 800; color: #1A1A1A;">Live Train</div>
+            <div style="font-size: 9px; color: #6B7280; font-weight: 600;">Track your train</div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Products List Section -->
-    <section class="px-margin-mobile mb-6">
+    <section class="px-margin-mobile mb-6" style="padding-top: 16px;">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-base font-headline font-bold text-on-surface" id="products-section">Trending Essentials</h3>
         <button class="text-primary-light font-bold text-xs hover:opacity-75 flex items-center gap-1" onclick="filterCategory('all', null)">
@@ -2333,28 +2458,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       
       <!-- Grid Items (sectioned layout rendered via Javascript) -->
       <div class="products-grid-premium" id="products-grid" style="padding-bottom: 100px;"></div>
-    </section>
-
-    <!-- Trust Badges -->
-    <section class="px-margin-mobile mb-10 flex gap-4">
-      <div class="flex-1 bg-white border border-outline-variant/30 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-        <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined text-lg">verified_user</span>
-        </div>
-        <div>
-          <div class="text-[10px] font-bold text-on-surface">Sealed Safety</div>
-          <div class="text-[8px] text-gray-500">Hygiene assured</div>
-        </div>
-      </div>
-      <div class="flex-1 bg-white border border-outline-variant/30 rounded-2xl p-3 flex items-center gap-3 shadow-sm">
-        <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined text-lg">schedule</span>
-        </div>
-        <div>
-          <div class="text-[10px] font-bold text-on-surface">Next Stop</div>
-          <div class="text-[8px] text-gray-500">Seat-guaranteed</div>
-        </div>
-      </div>
     </section>
   </div>
 

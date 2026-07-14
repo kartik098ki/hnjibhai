@@ -195,9 +195,7 @@ function saveState() {
 
 // ===== NAVIGATION =====
 function navigateTo(pageId) {
-  if (pageId === 'page-pnr' && appState.isPnrConfirmed) {
-    pageId = 'page-live-tracking';
-  }
+  // Allow direct navigation to page-pnr always (both PNR check and Live train tabs live there)
   const current = document.getElementById(appState.currentPage);
   const target = document.getElementById(pageId);
   if (!target || pageId === appState.currentPage) return;
@@ -2521,6 +2519,13 @@ function addToCart(productId) {
   updateSingleProductCardDOM(productId);
   
   if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function addToCartById(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+  addToCart(productId);
+  showToast(`${product.name} added to cart!`, 'success');
 }
 
 function addComboToCart(productIds) {
