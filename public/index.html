@@ -1754,31 +1754,31 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   <!-- ==================== PNR & TRAIN STATUS PAGE ==================== -->
   <div id="page-pnr" class="page tab-page bg-background active">
     <!-- Header Section (Elegant & Minimal Compact Hero) -->
-    <header class="relative overflow-hidden bg-white px-5 pt-6 pb-4 flex flex-row items-center justify-between min-h-[165px]">
-      <!-- Radial Glow and Masked Train Image container on the right -->
+    <header class="relative overflow-hidden px-5 pt-6 pb-5 flex flex-row items-center justify-between min-h-[165px]" style="background: linear-gradient(135deg, #118A4E 0%, #0A5C35 100%); border-bottom: 1px solid rgba(255,255,255,0.08);">
+      <!-- Masked Train Image container on the right -->
       <div class="absolute right-0 top-0 bottom-0 w-[45%] overflow-hidden pointer-events-none z-0">
-        <img src="pnr_hero.png" class="w-full h-full object-cover object-[70%_bottom]" style="mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);" alt="Premium Train Service" />
+        <img src="pnr_hero.png" class="w-full h-full object-cover object-[70%_bottom]" style="mix-blend-mode: overlay; opacity: 0.9; mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 100%);" alt="Premium Train Service" />
       </div>
 
       <div class="relative z-10 flex flex-col w-[55%] items-start">
         <!-- Action Bar & Badge -->
-        <div class="flex items-center gap-2 mb-2">
-          <button id="pnr-back-btn" class="w-7 h-7 flex items-center justify-center rounded-full bg-white border border-[#ECECEC] active:scale-95 transition-all text-[#111827]" style="display: none;">
+        <div class="flex items-center gap-2 mb-2.5">
+          <button id="pnr-back-btn" class="w-7 h-7 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/10 active:scale-95 transition-all text-white" style="display: none;">
             <span class="material-symbols-outlined text-[14px]">arrow_back</span>
           </button>
           
-          <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-[#118A4E]/15 bg-[#E7F6EF] text-[#118A4E] font-bold text-[8.5px] uppercase tracking-wider">
+          <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-white/20 bg-white/10 text-white font-bold text-[8.5px] uppercase tracking-wider">
             <span class="material-symbols-outlined text-[9px] fill-1">shield</span>
             Travel Essentials
           </div>
         </div>
 
-        <h1 class="text-xl font-black text-[#111827] tracking-tight leading-[1.15] mb-1.5 font-headline">
+        <h1 class="text-xl font-black text-white tracking-tight leading-[1.15] mb-1.5 font-headline">
           Delivered to<br/>
-          <span class="text-[#118A4E]">your seat.</span>
+          <span class="text-[#4ADE80]">your seat.</span>
         </h1>
         
-        <p class="text-[10px] text-[#6B7280] font-semibold leading-relaxed">
+        <p class="text-[10px] text-white/80 font-semibold leading-relaxed">
           Tasty snacks, drinks, chargers & comfort kits.
         </p>
       </div>
@@ -2223,116 +2223,54 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   <!-- ==================== SHOP / HOME PAGE ==================== -->
   <div id="page-shop" class="page tab-page bg-background">
     <!-- Hero Section -->
-    <section class="shop-hero-section" style="background: #ffffff !important; padding-top: calc(18px + var(--rq-safe-top)); padding-bottom: 6px; position: relative; overflow: hidden; border-bottom: 1.5px solid #F3F4F6;">
+    <section class="shop-hero-section" style="background: #ffffff !important; padding-top: calc(18px + var(--rq-safe-top)); padding-bottom: 18px; position: relative; overflow: hidden; border-bottom: 1.5px solid #F3F4F6;">
       <!-- Ambient aura background glows -->
       <div class="hero-aura-glow">
         <div class="aura-circle-1"></div>
         <div class="aura-circle-2"></div>
       </div>
       
-      <!-- Row 1: RAILQUICK branding + Profile button (No train here, no overlap) -->
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px; position: relative; z-index: 10;">
-        <span style="font-size: 10px; font-weight: 900; color: #117A4A; letter-spacing: 0.28em; text-transform: uppercase;">RAILQUICK</span>
-        <!-- Profile Button (Slightly larger, top-right) -->
-        <div onclick="navigateTo('page-account')" style="width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: 1.5px solid #E5E7EB; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-          <span class="material-symbols-outlined" style="font-size: 22px; color: #117A4A;">person</span>
-        </div>
-      </div>
-
-      <!-- Row 2: Title text (left) + Train image (right) -->
-      <div style="display: flex; align-items: flex-start; padding: 0 20px; margin-top: 10px; position: relative; min-height: 110px;">
-        <!-- Left: Text content -->
-        <div style="flex: 1; padding-top: 2px; position: relative; z-index: 5; max-width: 55%;">
+      <!-- Top Row Container (Unified Left Title + Right Profile & Train illustration) -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 0 20px; position: relative; z-index: 10;">
+        <!-- Left Side: Branding, Title and Select PNR Button -->
+        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; max-width: 55%; margin-top: 4px;">
+          <span style="font-size: 10px; font-weight: 800; color: #118A4E; letter-spacing: 0.28em; text-transform: uppercase; line-height: 1;">RAILQUICK</span>
           <h1 class="font-headline" id="shop-delivering-label" style="font-family: 'Outfit', sans-serif; margin: 0; text-align: left;">
             <span style="font-size: 28px; font-weight: 950; color: #1A1A1A; line-height: 1.05; letter-spacing: -0.02em; display: block;">Deliver in</span>
           </h1>
           
           <!-- Select Train / PNR Button -->
-          <div id="shop-delivery-header" style="margin-top: 8px;">
-            <button onclick="resetAppStateAndLogin()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1.5px solid #E0E0E0; color: #117A4A; padding: 8px 16px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.03em; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.2s;">
-              <span class="material-symbols-outlined" style="font-size: 15px; color: #117A4A;">train</span>
+          <div id="shop-delivery-header" style="margin-top: 10px;">
+            <button onclick="resetAppStateAndLogin()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1.5px solid #E0E0E0; color: #118A4E; padding: 8px 16px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.03em; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.2s;">
+              <span class="material-symbols-outlined" style="font-size: 15px; color: #118A4E;">train</span>
               Select Train / PNR
             </button>
           </div>
         </div>
-        
-        <!-- Right: Train hero image (absolute and large, sits under the profile button of Row 1) -->
-        <div style="position: absolute; right: -12px; top: -30px; width: 58%; z-index: 2; pointer-events: none;">
-          <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; mix-blend-mode: multiply;" />
-        </div>
-      </div>
 
-      <!-- Seat Card: Solid green card (moved higher up) -->
-      <div class="home-seat-card" id="shop-pnr-card" onclick="goToLiveStatusFromHome()" style="margin: 4px 20px 0; padding: 18px 20px; border-radius: 24px; background: linear-gradient(135deg, #117A4A 0%, #0E6B3F 50%, #0A5C35 100%) !important; box-shadow: 0 12px 30px rgba(10, 92, 53, 0.18) !important; border: 1px solid rgba(255, 255, 255, 0.12) !important; cursor: pointer; position: relative; z-index: 10;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-          <div>
-            <h2 id="shop-pnr-seat" style="font-size: 24px; font-weight: 900; color: #ffffff; letter-spacing: -0.02em; line-height: 1; font-family: var(--font-headline);">Seat —</h2>
+        <!-- Right Side: Profile icon (top-right) + Train hero image underneath -->
+        <div style="display: flex; flex-direction: column; align-items: flex-end; position: relative; min-height: 125px;">
+          <!-- Profile Button -->
+          <div onclick="navigateTo('page-account')" style="width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: 1.5px solid #E5E7EB; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04); position: relative; z-index: 10;">
+            <span class="material-symbols-outlined" style="font-size: 22px; color: #118A4E;">person</span>
           </div>
-          <div style="text-align: right;">
-            <p style="font-size: 8px; font-weight: 800; color: rgba(255,255,255,0.50); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 5px;">TICKET</p>
-            <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.08); padding: 4px 10px; border-radius: 999px;">
-              <span class="material-symbols-outlined fill-1" style="font-size: 12px; color: #4ADE80;">verified</span>
-              <span id="shop-pnr-status" style="font-size: 9px; font-weight: 800; color: #ffffff; letter-spacing: 0.04em;">No PNR</span>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; justify-content: space-between; align-items: center; color: #ffffff;">
-          <div style="display: flex; flex-direction: column; text-align: left;">
-            <span style="font-size: 8px; color: rgba(255,255,255,0.40); text-transform: uppercase; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 3px;">FROM</span>
-            <span id="shop-pnr-from" style="font-size: 12px; font-weight: 800; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</span>
-          </div>
-          <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 0 10px;">
-            <div style="width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center;">
-              <span class="material-symbols-outlined" style="font-size: 14px; color: rgba(255,255,255,0.45);">swap_horiz</span>
-            </div>
-          </div>
-          <div style="display: flex; flex-direction: column; text-align: right;">
-            <span style="font-size: 8px; color: rgba(255,255,255,0.40); text-transform: uppercase; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 3px;">TO</span>
-            <span id="shop-pnr-to" style="font-size: 12px; font-weight: 800; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</span>
+          <!-- Train Hero Image (floating below profile button) -->
+          <div style="position: absolute; right: -28px; top: 22px; width: 215px; pointer-events: none; z-index: 2;">
+            <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; mix-blend-mode: multiply;" />
           </div>
         </div>
       </div>
 
-      <!-- Search Section: Taller search box with spacing and neutral border -->
-      <div style="padding: 0 20px; margin-top: 14px; position: relative; z-index: 20;" onclick="openSearchOverlay()">
+      <!-- Search Section: Taller search box with spacing and neutral border, sitting directly below Train / Hero illustration -->
+      <div style="padding: 0 20px; margin-top: 18px; position: relative; z-index: 20;" onclick="openSearchOverlay()">
         <div class="search-glow-container" style="background: #ffffff; border-radius: 999px; box-shadow: 0 4px 18px rgba(17, 122, 74, 0.08); display: flex; align-items: center; height: 58px; cursor: pointer; padding: 0 20px;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="material-symbols-outlined" style="font-size: 22px; color: #117A4A;">search</span>
+            <span class="material-symbols-outlined" style="font-size: 22px; color: #118A4E;">search</span>
           </div>
           <!-- Typewriter container with static prefix outside -->
           <div style="flex-grow: 1; display: flex; align-items: center; font-size: 13.5px; font-weight: 700; color: #1A1A1A; user-select: none; text-align: left; margin-left: 8px;">
             <span style="color: #6B7280; font-weight: 500;">Search&nbsp;</span>
-            <span id="search-placeholder-text" style="color: #117A4A;">"hot samosa"</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live Orders Feed Ticker (Auto-scrolling upwards) -->
-      <div style="padding: 0 20px; margin-top: 14px; position: relative; z-index: 10;">
-        <div style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important; border-radius: 18px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15); border: 1.5px solid rgba(255, 255, 255, 0.08); overflow: hidden; height: 48px;">
-          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-            <span style="display: inline-block; width: 6px; height: 6px; background-color: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981; animation: pulseGlow 1.5s infinite alternate;"></span>
-            <span style="font-size: 8.5px; font-weight: 900; color: #10B981; text-transform: uppercase; letter-spacing: 0.12em;">LIVE STATUS</span>
-          </div>
-          <div style="flex-grow: 1; height: 28px; overflow: hidden; position: relative; margin-left: 12px;">
-            <div style="display: flex; flex-direction: column; animation: scrollUp 14s infinite ease-in-out;">
-              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
-                Seat <span style="color: #34D399; margin: 0 4px;">S-4 (Coach S2)</span> ordered Samosas & Chai
-              </div>
-              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
-                Seat <span style="color: #6EE7B7; margin: 0 4px;">B-12 (Coach A1)</span> ordered Sleep Pillow Combo
-              </div>
-              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
-                Seat <span style="color: #34D399; margin: 0 4px;">S-65 (Coach S5)</span> ordered Dual Fast Adapter
-              </div>
-              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
-                Seat <span style="color: #6EE7B7; margin: 0 4px;">H-3 (Coach B2)</span> ordered Cold Mineral Water
-              </div>
-              <!-- Loop repeat -->
-              <div style="height: 28px; display: flex; align-items: center; font-size: 9.5px; font-weight: 700; color: #F1F5F9; white-space: nowrap;">
-                Seat <span style="color: #34D399; margin: 0 4px;">S-4 (Coach S2)</span> ordered Samosas & Chai
-              </div>
-            </div>
+            <span id="search-placeholder-text" style="color: #118A4E;">"hot samosa"</span>
           </div>
         </div>
       </div>
@@ -2344,116 +2282,43 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       <div class="flex gap-6 overflow-x-auto no-scrollbar px-5 justify-between">
         <!-- All -->
         <button class="category-pill active flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('all', this)">
-          <div class="cat-icon-wrapper">
-            <img src="product_water.png" style="width: 36px; height: 36px; object-fit: contain;" alt="All" />
+          <div class="cat-icon-wrapper" style="display: flex; align-items: center; justify-content: center;">
+            <span class="material-symbols-outlined text-[24px]">grid_view</span>
           </div>
           <span class="cat-label font-headline">All</span>
         </button>
 
-        <!-- Match Day -->
+        <!-- Snacks & Food -->
         <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('comfort', this)">
           <div class="cat-icon-wrapper">
-            <img src="product_haldirams.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Snacks" />
+            <img src="product_haldirams.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Snacks & Food" />
           </div>
-          <span class="cat-label font-headline">Match Day</span>
+          <span class="cat-label font-headline">Snacks & Food</span>
         </button>
 
-        <!-- Fresh -->
+        <!-- Drinks -->
         <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('beverages', this)">
           <div class="cat-icon-wrapper">
             <img src="product_tea.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Drinks" />
           </div>
-          <span class="cat-label font-headline">Fresh</span>
+          <span class="cat-label font-headline">Drinks</span>
         </button>
 
         <!-- Electronics -->
         <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('tech', this)">
           <div class="cat-icon-wrapper">
-            <img src="product_earphones.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Tech" />
+            <img src="product_earphones.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Electronics" />
           </div>
           <span class="cat-label font-headline">Electronics</span>
         </button>
 
-        <!-- Fashion -->
+        <!-- Hygiene & Care -->
         <button class="category-pill flex flex-col items-center gap-1 focus:outline-none shrink-0" onclick="filterCategory('hygiene', this)">
           <div class="cat-icon-wrapper">
-            <img src="product_neckpillow.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Comfort" />
+            <img src="product_sanitizer.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Hygiene & Care" />
           </div>
-          <span class="cat-label font-headline">Fashion</span>
+          <span class="cat-label font-headline">Hygiene & Care</span>
         </button>
-      </div>
-    </section>
-
-    <!-- Station Dining Partners horizontal list -->
-    <section class="mb-8 mt-6" style="padding: 0 20px;">
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <div style="width: 3.5px; height: 16px; background: #118A4E; border-radius: 4px;"></div>
-          <h3 class="font-headline" style="font-size: 14px; font-weight: 900; color: #1E293B; text-transform: uppercase; letter-spacing: 0.02em; margin: 0;">Verified Station Partners</h3>
-        </div>
-      </div>
-
-      <!-- Horizontal scroll track of partners -->
-      <div class="flex gap-4 overflow-x-auto no-scrollbar" style="padding-bottom: 6px;">
-        <!-- Partner 1: Haldiram's -->
-        <div style="min-width: 200px; background: #ffffff; border: 1.5px solid #F1F5F9; border-radius: 20px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s;">
-          <div style="width: 46px; height: 46px; background: #FFF7ED; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #FFEDD5;">
-            <img src="product_haldirams.png" style="width: 34px; height: 34px; object-fit: contain;" alt="Haldiram's" />
-          </div>
-          <div style="text-align: left;">
-            <h4 style="font-size: 12px; font-weight: 900; color: #1E293B; margin: 0;">Haldiram's</h4>
-            <p style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 2px;">Pure Veg Snacks</p>
-            <div style="display: flex; align-items: center; gap: 2px; margin-top: 3px; font-size: 9px; font-weight: 800; color: #F59E0B;">
-              <span class="material-symbols-outlined fill-1" style="font-size: 10px; color: #F59E0B;">star</span>
-              <span>4.8</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partner 2: Chai Point -->
-        <div style="min-width: 200px; background: #ffffff; border: 1.5px solid #F1F5F9; border-radius: 20px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s;">
-          <div style="width: 46px; height: 46px; background: #F0FDF4; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #DCFCE7;">
-            <img src="product_tea.png" style="width: 34px; height: 34px; object-fit: contain;" alt="Chai Point" />
-          </div>
-          <div style="text-align: left;">
-            <h4 style="font-size: 12px; font-weight: 900; color: #1E293B; margin: 0;">Chai Point</h4>
-            <p style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 2px;">Fresh Masala Chai</p>
-            <div style="display: flex; align-items: center; gap: 2px; margin-top: 3px; font-size: 9px; font-weight: 800; color: #F59E0B;">
-              <span class="material-symbols-outlined fill-1" style="font-size: 10px; color: #F59E0B;">star</span>
-              <span>4.7</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partner 3: Domino's Pizza -->
-        <div style="min-width: 200px; background: #ffffff; border: 1.5px solid #F1F5F9; border-radius: 20px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s;">
-          <div style="width: 46px; height: 46px; background: #EFF6FF; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #DBEAFE;">
-            <img src="product_samosa.png" style="width: 34px; height: 34px; object-fit: contain; transform: rotate(15deg);" alt="Domino's Pizza" />
-          </div>
-          <div style="text-align: left;">
-            <h4 style="font-size: 12px; font-weight: 900; color: #1E293B; margin: 0;">Domino's Pizza</h4>
-            <p style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 2px;">Fresh Oven Pizzas</p>
-            <div style="display: flex; align-items: center; gap: 2px; margin-top: 3px; font-size: 9px; font-weight: 800; color: #F59E0B;">
-              <span class="material-symbols-outlined fill-1" style="font-size: 10px; color: #F59E0B;">star</span>
-              <span>4.6</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partner 4: Subway -->
-        <div style="min-width: 200px; background: #ffffff; border: 1.5px solid #F1F5F9; border-radius: 20px; padding: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s;">
-          <div style="width: 46px; height: 46px; background: #FFFDF5; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #FEF9C3;">
-            <img src="product_water.png" style="width: 34px; height: 34px; object-fit: contain;" alt="Subway" />
-          </div>
-          <div style="text-align: left;">
-            <h4 style="font-size: 12px; font-weight: 900; color: #1E293B; margin: 0;">Subway</h4>
-            <p style="font-size: 9px; color: #059669; font-weight: 700; margin-top: 2px;">Fresh Sandwiches</p>
-            <div style="display: flex; align-items: center; gap: 2px; margin-top: 3px; font-size: 9px; font-weight: 800; color: #F59E0B;">
-              <span class="material-symbols-outlined fill-1" style="font-size: 10px; color: #F59E0B;">star</span>
-              <span>4.5</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

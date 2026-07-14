@@ -353,11 +353,14 @@ async function checkPNRStatus() {
     }
     if (!liveData && mapped.trainNumber) liveData = getMockLiveStatus(mapped.trainNumber);
     
+    // bypassed destination restriction
+    /*
     if (hasTrainReachedDestination(mapped, liveData)) {
       hideLoading();
       showToast('Cannot enter app: Train has already reached your destination.', 'error');
       return;
     }
+    */
     
     appState.pnrData = mapped; 
     appState.pnrLiveData = liveData; 
@@ -368,39 +371,57 @@ async function checkPNRStatus() {
       appState.hasOnboarded = true;
       saveState();
       hideLoading(); 
-      document.getElementById('pnr-results').innerHTML = '';
-      document.getElementById('pnr-results').classList.add('hidden');
+      renderPNRResult(mapped);
       updateShopTopbar(); 
-      showToast('Ticket verified! Entering app...', 'success');
-      setTimeout(() => {
-        if (appState.cart && appState.cart.length > 0) {
-          navigateTo('page-cart');
+      showToast('Ticket verified! You can now browse the shop.', 'success');
+      
+      // Show sticky bottom continue bar
+      const bar = document.getElementById('continue-bar');
+      if (bar) {
+        const info = document.getElementById('train-info-mini');
+        let seatDesc = '';
+        if (mapped.passengerList && mapped.passengerList.length > 0) {
+          const p = mapped.passengerList[0];
+          seatDesc = p.coach ? `Seat ${p.coach}, ${p.berth || ''}` : 'Seat Assigned';
         } else {
-          navigateTo('page-shop');
+          seatDesc = 'Onboard seat-side delivery';
         }
-      }, 1500);
+        if (info) {
+          info.innerHTML = `<strong class="text-sm text-primary">${mapped.trainName || 'Train'}</strong><span class="text-xs text-secondary font-bold">${seatDesc}</span>`;
+        }
+        bar.classList.remove('hidden');
+      }
     } else {
       appState.isPnrConfirmed = false;
       appState.hasOnboarded = true;
       saveState();
       hideLoading();
-      document.getElementById('pnr-results').innerHTML = '';
-      document.getElementById('pnr-results').classList.add('hidden');
+      renderUnconfirmedPNRResult(mapped);
       showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
-      setTimeout(() => {
-        navigateTo('page-shop');
-      }, 1500);
+      
+      // Show sticky bottom continue bar
+      const bar = document.getElementById('continue-bar');
+      if (bar) {
+        const info = document.getElementById('train-info-mini');
+        if (info) {
+          info.innerHTML = `<strong class="text-sm text-primary">${mapped.trainName || 'Train'}</strong><span class="text-xs text-amber-650 font-bold">Waitlisted (Requires Confirmation)</span>`;
+        }
+        bar.classList.remove('hidden');
+      }
     }
   } catch (err) {
     console.warn('API Offline, running fallback mock:', err.message);
     const mock = getMockPNRData(pnr);
     const liveData = getMockLiveStatus(mock.trainNumber);
     
+    // bypassed destination restriction
+    /*
     if (hasTrainReachedDestination(mock, liveData)) {
       hideLoading();
       showToast('Cannot enter app: Train has already reached your destination.', 'error');
       return;
     }
+    */
     
     appState.pnrData = mock; 
     appState.pnrLiveData = liveData; 
@@ -411,20 +432,43 @@ async function checkPNRStatus() {
       appState.hasOnboarded = true;
       saveState();
       hideLoading(); 
-      document.getElementById('pnr-results').innerHTML = '';
-      document.getElementById('pnr-results').classList.add('hidden');
+      renderPNRResult(mock);
       updateShopTopbar(); 
-      showToast('Ticket verified! Entering app...', 'success');
-      setTimeout(() => navigateTo('page-shop'), 1500);
+      showToast('Ticket verified! You can now browse the shop.', 'success');
+      
+      // Show sticky bottom continue bar
+      const bar = document.getElementById('continue-bar');
+      if (bar) {
+        const info = document.getElementById('train-info-mini');
+        let seatDesc = '';
+        if (mock.passengerList && mock.passengerList.length > 0) {
+          const p = mock.passengerList[0];
+          seatDesc = p.coach ? `Seat ${p.coach}, ${p.berth || ''}` : 'Seat Assigned';
+        } else {
+          seatDesc = 'Onboard seat-side delivery';
+        }
+        if (info) {
+          info.innerHTML = `<strong class="text-sm text-primary">${mock.trainName || 'Train'}</strong><span class="text-xs text-secondary font-bold">${seatDesc}</span>`;
+        }
+        bar.classList.remove('hidden');
+      }
     } else {
       appState.isPnrConfirmed = false;
       appState.hasOnboarded = true;
       saveState();
       hideLoading();
-      document.getElementById('pnr-results').innerHTML = '';
-      document.getElementById('pnr-results').classList.add('hidden');
+      renderUnconfirmedPNRResult(mock);
       showToast('Waitlisted PNR verified! Seat-side delivery requires confirmation.', 'warning');
-      setTimeout(() => navigateTo('page-shop'), 1500);
+      
+      // Show sticky bottom continue bar
+      const bar = document.getElementById('continue-bar');
+      if (bar) {
+        const info = document.getElementById('train-info-mini');
+        if (info) {
+          info.innerHTML = `<strong class="text-sm text-primary">${mock.trainName || 'Train'}</strong><span class="text-xs text-amber-650 font-bold">Waitlisted (Requires Confirmation)</span>`;
+        }
+        bar.classList.remove('hidden');
+      }
     }
   }
 }
@@ -1190,62 +1234,51 @@ function initPnrPage() {
     }
   }
 
-  if (appState.hasOnboarded) {
-    // Inside the app: Make it a dedicated Live Status Tracking app only
-    if (headerTitle) headerTitle.textContent = 'Live Train Tracker';
-    if (headerDesc) headerDesc.textContent = 'Track train schedules and real-time halts';
-    if (tabHeaders) tabHeaders.style.display = 'none';
-    
-    // Switch internally to live status tab and hide the PNR panel entirely
+  // Keep PNR status and Live Train tabs, Segmented control, and inputs always available!
+  if (headerTitle) headerTitle.innerHTML = 'Delivered to<br/><span class="text-[#4ADE80]">your seat.</span>';
+  if (headerDesc) headerDesc.textContent = 'Tasty snacks, drinks, chargers & comfort kits.';
+  if (tabHeaders) tabHeaders.style.display = '';
+
+  const isLiveTab = tabLiveBtn && tabLiveBtn.classList.contains('text-white') || (appState.pnrLiveData && !appState.pnrData);
+  if (isLiveTab) {
     switchPNRTab('live');
     if (panelPnr) panelPnr.style.display = 'none';
     if (panelLive) panelLive.style.display = '';
-
-    const liveTrainInput = document.getElementById('live-train-input');
-    const trainNo = (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') 
-      ? appState.pnrData.trainNumber 
-      : (appState.pnrLiveData?.trainNo || appState.pnrLiveData?.trainNumber || '');
-    if (liveTrainInput && trainNo && !liveTrainInput.value) {
-      liveTrainInput.value = trainNo;
-    }
-    
-    if (resultsEl) {
-      if (appState.pnrLiveData) {
-        resultsEl.classList.remove('hidden');
-        renderLiveTrainResult(appState.pnrLiveData, trainNo);
-      } else {
-        resultsEl.classList.add('hidden');
-        resultsEl.innerHTML = '';
-      }
-    }
   } else {
-    // Onboarding Mode: Normal PNR / Live Status switcher tabs
-    if (headerTitle) headerTitle.textContent = 'PNR & Train Status';
-    if (headerDesc) headerDesc.textContent = 'Live updates • Hassle-free journey';
-    if (tabHeaders) tabHeaders.style.display = 'flex';
-    if (tabPnrBtn) tabPnrBtn.style.display = '';
+    switchPNRTab('pnr');
     if (panelPnr) panelPnr.style.display = '';
-    if (panelLive) panelLive.style.display = '';
-    
-    if (appState.pnrLiveData) {
-      switchPNRTab('live');
-      const liveTrainInput = document.getElementById('live-train-input');
-      const trainNo = (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') 
-        ? appState.pnrData.trainNumber 
-        : (appState.pnrLiveData.trainNo || appState.pnrLiveData.trainNumber || '');
-      if (liveTrainInput && trainNo) {
-        liveTrainInput.value = trainNo;
+    if (panelLive) panelLive.style.display = 'none';
+  }
+
+  // Restore train value if existing in state
+  const liveTrainInput = document.getElementById('live-train-input');
+  const trainNo = (appState.pnrData && appState.pnrData.trainNumber && appState.pnrData.trainNumber !== '—') 
+    ? appState.pnrData.trainNumber 
+    : (appState.pnrLiveData?.trainNo || appState.pnrLiveData?.trainNumber || '');
+  if (liveTrainInput && trainNo && !liveTrainInput.value) {
+    liveTrainInput.value = trainNo;
+  }
+
+  // Restore PNR result if checked
+  if (resultsEl) {
+    if (appState.pnrData && appState.pnrData.pnrNumber && appState.pnrData.pnrNumber !== '—') {
+      resultsEl.classList.remove('hidden');
+      const isConfirmed = isTicketConfirmed(appState.pnrData);
+      if (isConfirmed) {
+        renderPNRResult(appState.pnrData);
+      } else {
+        renderUnconfirmedPNRResult(appState.pnrData);
       }
-      if (resultsEl) {
-        resultsEl.classList.remove('hidden');
-        renderLiveTrainResult(appState.pnrLiveData, trainNo);
-      }
+    } else if (appState.pnrLiveData) {
+      resultsEl.classList.remove('hidden');
+      renderLiveTrainResult(appState.pnrLiveData, trainNo);
     } else {
-      switchPNRTab('pnr');
+      resultsEl.classList.add('hidden');
+      resultsEl.innerHTML = '';
     }
   }
 
-  // Testimonials should always remain visible on PNR/onboarding page
+  // Testimonials should always remain visible on PNR page
   document.getElementById('testimonials-section')?.classList.remove('hidden');
 }
 
