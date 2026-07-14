@@ -2326,30 +2326,42 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         font-family: 'Outfit', sans-serif;
       }
     </style>
-    <div style="display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #ECEFF1;padding:4px 6px;scrollbar-width:none;" class="no-scrollbar">
+    <div style="display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #ECEFF1;padding:6px 6px;scrollbar-width:none;" class="no-scrollbar">
       <div class="rq-cat-tab active" onclick="filterCategory('all',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#E8F5EE;">🛍️</div>
+        <div class="rq-cat-tab-icon" style="background:#E8F5EE;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#118A4E;font-weight:bold;">storefront</span>
+        </div>
         <span class="rq-cat-tab-label">All</span>
       </div>
       <div class="rq-cat-tab" onclick="filterCategory('comfort',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#FFFBEB;">🍟</div>
+        <div class="rq-cat-tab-icon" style="background:#FFFBEB;">
+          <img src="product_haldirams.png" style="width:32px; height:32px; object-fit:contain;" alt="Snacks" />
+        </div>
         <span class="rq-cat-tab-label">Snacks</span>
       </div>
       <div class="rq-cat-tab" onclick="filterCategory('beverages',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#FFF7ED;">☕</div>
+        <div class="rq-cat-tab-icon" style="background:#FFF7ED;">
+          <img src="product_tea.png" style="width:34px; height:34px; object-fit:contain;" alt="Chai & Drinks" />
+        </div>
         <span class="rq-cat-tab-label">Chai &amp; Drinks</span>
       </div>
       <div class="rq-cat-tab" style="position:relative;" onclick="filterCategory('tech',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#F5F3FF;">🎧</div>
+        <div class="rq-cat-tab-icon" style="background:#F5F3FF;">
+          <img src="product_earphones.png" style="width:32px; height:32px; object-fit:contain;" alt="Electronics" />
+        </div>
         <span class="rq-cat-tab-label">Electronics</span>
         <div class="rq-cat-new">NEW</div>
       </div>
       <div class="rq-cat-tab" onclick="filterCategory('hygiene',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#F0F9FF;">🧴</div>
+        <div class="rq-cat-tab-icon" style="background:#F0F9FF;">
+          <img src="product_sanitizer.png" style="width:30px; height:30px; object-fit:contain;" alt="Hygiene" />
+        </div>
         <span class="rq-cat-tab-label">Hygiene</span>
       </div>
       <div class="rq-cat-tab" onclick="filterCategory('comfort',null);setRQTab(this)">
-        <div class="rq-cat-tab-icon" style="background:#ECFDF5;">🛌</div>
+        <div class="rq-cat-tab-icon" style="background:#ECFDF5;">
+          <img src="product_neckpillow.png" style="width:32px; height:32px; object-fit:contain;" alt="Comfort" />
+        </div>
         <span class="rq-cat-tab-label">Comfort</span>
       </div>
     </div>
@@ -2360,14 +2372,10 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       }
     </script>
 
-    <!-- ===== GREEN HERO BANNER (RE-DESIGNED) ===== -->
-    <section style="margin:16px 12px; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #094F2C 0%, #118A4E 100%); box-shadow:0 10px 30px rgba(17, 138, 78, 0.2); min-height:165px; display:flex;">
-      <!-- Background Ambient Light -->
-      <div style="position:absolute; top:-50px; left:-50px; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,0.08); filter:blur(20px); pointer-events:none;"></div>
-      <div style="position:absolute; bottom:-30px; right:10%; width:120px; height:120px; border-radius:50%; background:rgba(22, 163, 94, 0.4); filter:blur(30px); pointer-events:none;"></div>
-
-      <!-- Left Content (62% width) -->
-      <div style="position:relative; z-index:2; padding:20px 12px 20px 20px; width:62%; display:flex; flex-direction:column; justify-content:center;">
+    <!-- ===== GREEN HERO BANNER (RE-DESIGNED & BLENDED) ===== -->
+    <section style="margin:16px 12px; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #0A5C35 0%, #118A4E 100%); box-shadow:0 10px 30px rgba(17, 138, 78, 0.2); min-height:165px; display:flex;">
+      <!-- Left Content (58% width) -->
+      <div style="position:relative; z-index:2; padding:20px 12px 20px 20px; width:58%; display:flex; flex-direction:column; justify-content:center;">
         <div style="display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.15); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.25); border-radius:30px; padding:3px 10px; width:fit-content; margin-bottom:8px;">
           <span style="font-size:9px; font-weight:800; color:#fff; letter-spacing:0.06em; text-transform:uppercase; display:flex; align-items:center; gap:3px; font-family:'Outfit',sans-serif;">
             <span class="material-symbols-outlined" style="font-size:11px; color:#4ADE80; font-weight:900;">bolt</span>
@@ -2386,12 +2394,12 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
         </button>
       </div>
 
-      <!-- Right Content (38% width with image overlay) -->
-      <div style="position:relative; width:38%; display:flex; align-items:flex-end; justify-content:center; overflow:visible;">
-        <!-- Glowing Ring behind the delivery boy -->
-        <div style="position:absolute; width:110px; height:110px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.15); bottom:-15px; z-index:1; transform:scale(1.1);"></div>
-        <!-- Delivery boy image -->
-        <img src="delivery_person.png" style="max-height:155px; width:auto; z-index:2; filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25)); object-fit:contain; transform:translateY(4px);" alt="Seat Delivery" />
+      <!-- Right Content (42% width with blended photo) -->
+      <div style="position:relative; width:42%; overflow:hidden;">
+        <!-- The Image -->
+        <img src="delivery_person.png" style="width:100%; height:100%; object-fit:cover; object-position:center; position:absolute; right:0; top:0;" alt="Seat Delivery" />
+        <!-- Gradient Overlay to dissolve the sharp left edge into the card background -->
+        <div style="position:absolute; inset:0; background:linear-gradient(to right, #0d7945 0%, rgba(13,121,69,0.5) 30%, transparent 100%); pointer-events:none;"></div>
       </div>
     </section>
 
@@ -2406,26 +2414,26 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       </div>
       <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:0 16px;">
         <!-- Promo Card 1: Snacks -->
-        <div onclick="filterCategory('comfort',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🍟</div>
+        <div onclick="filterCategory('comfort',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:115px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <img src="product_haldirams.png" style="width:44px; height:44px; object-fit:contain; margin-bottom:6px;" alt="Snacks & Food" />
           <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Snacks &amp; Food</div>
           <span style="background:#E8F5EE; color:#118A4E; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(17,138,78,0.15);">30% OFF</span>
         </div>
         <!-- Promo Card 2: Drinks -->
-        <div onclick="filterCategory('beverages',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px; line-height:1; margin-bottom:6px;">☕</div>
+        <div onclick="filterCategory('beverages',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:115px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <img src="product_tea.png" style="width:44px; height:44px; object-fit:contain; margin-bottom:6px;" alt="Chai & Drinks" />
           <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Chai &amp; Drinks</div>
           <span style="background:#FFF9E6; color:#D97706; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(217,119,6,0.15);">From ₹15</span>
         </div>
         <!-- Promo Card 3: Electronics -->
-        <div onclick="filterCategory('tech',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🎧</div>
+        <div onclick="filterCategory('tech',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:115px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <img src="product_earphones.png" style="width:44px; height:44px; object-fit:contain; margin-bottom:6px;" alt="Electronics" />
           <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Electronics</div>
           <span style="background:#F3E8FF; color:#7C3AED; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(124,58,237,0.15);">45% OFF</span>
         </div>
         <!-- Promo Card 4: Hygiene -->
-        <div onclick="filterCategory('hygiene',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
-          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🧴</div>
+        <div onclick="filterCategory('hygiene',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:115px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <img src="product_sanitizer.png" style="width:40px; height:40px; object-fit:contain; margin-bottom:10px;" alt="Hygiene" />
           <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Hygiene</div>
           <span style="background:#E0F2FE; color:#0284C7; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(2,132,199,0.15);">Essentials</span>
         </div>
