@@ -651,13 +651,8 @@ function buildPremiumStationTimelineHTML(liveData, statusNote, isDelayed) {
     const halt = getHaltMinutes(s);
     const haltText = halt ? `<span class="inline-flex items-center gap-0.5 text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-md"><span class="material-symbols-outlined text-[10px]">pause_circle</span>Halt ${halt}</span>` : '';
     
-    // Determine blur/low-opacity classes
+    // Determine blur/low-opacity classes (Disabled to keep timeline fully visible)
     let blurClass = '';
-    if (nodeClass === 'passed') {
-      blurClass = 'station-past-blur';
-    } else if (nodeClass === 'upcoming' && (currentIdx !== -1 && idx > currentIdx + 3)) {
-      blurClass = 'station-upcoming-blur';
-    }
     
     return `
       <div class="live-station-node ${nodeClass} ${blurClass} ${isCurrent ? 'current-active-node' : ''}" style="animation-delay:${Math.min(idx * 30, 300)}ms" onclick="handleStationNodeClick(this)">
@@ -669,33 +664,8 @@ function buildPremiumStationTimelineHTML(liveData, statusNote, isDelayed) {
       </div>`;
   });
 
-  // Inject helper banners
-  let finalHTML = '';
-  
-  // Count passed stations
-  const passedCount = currentIdx > 0 ? currentIdx : 0;
-  if (passedCount > 0) {
-    finalHTML += `
-      <div class="past-reveal-banner flex items-center justify-center gap-1.5 py-2.5 px-4 text-[10px] font-black text-emerald-800 bg-emerald-50/40 hover:bg-emerald-50 rounded-2xl mb-4 border border-dashed border-emerald-100 cursor-pointer transition-colors shadow-sm select-none" onclick="togglePastStationsReveal(event)">
-        <span class="material-symbols-outlined text-sm text-emerald-600 animate-pulse">visibility</span>
-        <span>Show ${passedCount} Passed Station${passedCount > 1 ? 's' : ''} (Tap to unblur)</span>
-      </div>
-    `;
-  }
-  
   // Wrap list inside an id-tagged div
-  finalHTML += `<div id="timeline-list" class="space-y-0.5 relative">${htmlList.join('')}</div>`;
-  
-  // Count far upcoming stations
-  const farUpcomingCount = currentIdx !== -1 ? Math.max(0, timeline.length - (currentIdx + 4)) : 0;
-  if (farUpcomingCount > 0) {
-    finalHTML += `
-      <div class="upcoming-reveal-banner flex items-center justify-center gap-1.5 py-2.5 px-4 text-[10px] font-black text-emerald-800 bg-emerald-50/40 hover:bg-emerald-50 rounded-2xl mt-4 border border-dashed border-emerald-100 cursor-pointer transition-colors shadow-sm select-none" onclick="toggleUpcomingStationsReveal(event)">
-        <span class="material-symbols-outlined text-sm text-emerald-600 animate-pulse">visibility</span>
-        <span>Show ${farUpcomingCount} Far Station${farUpcomingCount > 1 ? 's' : ''} (Tap to unblur)</span>
-      </div>
-    `;
-  }
+  let finalHTML = `<div id="timeline-list" class="space-y-0.5 relative">${htmlList.join('')}</div>`;
   
   return finalHTML;
 }
@@ -2080,22 +2050,15 @@ function updateShopTopbar() {
 
     if (labelEl) {
       labelEl.innerHTML = `
-        <span style="font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; color: #117A4A; display: block; margin-bottom: 4px;">Deliver in</span>
-        <span style="font-size: 26px; font-weight: 950; color: #1A1A1A; line-height: 1.1; letter-spacing: -0.02em;">${d.trainName}</span>
+        <span style="font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em; color: #A7F3D0; display: block; margin-bottom: 2px;">Delivering to</span>
+        <span style="font-size: 15px; font-weight: 900; color: #FFFFFF; line-height: 1.25; font-family:'Outfit',sans-serif; display:block;">
+          ${d.trainName} (${d.trainNumber}) · Coach ${coach || '—'} · Seat ${seat || '—'}
+        </span>
       `;
     }
+    // Restore the headerEl defaults
     if (headerEl) {
-      headerEl.style.marginTop = "12px";
-      headerEl.innerHTML = `
-        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6B7280;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">
-          <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">train</span>
-          <span>Train No: ${d.trainNumber} ${coach ? `· Seat: ${coach}-${seat} ${berth ? `(${berth})` : ''}` : '· Seat: Click to Verify'}</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:#9CA3AF;font-weight:500;margin-top:3px;">
-          <span class="material-symbols-outlined" style="font-size:12px;color:#117A4A;">route</span>
-          <span>${d.source.split('(')[0].trim()} to ${d.destination.split('(')[0].trim()}</span>
-        </div>
-      `;
+      headerEl.style.marginTop = "0px";
     }
 
     if (seatEl) {
@@ -2117,17 +2080,11 @@ function updateShopTopbar() {
   } else {
     if (labelEl) {
       labelEl.innerHTML = `
-        <span style="font-size: 28px; font-weight: 950; color: #1A1A1A; line-height: 1.05; letter-spacing: -0.02em; display: block;">Deliver in</span>
+        <span style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);">Select Train / PNR to order</span>
       `;
     }
     if (headerEl) {
-      headerEl.className = "mt-3";
-      headerEl.innerHTML = `
-        <button class="flex items-center gap-1.5 bg-white border border-[#ECECEC] text-[#118A4E] px-3.5 py-2 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.05)] active:scale-95 transition-all text-[10px] font-extrabold uppercase tracking-wider font-headline" onclick="resetAppStateAndLogin()">
-          <span class="material-symbols-outlined text-[14px] text-secondary fill-1">train</span>
-          Select Train / PNR
-        </button>
-      `;
+      headerEl.style.marginTop = "0px";
     }
     if (seatEl) seatEl.textContent = 'Seat —';
     if (statusEl) statusEl.textContent = 'No Ticket';
@@ -2212,9 +2169,9 @@ function renderProducts(products) {
     const tech = products.filter(p => p.category === 'tech');
 
     const sections = [
-      { title: '🍵 Chai, Coffee & Snacks', items: snacks, accentColor: '#118A4E' },
-      { title: '🧼 Travel Hygiene & Comfort', items: comfort, accentColor: '#D97706' },
-      { title: '🔌 Tech & Electronics', items: tech, accentColor: '#7C3AED' }
+      { title: 'Chai, Coffee & Snacks', items: snacks, accentColor: '#118A4E' },
+      { title: 'Travel Hygiene & Comfort', items: comfort, accentColor: '#D97706' },
+      { title: 'Tech & Electronics', items: tech, accentColor: '#7C3AED' }
     ];
 
     grid.innerHTML = sections.map(sec => {
@@ -3829,7 +3786,7 @@ function updateBottomNav(pageId) {
   if (!nav) return;
   
   // Bottom navigation visibility mapping
-  const navPages = ['page-shop', 'page-pnr', 'page-live-tracking', 'page-orders', 'page-account', 'page-category-view', 'page-search'];
+  const navPages = ['page-shop', 'page-pnr', 'page-live-tracking', 'page-orders', 'page-offers', 'page-category-view', 'page-search'];
   let canShowNav = navPages.includes(pageId);
   
   if (pageId === 'page-pnr' && !appState.hasOnboarded) {
@@ -3860,7 +3817,7 @@ function updateBottomNav(pageId) {
     const icon = item.querySelector('.nav-icon');
     const isLiveActive = (targetPage === 'page-live-tracking' && (pageId === 'page-live-tracking' || pageId === 'page-pnr'));
     if (targetPage === pageId || isLiveActive ||
-        (targetPage === 'page-account' && ['page-offers', 'page-support', 'page-games'].includes(pageId)) ||
+        (targetPage === 'page-offers' && ['page-offers', 'page-support', 'page-games'].includes(pageId)) ||
         (targetPage === 'page-shop' && pageId === 'page-category-view')) {
       item.classList.add('active');
       if (icon) icon.classList.add('fill-1');

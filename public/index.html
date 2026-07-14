@@ -2407,7 +2407,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     <section style="background:#F6F8F7; padding:18px 0 16px;">
       <div style="padding:0 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between;">
         <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size:16px;">⚡</span>
           <h3 style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; color:#1e293b; margin:0;">Super Deals</h3>
         </div>
         <button onclick="filterCategory('all',null)" style="font-size:11px; font-weight:700; color:#118A4E; background:none; border:none; cursor:pointer; display:flex; align-items:center; gap:2px;">View All <span class="material-symbols-outlined" style="font-size:14px; font-weight:bold;">chevron_right</span></button>
@@ -2444,7 +2443,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     <section style="background: #ffffff; padding: 18px 0 12px; border-bottom: 1px solid #ECEFF1;">
       <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 16px;">🍵</span>
           <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 800; color: #1E293B; margin: 0;">Chai &amp; Snacks</h3>
           <div style="display: inline-flex; align-items: center; gap: 3px; background: #FFF9E6; padding: 3px 8px; border-radius: 999px;">
             <span class="material-symbols-outlined" style="font-size: 12px; color: #D97706; font-weight: bold;">local_cafe</span>
@@ -2983,20 +2981,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
             </div>
           </div>
 
-          <!-- Demo Login fallback for testing -->
-          <div class="w-full max-w-sm mt-4 px-2">
-            <div class="relative flex py-2 items-center justify-center mb-3">
-              <div class="w-full border-t border-slate-200/60"></div>
-              <span class="absolute bg-[#f6f8f7] px-3 text-[9px] font-black text-slate-400 uppercase tracking-[0.25em] leading-none select-none">Or</span>
-            </div>
-            <button class="w-full bg-[#0C8346] hover:bg-emerald-700 text-white rounded-2xl py-3.5 px-4 flex items-center justify-center gap-2 text-xs font-black uppercase tracking-wider active:scale-95 transition-all shadow-md btn-tactile" onclick="simulateDemoLogin()">
-              <span class="material-symbols-outlined text-sm">login</span>
-              Continue with Demo Login
-            </button>
-          </div>
-          
-
-          <!-- Security Badge -->
+          <!-- Restart Button for Logged Out users too -->
           <div class="mt-6 flex items-center gap-2 text-gray-400">
             <span class="material-symbols-outlined text-sm">lock</span>
             <span class="text-[10px] font-medium">Secured by Clerk · End-to-end encrypted</span>
@@ -3300,7 +3285,7 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     <div class="modal-card bg-white rounded-t-[2rem] w-full max-w-[412px] max-h-[85vh] overflow-y-auto z-50 relative animate-fade-in-up" id="modal-card">
       <button class="modal-close w-8 h-8 rounded-full bg-black/5 flex items-center justify-center text-gray-600 absolute top-4 right-4 z-50" onclick="closeProductModal()">✕</button>
       
-      <div class="modal-img-wrapper bg-[#F4F6F5] h-52 w-full flex items-center justify-center p-6 relative">
+      <div class="modal-img-wrapper bg-transparent h-52 w-full flex items-center justify-center p-6 relative">
         <img id="modal-img" src="" alt="" class="max-h-full max-w-full object-contain" />
       </div>
       
@@ -3363,9 +3348,9 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
       <span class="nav-label">Orders</span>
       <span class="nav-badge" id="nav-orders-badge" style="display:none;">0</span>
     </div>
-    <div class="nav-item" data-page="page-account" onclick="navTo('page-account')">
-      <span class="material-symbols-outlined nav-icon">person</span>
-      <span class="nav-label">Account</span>
+    <div class="nav-item" data-page="page-offers" onclick="navTo('page-offers')">
+      <span class="material-symbols-outlined nav-icon">local_offer</span>
+      <span class="nav-label">Offers</span>
     </div>
   </nav>
 
