@@ -34,30 +34,30 @@ let clerkInstance = null;
 const PRODUCTS = [
   // Comfort / Travel category (Match Day / Comfort)
   { id: 101, name: 'Premium Memory Foam Neck Pillow', price: 299, category: 'comfort', weight: '1 Unit', img: 'product_neckpillow.png', rating: 4.9, reviews: 1420, description: 'High-density memory foam pillow providing 360-degree neck support for sitting berths.', tags: ['Comfort', 'Best Seller'] },
-  { id: 102, name: 'Blackout Eye Mask & Foam Earplugs', price: 99, category: 'comfort', weight: '1 Combo Pack', img: 'product_neckpillow.png', rating: 4.7, reviews: 560, description: '3D contoured light-blocking eye mask paired with high-decibel reduction earplugs.', tags: ['Sleep', 'Travel'] },
+  { id: 102, name: 'Blackout Eye Mask & Foam Earplugs', price: 99, category: 'comfort', weight: '1 Combo Pack', img: 'https://images.unsplash.com/photo-1598136490941-30d885318abd?w=400&h=400&fit=crop', rating: 4.7, reviews: 560, description: '3D contoured light-blocking eye mask paired with high-decibel reduction earplugs.', tags: ['Sleep', 'Travel'] },
   { id: 103, name: 'Haldiram\'s Bhujia Sev Combo Pack', price: 45, category: 'comfort', weight: '150g + 50g Extra', img: 'product_haldirams.png', rating: 4.9, reviews: 3120, description: 'Crispy and spicy gram flour noodle snacks, perfect companion for tea times.', tags: ['Snacks', 'Veg'] },
-  { id: 104, name: 'Bingo Potato Chips (Masala Masti)', price: 30, category: 'comfort', weight: '130g Pack', img: 'product_haldirams.png', rating: 4.8, reviews: 2200, description: 'Spicy and crunchy potato chips for instant journey munching.', tags: ['Snacks', 'Veg'] },
+  { id: 104, name: 'Bingo Potato Chips (Masala Masti)', price: 30, category: 'comfort', weight: '130g Pack', img: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&h=400&fit=crop', rating: 4.8, reviews: 2200, description: 'Spicy and crunchy potato chips for instant journey munching.', tags: ['Snacks', 'Veg'] },
   { id: 105, name: 'IRCTC Hot Samosa & Masala Chai Combo', price: 50, category: 'comfort', weight: '2 Samosas + 1 Tea', img: 'product_tea.png', rating: 4.9, reviews: 6890, description: 'Golden crispy samosas served with hot traditional claypot ginger masala tea.', tags: ['Hot Food', 'Chai', 'Traditional'] },
 
   // Beverages / Fresh category
   { id: 201, name: 'Chilled Rail Neer Mineral Water', price: 15, category: 'beverages', weight: '1 Litre', img: 'product_water.png', rating: 4.9, reviews: 9450, description: 'Purified and mineral-enriched drinking water bottle, officially approved by IRCTC.', tags: ['Water', 'Hydration', 'Official'] },
-  { id: 202, name: 'Coca-Cola Chilled Beverage Can', price: 40, category: 'beverages', weight: '300 ml', img: 'product_water.png', rating: 4.8, reviews: 4320, description: 'Refreshing, ice-chilled carbonated soft drink delivered straight to your seat.', tags: ['Cold Drink', 'Veg'] },
+  { id: 202, name: 'Coca-Cola Chilled Beverage Can', price: 40, category: 'beverages', weight: '300 ml', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=400&fit=crop', rating: 4.8, reviews: 4320, description: 'Refreshing, ice-chilled carbonated soft drink delivered straight to your seat.', tags: ['Cold Drink', 'Veg'] },
   { id: 203, name: 'Claypot Ginger Masala Chai', price: 20, category: 'beverages', weight: '1 Kulhad Cup', img: 'product_tea.png', rating: 4.9, reviews: 8120, description: 'Freshly brewed piping hot tea with ginger and cardamom in an eco-friendly kulhad.', tags: ['Chai', 'Hot', 'Traditional'] },
   { id: 204, name: 'Nescafe Classic Rich Hot Coffee', price: 30, category: 'beverages', weight: '1 Cup', img: 'product_tea.png', rating: 4.7, reviews: 2900, description: 'Hot instant coffee brewed with fresh creamed milk for an instant energy boost.', tags: ['Coffee', 'Hot'] },
-  { id: 205, name: 'Real Mixed Fruit Juice Tetrapack', price: 30, category: 'beverages', weight: '200 ml', img: 'product_water.png', rating: 4.9, reviews: 1890, description: 'Delicious mixed fruit juice packed with natural vitamins, safe for kids.', tags: ['Juice', 'Cold'] },
+  { id: 205, name: 'Real Mixed Fruit Juice Tetrapack', price: 30, category: 'beverages', weight: '200 ml', img: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=400&fit=crop', rating: 4.9, reviews: 1890, description: 'Delicious mixed fruit juice packed with natural vitamins, safe for kids.', tags: ['Juice', 'Cold'] },
 
   // Hygiene / Fashion category
   { id: 301, name: 'Dettol Instant Hand Sanitizer Gel', price: 50, category: 'hygiene', weight: '50 ml', img: 'product_sanitizer.png', rating: 4.8, reviews: 2450, description: 'germ protection formula that kills 99.9% germs without needing water.', tags: ['Hygiene', 'Essential'] },
   { id: 302, name: 'Colgate Fresh Mint Toothbrush & Paste', price: 55, category: 'hygiene', weight: '1 Kit', img: 'product_toothbrush.png', rating: 4.7, reviews: 920, description: 'Compact travel toothbrush paired with a mini toothpaste tube.', tags: ['Dental', 'Travel'] },
-  { id: 303, name: 'Anti-Bacterial Wet Cleansing Wipes', price: 79, category: 'hygiene', weight: '25 Wipes', img: 'product_sanitizer.png', rating: 4.8, reviews: 1840, description: 'Refreshing wet wipes to easily clean hands, face, or dirty train seat trays.', tags: ['Wipes', 'Hygiene'] },
-  { id: 304, name: 'PeeSafe Toilet Seat Sanitizer Spray', price: 110, category: 'hygiene', weight: '75 ml Spray', img: 'product_sanitizer.png', rating: 4.9, reviews: 1120, description: 'Fast-drying sanitizing spray for clean and worry-free train restroom use.', tags: ['Hygiene', 'Travel'] },
-  { id: 305, name: 'Whisper Ultra Clean Sanitary Pads Pack', price: 85, category: 'hygiene', weight: '7 Pads', img: 'product_sanitizer.png', rating: 4.8, reviews: 650, description: 'Reliable feminine hygiene essential for long-duration train travels.', tags: ['Hygiene', 'Feminine'] },
+  { id: 303, name: 'Anti-Bacterial Wet Cleansing Wipes', price: 79, category: 'hygiene', weight: '25 Wipes', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=400&fit=crop', rating: 4.8, reviews: 1840, description: 'Refreshing wet wipes to easily clean hands, face, or dirty train seat trays.', tags: ['Wipes', 'Hygiene'] },
+  { id: 304, name: 'PeeSafe Toilet Seat Sanitizer Spray', price: 110, category: 'hygiene', weight: '75 ml Spray', img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop', rating: 4.9, reviews: 1120, description: 'Fast-drying sanitizing spray for clean and worry-free train restroom use.', tags: ['Hygiene', 'Travel'] },
+  { id: 305, name: 'Whisper Ultra Clean Sanitary Pads Pack', price: 85, category: 'hygiene', weight: '7 Pads', img: 'https://images.unsplash.com/photo-1583947581924-860bda6a26df?w=400&h=400&fit=crop', rating: 4.8, reviews: 650, description: 'Reliable feminine hygiene essential for long-duration train travels.', tags: ['Hygiene', 'Feminine'] },
 
   // Tech / Electronics category
   { id: 401, name: 'boAt BassHeads Wired Earphones Mic', price: 349, category: 'tech', weight: 'Wired HD Mic', img: 'product_earphones.png', rating: 4.8, reviews: 5200, description: 'In-ear wired earphones with dynamic bass and mic for handsfree calling.', tags: ['Audio', 'boAt'] },
   { id: 402, name: '10,000mAh Slim Fast Power Bank', price: 799, category: 'tech', weight: '12W Dual Output', img: 'product_powerbank.png', rating: 4.8, reviews: 6100, description: 'Compact power bank to keep your phone charged throughout the long journey.', tags: ['Power', 'Fast Charger'] },
-  { id: 403, name: '20W Dual Port Fast Charger Adapter', price: 299, category: 'tech', weight: 'Type-C + USB', img: 'product_powerbank.png', rating: 4.7, reviews: 1840, description: 'Fast wall charger supporting dual ports for train cabin sockets.', tags: ['Charger', 'Fast'] },
-  { id: 404, name: 'Tough Braided Type-C Charging Cable', price: 149, category: 'tech', weight: '1.2 Meter', img: 'product_powerbank.png', rating: 4.6, reviews: 980, description: 'Durable fast-charging data cable, built to withstand rough travel use.', tags: ['Cable', 'USB-C'] }
+  { id: 403, name: '20W Dual Port Fast Charger Adapter', price: 299, category: 'tech', weight: 'Type-C + USB', img: 'https://images.unsplash.com/photo-1616440347437-b1c73416efc2?w=400&h=400&fit=crop', rating: 4.7, reviews: 1840, description: 'Fast wall charger supporting dual ports for train cabin sockets.', tags: ['Charger', 'Fast'] },
+  { id: 404, name: 'Tough Braided Type-C Charging Cable', price: 149, category: 'tech', weight: '1.2 Meter', img: 'https://images.unsplash.com/photo-1585250481062-878848f07fcb?w=400&h=400&fit=crop', rating: 4.6, reviews: 980, description: 'Durable fast-charging data cable, built to withstand rough travel use.', tags: ['Cable', 'USB-C'] }
 ];
 
 function isTicketConfirmed(pnrData) {
@@ -1038,16 +1038,16 @@ function getDashboardProductCardHTML(p) {
   const weightText = p.weight ? p.weight : '1 unit';
   
   const cardClass = qty > 0
-    ? 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-primary/40 bg-primary/[0.01] shadow-premium-glow flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0'
-    : 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0';
+    ? 'product-card-premium bg-white rounded-2xl p-3 border border-primary/40 shadow-premium-glow flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0'
+    : 'product-card-premium bg-white rounded-2xl p-3 border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden min-w-[135px] max-w-[135px] shrink-0';
     
   const buttonHTML = qty > 0
-    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
-         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
-         <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
-         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
+    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-primary border border-primary rounded-lg overflow-hidden shadow-sm shrink-0">
+         <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
+         <span class="font-mono text-xs font-black text-white text-center flex-1">${qty}</span>
+         <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
        </div>`
-    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
+    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-lg text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
 
   return `
     <div class="${cardClass}" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
@@ -1056,8 +1056,8 @@ function getDashboardProductCardHTML(p) {
         ${ratingText}
       </div>
       <!-- Image Container -->
-      <div class="w-full aspect-square bg-[#F7F9F8] rounded-2xl p-2.5 mb-2 flex items-center justify-center overflow-hidden shrink-0">
-        <img src="img/${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-350" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop';">
+      <div class="w-full aspect-square bg-[#F8F9FA] rounded-xl p-2.5 mb-2 flex items-center justify-center overflow-hidden shrink-0">
+        <img src="${p.img}" alt="${p.name}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-350" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150&h=150&fit=crop';">
       </div>
       <!-- Body -->
       <div class="flex flex-col flex-grow">
@@ -2146,21 +2146,21 @@ function renderSingleProductCardHTML(p) {
   const weightText = p.weight ? p.weight : 'Standard Size';
   
   const buttonHTML = qty > 0
-    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
-         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
-         <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
-         <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
+    ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-primary border border-primary rounded-lg overflow-hidden shadow-sm shrink-0">
+         <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},-1)">−</button>
+         <span class="font-mono text-xs font-black text-white text-center flex-1">${qty}</span>
+         <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${p.id},1)">+</button>
        </div>`
-    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
+    : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-lg text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${p.id})">Add</button>`;
 
   const cardClass = qty > 0 
-    ? 'border-primary/40 bg-primary/[0.01] shadow-premium-glow' 
+    ? 'border-primary/45 bg-white shadow-premium-glow' 
     : 'border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)]';
 
   return `
-    <div class="product-card-premium bg-white rounded-[2rem] p-3.5 border ${cardClass} flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
+    <div class="product-card-premium bg-white rounded-2xl p-3.5 border ${cardClass} flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden" data-product-id="${p.id}" onclick="openProductModal(${p.id})">
       <span class="product-badge">${productBadge(p)}</span>
-      <div class="product-img-wrap w-full aspect-square bg-slate-50 rounded-[1.5rem] p-3 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
+      <div class="product-img-wrap w-full aspect-square bg-[#F8F9FA] rounded-xl p-3 mb-3 flex items-center justify-center relative overflow-hidden shrink-0 transition-transform duration-300 group-hover:scale-[1.01]">
         <img alt="${p.name}" class="max-h-full max-w-full object-contain" src="${p.img}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&h=200&fit=crop';">
       </div>
       <div class="flex flex-col flex-grow">
@@ -2190,9 +2190,9 @@ function renderProducts(products) {
     const tech = products.filter(p => p.category === 'tech');
 
     const sections = [
-      { title: 'Hot Snacks & Beverages', items: snacks, accentColor: '#10B981' },
-      { title: 'Travel Comfort & Hygiene', items: comfort, accentColor: '#3B82F6' },
-      { title: 'Tech & Electronics Accessories', items: tech, accentColor: '#8B5CF6' }
+      { title: '🍵 Chai, Coffee & Snacks', items: snacks, accentColor: '#118A4E' },
+      { title: '🧼 Travel Hygiene & Comfort', items: comfort, accentColor: '#D97706' },
+      { title: '🔌 Tech & Electronics', items: tech, accentColor: '#7C3AED' }
     ];
 
     grid.innerHTML = sections.map(sec => {
@@ -2200,9 +2200,9 @@ function renderProducts(products) {
       const itemsHTML = sec.items.map(p => renderSingleProductCardHTML(p)).join('');
       return `
         <div class="mb-8">
-          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 12px; padding: 0 4px;">
-            <div style="width: 3.5px; height: 14px; background: ${sec.accentColor}; border-radius: 2px;"></div>
-            <h4 style="font-size: 11.5px; font-weight: 850; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin: 0;">${sec.title}</h4>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 0 4px;">
+            <div style="width: 4px; height: 15px; background: ${sec.accentColor}; border-radius: 2px;"></div>
+            <h4 style="font-size: 13.5px; font-weight: 800; color: #1E293B; margin: 0; font-family: 'Outfit', sans-serif;">${sec.title}</h4>
           </div>
           <div class="grid grid-cols-2 gap-4">
             ${itemsHTML}
@@ -2492,20 +2492,20 @@ function updateSingleProductCardDOM(productId) {
   const qty = inCart ? inCart.qty : 0;
   
   if (qty > 0) {
-    card.className = 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-primary/40 bg-primary/[0.01] shadow-premium-glow flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden';
+    card.className = 'product-card-premium bg-white rounded-2xl p-3.5 border border-primary/45 shadow-premium-glow flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden';
   } else {
-    card.className = 'product-card-premium bg-white rounded-[2rem] p-3.5 border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden';
+    card.className = 'product-card-premium bg-white rounded-2xl p-3.5 border border-slate-100 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex flex-col group cursor-pointer hover:border-primary/20 active:scale-[0.98] transition-all duration-300 relative overflow-hidden';
   }
   
   const wrapper = card.querySelector(`.qty-btn-wrapper[data-product-id="${productId}"]`);
   if (wrapper) {
     wrapper.innerHTML = qty > 0
-      ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-white border border-primary rounded-full overflow-hidden shadow-sm shrink-0">
-           <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${product.id},-1)">−</button>
-           <span class="font-mono text-xs font-black text-primary text-center flex-1">${qty}</span>
-           <button class="w-6 h-full flex items-center justify-center text-primary hover:bg-primary/5 active:bg-primary/10 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${product.id},1)">+</button>
+      ? `<div class="qty-control-premium w-20 flex items-center justify-between bg-primary border border-primary rounded-lg overflow-hidden shadow-sm shrink-0">
+           <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${product.id},-1)">−</button>
+           <span class="font-mono text-xs font-black text-white text-center flex-1">${qty}</span>
+           <button class="w-6 h-full flex items-center justify-center text-white hover:bg-black/10 active:bg-black/20 font-bold transition-colors text-sm" onclick="event.stopPropagation();changeProductQty(${product.id},1)">+</button>
          </div>`
-      : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-full text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${product.id})">Add</button>`;
+      : `<button class="add-btn-premium w-20 flex items-center justify-center bg-white border border-primary text-primary hover:bg-primary hover:text-white rounded-lg text-[11px] font-black uppercase transition-all shadow-sm shrink-0 active:scale-95 duration-200" onclick="event.stopPropagation();addToCart(${product.id})">Add</button>`;
   }
 }
 

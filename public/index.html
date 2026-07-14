@@ -74,7 +74,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=1.1">
   <style>
     /* Base wrapper styling */
     html, body {
@@ -1015,21 +1015,26 @@ input, textarea, select { font-size: 16px !important; }
 
 .products-grid-premium { gap: 18px !important; }
 .product-card-premium {
-  border-radius: 24px !important;
-  padding: 14px !important;
-  min-height: 262px;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.055) !important;
+  border-radius: 16px !important;
+  padding: 12px !important;
+  min-height: 248px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+  border: 1.5px solid #ECEFF1 !important;
+  background: #ffffff !important;
 }
-.product-card-premium .product-img-wrap { border-radius: 20px !important; }
+.product-card-premium .product-img-wrap {
+  border-radius: 12px !important;
+  background: #F8F9FA !important;
+}
 .qty-control-premium,
 .add-btn-premium {
-  height: 34px;
-  min-width: 82px;
-  border-radius: 999px;
+  height: 32px;
+  min-width: 76px;
+  border-radius: 8px !important;
   touch-action: manipulation;
 }
 .add-btn-premium:active,
-.qty-control-premium button:active { transform: scale(0.92); }
+.qty-control-premium button:active { transform: scale(0.95); }
 .cart-bump { animation: cartBump 0.42s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes cartBump {
   0% { transform: translateX(-50%) scale(1); }
@@ -2223,225 +2228,394 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
   <!-- ==================== SHOP / HOME PAGE ==================== -->
   <div id="page-shop" class="page tab-page bg-background">
     <!-- Hero Section -->
-    <section class="shop-hero-section" style="background: #ffffff !important; padding-top: calc(18px + var(--rq-safe-top)); padding-bottom: 18px; position: relative; overflow: hidden; border-bottom: 1.5px solid #F3F4F6;">
-      <!-- Ambient aura background glows -->
-      <div class="hero-aura-glow">
-        <div class="aura-circle-1"></div>
-        <div class="aura-circle-2"></div>
-      </div>
-      
-      <!-- Top Row Container (Unified Left Title + Right Profile & Train illustration) -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 0 20px; position: relative; z-index: 10;">
-        <!-- Left Side: Branding, Title and Select PNR Button -->
-        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 4px; max-width: 55%; margin-top: 4px;">
-          <span style="font-size: 10px; font-weight: 800; color: #118A4E; letter-spacing: 0.28em; text-transform: uppercase; line-height: 1;">RAILQUICK</span>
-          <h1 class="font-headline" id="shop-delivering-label" style="font-family: 'Outfit', sans-serif; margin: 0; text-align: left;">
-            <span style="font-size: 28px; font-weight: 950; color: #1A1A1A; line-height: 1.05; letter-spacing: -0.02em; display: block;">Deliver in</span>
-          </h1>
-          
-          <!-- Select Train / PNR Button -->
-          <div id="shop-delivery-header" style="margin-top: 10px;">
-            <button onclick="resetAppStateAndLogin()" style="display: inline-flex; align-items: center; gap: 6px; background: #ffffff; border: 1.5px solid #E0E0E0; color: #118A4E; padding: 8px 16px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.03em; box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.2s;">
-              <span class="material-symbols-outlined" style="font-size: 15px; color: #118A4E;">train</span>
-              Select Train / PNR
-            </button>
-          </div>
-        </div>
+    <section class="shop-hero-section" style="background: linear-gradient(160deg, #0a5c35 0%, #118A4E 60%, #0e7a46 100%) !important; padding-top: calc(14px + var(--rq-safe-top)); padding-bottom: 14px; position: relative; overflow: hidden;">
+      <!-- Decorative ambient circles -->
+      <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.05);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:-60px;left:-30px;width:140px;height:140px;border-radius:50%;background:rgba(0,0,0,0.05);pointer-events:none;"></div>
 
-        <!-- Right Side: Profile icon (top-right) + Train hero image underneath -->
-        <div style="display: flex; flex-direction: column; align-items: flex-end; position: relative; min-height: 125px;">
-          <!-- Profile Button -->
-          <div onclick="navigateTo('page-account')" style="width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: 1.5px solid #E5E7EB; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.04); position: relative; z-index: 10;">
-            <span class="material-symbols-outlined" style="font-size: 22px; color: #118A4E;">person</span>
-          </div>
-          <!-- Train Hero Image (floating below profile button) -->
-          <div style="position: absolute; right: -28px; top: 22px; width: 215px; pointer-events: none; z-index: 2;">
-            <img src="hero_train.png" alt="RailQuick Express Delivery" style="width: 100%; height: auto; object-fit: contain; mix-blend-mode: multiply;" />
-          </div>
+      <!-- Top Row: Delivery badge + Profile (Logo removed) -->
+      <div style="display:flex;align-items:center;gap:10px;padding:0 16px;margin-bottom:10px;position:relative;z-index:10;">
+        <!-- Brand Text -->
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.5px;text-shadow:0 2px 4px rgba(0,0,0,0.05);">Railquick</span>
+          <div style="width:6px;height:6px;background:#4ADE80;border-radius:50%;margin-top:4px;animation:shopBlink 1.2s infinite;"></div>
+        </div>
+        <!-- Profile -->
+        <div onclick="navigateTo('page-account')" style="margin-left:auto;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <span class="material-symbols-outlined" style="font-size:20px;color:#fff;">person</span>
         </div>
       </div>
 
-      <!-- Search Section: Taller search box with spacing and neutral border, sitting directly below Train / Hero illustration -->
-      <div style="padding: 0 20px; margin-top: 18px; position: relative; z-index: 20;" onclick="openSearchOverlay()">
-        <div class="search-glow-container" style="background: #ffffff; border-radius: 999px; box-shadow: 0 4px 18px rgba(17, 122, 74, 0.08); display: flex; align-items: center; height: 58px; cursor: pointer; padding: 0 20px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="material-symbols-outlined" style="font-size: 22px; color: #118A4E;">search</span>
-          </div>
-          <!-- Typewriter container with static prefix outside -->
-          <div style="flex-grow: 1; display: flex; align-items: center; font-size: 13.5px; font-weight: 700; color: #1A1A1A; user-select: none; text-align: left; margin-left: 8px;">
-            <span style="color: #6B7280; font-weight: 500;">Search&nbsp;</span>
-            <span id="search-placeholder-text" style="color: #118A4E;">"hot samosa"</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== BLINKIT-STYLE PROMO BANNER (below search bar) ===== -->
-    <section class="rq-promo-banner" style="margin: 0; padding: 20px 16px 24px; background: linear-gradient(135deg, #118A4E 0%, #0A5C35 60%, #064A2B 100%); position: relative; overflow: hidden;">
-      <!-- Decorative circles -->
-      <div style="position: absolute; top: -40px; right: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,0.06);"></div>
-      <div style="position: absolute; bottom: -50px; left: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.04);"></div>
-      
-      <div style="display: flex; align-items: center; gap: 12px; position: relative; z-index: 2;">
-        <!-- Left: Text content -->
-        <div style="flex: 1;">
-          <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); border-radius: 999px; padding: 4px 10px; margin-bottom: 8px;">
-            <span style="display: inline-block; width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; animation: pulseGlow 1.5s infinite alternate;"></span>
-            <span style="font-size: 9px; font-weight: 800; color: #ffffff; letter-spacing: 0.1em; text-transform: uppercase;">Delivering Now</span>
-          </div>
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 900; color: #ffffff; line-height: 1.15; margin: 0 0 6px 0; letter-spacing: -0.02em;">Train Snacks<br/>& Essentials</h2>
-          <p style="font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 600; margin: 0 0 12px 0;">Delivered to your seat in minutes</p>
-          <button onclick="filterCategory('comfort', null)" style="display: inline-flex; align-items: center; gap: 4px; background: #ffffff; color: #118A4E; border: none; padding: 8px 16px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.2s;">
-            Order Now
-            <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
-          </button>
-        </div>
-        <!-- Right: Hero train illustration -->
-        <div style="width: 140px; flex-shrink: 0; position: relative;">
-          <img src="hero_train.png" alt="Train Delivery" style="width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3)); transform: scaleX(-1);" />
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== CATEGORY CARDS (Blinkit-style with images + discount badges) ===== -->
-    <section style="background: #F8FAF9; padding: 16px 0 12px;">
-      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <h3 style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 900; color: #1A1A1A; margin: 0; letter-spacing: -0.01em;">Shop by Category</h3>
-        <button onclick="filterCategory('all', null)" style="font-size: 11px; font-weight: 700; color: #118A4E; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 2px;">
-          See All <span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
+      <!-- Location Row -->
+      <div style="display:flex;align-items:center;gap:6px;padding:0 16px;margin-bottom:10px;position:relative;z-index:10;" id="shop-delivery-header">
+        <span class="material-symbols-outlined" style="font-size:17px;color:#a7f3d0;">train</span>
+        <div id="shop-delivering-label" style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);">Select Train / PNR to order</div>
+        <button onclick="resetAppStateAndLogin()" style="margin-left:auto;background:none;border:none;cursor:pointer;display:flex;align-items:center;">
+          <span class="material-symbols-outlined" style="font-size:18px;color:rgba(255,255,255,0.6);">keyboard_arrow_down</span>
         </button>
       </div>
-      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 8px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
-        
-        <!-- Category Card: Snacks & Food -->
-        <div onclick="filterCategory('comfort', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #FF6B6B, #EE5A24); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">POPULAR</div>
-          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #FFF7ED; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_haldirams.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Snacks" />
-          </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Snacks &<br/>Food</div>
-          <div style="font-size: 9px; font-weight: 700; color: #118A4E; background: #ECFDF5; padding: 2px 8px; border-radius: 999px; display: inline-block;">From ₹30</div>
-        </div>
 
-        <!-- Category Card: Beverages -->
-        <div onclick="filterCategory('beverages', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #118A4E, #0A5C35); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">HOT</div>
-          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #F0FDF4; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_tea.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Beverages" />
+      <!-- Search Box -->
+      <div style="padding:0 16px;position:relative;z-index:20;" onclick="openSearchOverlay()">
+        <div style="background:#fff;border-radius:14px;display:flex;align-items:center;height:50px;cursor:pointer;padding:0 16px;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+          <span class="material-symbols-outlined" style="font-size:21px;color:#118A4E;">search</span>
+          <div style="flex-grow:1;display:flex;align-items:center;font-size:13.5px;font-weight:600;color:#9CA3AF;margin-left:10px;user-select:none;">
+            Search&nbsp;<span id="search-placeholder-text" style="color:#118A4E;">"hot samosa"</span>
           </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Chai &<br/>Drinks</div>
-          <div style="font-size: 9px; font-weight: 700; color: #118A4E; background: #ECFDF5; padding: 2px 8px; border-radius: 999px; display: inline-block;">From ₹15</div>
-        </div>
-
-        <!-- Category Card: Electronics -->
-        <div onclick="filterCategory('tech', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #6366F1, #4F46E5); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">DEALS</div>
-          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #EEF2FF; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_earphones.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Electronics" />
-          </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Tech &<br/>Gadgets</div>
-          <div style="font-size: 9px; font-weight: 700; color: #6366F1; background: #EEF2FF; padding: 2px 8px; border-radius: 999px; display: inline-block;">Up To 40% Off</div>
-        </div>
-
-        <!-- Category Card: Hygiene -->
-        <div onclick="filterCategory('hygiene', this)" style="min-width: 130px; background: #ffffff; border-radius: 16px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F1F3F2; transition: all 0.2s; position: relative; overflow: hidden;">
-          <div style="position: absolute; top: 6px; left: 6px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.04em; z-index: 2;">ESSENTIALS</div>
-          <div style="width: 56px; height: 56px; margin: 4px auto 8px; background: #FFFBEB; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_sanitizer.png" style="width: 44px; height: 44px; object-fit: contain;" alt="Hygiene" />
-          </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; margin-bottom: 3px; line-height: 1.2;">Hygiene<br/>& Care</div>
-          <div style="font-size: 9px; font-weight: 700; color: #D97706; background: #FFFBEB; padding: 2px 8px; border-radius: 999px; display: inline-block;">Must-Haves</div>
+          <span class="material-symbols-outlined" style="font-size:20px;color:#118A4E;">mic</span>
         </div>
       </div>
     </section>
 
-    <!-- ===== DEAL OF THE DAY HORIZONTAL SCROLL (Blinkit-style) ===== -->
-    <section style="background: #ffffff; padding: 16px 0 8px;">
-      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span style="font-size: 18px;">🔥</span>
-          <h3 style="font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 900; color: #1A1A1A; margin: 0;">Train Specials</h3>
+    <!-- ===== CATEGORY ICON SCROLL TAB (below search) ===== -->
+    <style>
+      .rq-cat-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 14px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+      }
+      .rq-cat-tab-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50% !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 2px solid transparent;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      }
+      .rq-cat-tab:active .rq-cat-tab-icon {
+        transform: scale(0.92);
+      }
+      .rq-cat-tab.active .rq-cat-tab-icon {
+        border-color: #118A4E;
+        box-shadow: 0 4px 12px rgba(17, 138, 78, 0.15);
+        transform: scale(1.05);
+      }
+      .rq-cat-tab-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #64748B;
+        font-family: 'Outfit', sans-serif;
+        transition: color 0.2s;
+      }
+      .rq-cat-tab.active .rq-cat-tab-label {
+        color: #118A4E;
+        font-weight: 800;
+      }
+      .rq-cat-new {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        background: #EF4444;
+        color: #fff;
+        font-size: 7px;
+        font-weight: 900;
+        border-radius: 4px;
+        padding: 1.5px 3.5px;
+        letter-spacing: 0.02em;
+        box-shadow: 0 2px 4px rgba(239,68,68,0.25);
+        font-family: 'Outfit', sans-serif;
+      }
+    </style>
+    <div style="display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #ECEFF1;padding:4px 6px;scrollbar-width:none;" class="no-scrollbar">
+      <div class="rq-cat-tab active" onclick="filterCategory('all',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#E8F5EE;">🛍️</div>
+        <span class="rq-cat-tab-label">All</span>
+      </div>
+      <div class="rq-cat-tab" onclick="filterCategory('comfort',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#FFFBEB;">🍟</div>
+        <span class="rq-cat-tab-label">Snacks</span>
+      </div>
+      <div class="rq-cat-tab" onclick="filterCategory('beverages',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#FFF7ED;">☕</div>
+        <span class="rq-cat-tab-label">Chai &amp; Drinks</span>
+      </div>
+      <div class="rq-cat-tab" style="position:relative;" onclick="filterCategory('tech',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#F5F3FF;">🎧</div>
+        <span class="rq-cat-tab-label">Electronics</span>
+        <div class="rq-cat-new">NEW</div>
+      </div>
+      <div class="rq-cat-tab" onclick="filterCategory('hygiene',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#F0F9FF;">🧴</div>
+        <span class="rq-cat-tab-label">Hygiene</span>
+      </div>
+      <div class="rq-cat-tab" onclick="filterCategory('comfort',null);setRQTab(this)">
+        <div class="rq-cat-tab-icon" style="background:#ECFDF5;">🛌</div>
+        <span class="rq-cat-tab-label">Comfort</span>
+      </div>
+    </div>
+    <script>
+      function setRQTab(el){
+        document.querySelectorAll('.rq-cat-tab').forEach(t=>t.classList.remove('active'));
+        el.classList.add('active');
+      }
+    </script>
+
+    <!-- ===== GREEN HERO BANNER (RE-DESIGNED) ===== -->
+    <section style="margin:16px 12px; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #094F2C 0%, #118A4E 100%); box-shadow:0 10px 30px rgba(17, 138, 78, 0.2); min-height:165px; display:flex;">
+      <!-- Background Ambient Light -->
+      <div style="position:absolute; top:-50px; left:-50px; width:150px; height:150px; border-radius:50%; background:rgba(255,255,255,0.08); filter:blur(20px); pointer-events:none;"></div>
+      <div style="position:absolute; bottom:-30px; right:10%; width:120px; height:120px; border-radius:50%; background:rgba(22, 163, 94, 0.4); filter:blur(30px); pointer-events:none;"></div>
+
+      <!-- Left Content (62% width) -->
+      <div style="position:relative; z-index:2; padding:20px 12px 20px 20px; width:62%; display:flex; flex-direction:column; justify-content:center;">
+        <div style="display:inline-flex; align-items:center; gap:5px; background:rgba(255,255,255,0.15); backdrop-filter:blur(4px); border:1px solid rgba(255,255,255,0.25); border-radius:30px; padding:3px 10px; width:fit-content; margin-bottom:8px;">
+          <span style="font-size:9px; font-weight:800; color:#fff; letter-spacing:0.06em; text-transform:uppercase; display:flex; align-items:center; gap:3px; font-family:'Outfit',sans-serif;">
+            <span class="material-symbols-outlined" style="font-size:11px; color:#4ADE80; font-weight:900;">bolt</span>
+            Express Delivery
+          </span>
         </div>
-        <div style="display: inline-flex; align-items: center; gap: 3px; background: #FEF2F2; padding: 3px 8px; border-radius: 999px;">
-          <span class="material-symbols-outlined" style="font-size: 12px; color: #EF4444;">timer</span>
-          <span style="font-size: 9px; font-weight: 800; color: #EF4444; letter-spacing: 0.02em;">LIMITED TIME</span>
+        <h3 style="font-size:21px; font-weight:900; color:#fff; line-height:1.18; font-family:'Outfit',sans-serif; letter-spacing:-0.4px; margin:0 0 6px 0;">
+          Chai, Snacks &amp;<br/>Essentials
+        </h3>
+        <p style="font-size:11px; font-weight:500; color:rgba(255,255,255,0.85); line-height:1.4; margin:0 0 12px 0; max-width:180px;">
+          Direct to your train seat berth in minutes.
+        </p>
+        <button onclick="filterCategory('comfort',null)" style="background:#fff; color:#118A4E; border:none; border-radius:12px; padding:8px 14px; font-family:'Outfit',sans-serif; font-size:11.5px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.12); display:flex; align-items:center; gap:4px; width:fit-content; transition:all 0.2s;" class="active:scale-95">
+          Order Now
+          <span class="material-symbols-outlined" style="font-size:12px; font-weight:900;">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Right Content (38% width with image overlay) -->
+      <div style="position:relative; width:38%; display:flex; align-items:flex-end; justify-content:center; overflow:visible;">
+        <!-- Glowing Ring behind the delivery boy -->
+        <div style="position:absolute; width:110px; height:110px; border-radius:50%; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.15); bottom:-15px; z-index:1; transform:scale(1.1);"></div>
+        <!-- Delivery boy image -->
+        <img src="delivery_person.png" style="max-height:155px; width:auto; z-index:2; filter:drop-shadow(0 8px 16px rgba(0,0,0,0.25)); object-fit:contain; transform:translateY(4px);" alt="Seat Delivery" />
+      </div>
+    </section>
+
+    <!-- ===== 4-COL CATEGORY PROMO GRID (RE-DESIGNED) ===== -->
+    <section style="background:#F6F8F7; padding:18px 0 16px;">
+      <div style="padding:0 16px; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:16px;">⚡</span>
+          <h3 style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; color:#1e293b; margin:0;">Super Deals</h3>
+        </div>
+        <button onclick="filterCategory('all',null)" style="font-size:11px; font-weight:700; color:#118A4E; background:none; border:none; cursor:pointer; display:flex; align-items:center; gap:2px;">View All <span class="material-symbols-outlined" style="font-size:14px; font-weight:bold;">chevron_right</span></button>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:0 16px;">
+        <!-- Promo Card 1: Snacks -->
+        <div onclick="filterCategory('comfort',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🍟</div>
+          <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Snacks &amp; Food</div>
+          <span style="background:#E8F5EE; color:#118A4E; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(17,138,78,0.15);">30% OFF</span>
+        </div>
+        <!-- Promo Card 2: Drinks -->
+        <div onclick="filterCategory('beverages',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <div style="font-size:28px; line-height:1; margin-bottom:6px;">☕</div>
+          <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Chai &amp; Drinks</div>
+          <span style="background:#FFF9E6; color:#D97706; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(217,119,6,0.15);">From ₹15</span>
+        </div>
+        <!-- Promo Card 3: Electronics -->
+        <div onclick="filterCategory('tech',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🎧</div>
+          <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Electronics</div>
+          <span style="background:#F3E8FF; color:#7C3AED; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(124,58,237,0.15);">45% OFF</span>
+        </div>
+        <!-- Promo Card 4: Hygiene -->
+        <div onclick="filterCategory('hygiene',null)" style="background:#fff; border-radius:18px; padding:12px 6px; text-align:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #ECEFF1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:space-between; min-height:105px; transition:transform 0.15s;" ontouchstart="this.style.transform='scale(0.95)'" ontouchend="this.style.transform='scale(1)'">
+          <div style="font-size:28px; line-height:1; margin-bottom:6px;">🧴</div>
+          <div style="font-size:10px; font-weight:800; color:#334155; line-height:1.2; margin-bottom:8px; font-family:'Outfit',sans-serif;">Hygiene</div>
+          <span style="background:#E0F2FE; color:#0284C7; font-size:8px; font-weight:800; padding:2px 6px; border-radius:6px; white-space:nowrap; border:0.5px solid rgba(2,132,199,0.15);">Essentials</span>
         </div>
       </div>
-      <div style="display: flex; gap: 10px; overflow-x: auto; padding: 0 16px 12px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
+    </section>
+
+    <!-- ===== CHAI & SNACKS HORIZONTAL SCROLL ===== -->
+    <section style="background: #ffffff; padding: 18px 0 12px; border-bottom: 1px solid #ECEFF1;">
+      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🍵</span>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 800; color: #1E293B; margin: 0;">Chai &amp; Snacks</h3>
+          <div style="display: inline-flex; align-items: center; gap: 3px; background: #FFF9E6; padding: 3px 8px; border-radius: 999px;">
+            <span class="material-symbols-outlined" style="font-size: 12px; color: #D97706; font-weight: bold;">local_cafe</span>
+            <span style="font-size: 9px; font-weight: 850; color: #D97706; letter-spacing: 0.02em; font-family:'Outfit',sans-serif;">HOT &amp; FRESH</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px 12px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
         
-        <!-- Deal Card 1: Samosa + Chai -->
-        <div onclick="addToCartById(105)" style="min-width: 155px; background: linear-gradient(180deg, #FFF7ED 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #FFEDD5; position: relative; transition: transform 0.2s;">
-          <div style="position: absolute; top: 8px; left: 8px; background: #EF4444; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">30% OFF</div>
-          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_tea.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Samosa Chai Combo" />
+        <!-- Samosa & Chai Combo (id 105) -->
+        <div onclick="event.stopPropagation(); addToCartById(105)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #EF4444; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">30% OFF</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_tea.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Samosa Chai Combo" />
           </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">Samosa & Chai<br/>Combo</div>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹50</span>
-            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹70</span>
-          </div>
-        </div>
-
-        <!-- Deal Card 2: Mineral Water -->
-        <div onclick="addToCartById(201)" style="min-width: 155px; background: linear-gradient(180deg, #F0FDF4 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #DCFCE7; position: relative; transition: transform 0.2s;">
-          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">BEST PRICE</div>
-          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_water.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Mineral Water" />
-          </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">Rail Neer<br/>Water 1L</div>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹15</span>
-            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹20</span>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Samosa &amp; Chai Combo</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">Serving for 1</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹50</span>
+              <span style="font-size: 9px; color: #94A3B8; text-decoration: line-through; font-family:'JetBrains Mono',monospace;">₹70</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
           </div>
         </div>
 
-        <!-- Deal Card 3: Power Bank -->
-        <div onclick="addToCartById(402)" style="min-width: 155px; background: linear-gradient(180deg, #EEF2FF 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #E0E7FF; position: relative; transition: transform 0.2s;">
-          <div style="position: absolute; top: 8px; left: 8px; background: #6366F1; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">45% OFF</div>
-          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_powerbank.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Power Bank" />
+        <!-- Claypot Ginger Masala Chai (id 203) -->
+        <div onclick="event.stopPropagation(); addToCartById(203)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">POPULAR</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_tea.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Masala Chai" />
           </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">10,000mAh<br/>Power Bank</div>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹799</span>
-            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹1,449</span>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Ginger Masala Chai</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">1 Kulhad Cup</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹20</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
           </div>
         </div>
 
-        <!-- Deal Card 4: Earphones -->
-        <div onclick="addToCartById(401)" style="min-width: 155px; background: linear-gradient(180deg, #FDF4FF 0%, #ffffff 100%); border-radius: 16px; padding: 12px; cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.05); border: 1.5px solid #F3E8FF; position: relative; transition: transform 0.2s;">
-          <div style="position: absolute; top: 8px; left: 8px; background: #A855F7; color: #fff; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 8px; z-index: 2;">25% OFF</div>
-          <div style="width: 80px; height: 80px; margin: 8px auto 8px; display: flex; align-items: center; justify-content: center;">
-            <img src="product_earphones.png" style="width: 72px; height: 72px; object-fit: contain;" alt="Earphones" />
+        <!-- Haldiram's Bhujia Sev Combo Pack (id 103) -->
+        <div onclick="event.stopPropagation(); addToCartById(103)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">BEST VALUE</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_haldirams.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Haldiram Bhujia" />
           </div>
-          <div style="font-size: 11px; font-weight: 800; color: #1A1A1A; line-height: 1.25; margin-bottom: 4px;">boAt Bass<br/>Earphones</div>
-          <div style="display: flex; align-items: center; gap: 4px;">
-            <span style="font-size: 13px; font-weight: 900; color: #118A4E;">₹349</span>
-            <span style="font-size: 10px; color: #9CA3AF; text-decoration: line-through; font-weight: 600;">₹499</span>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Haldiram's Bhujia Sev</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">150g + 50g Extra</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹45</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
           </div>
         </div>
+
+        <!-- Bingo Potato Chips (id 104) -->
+        <div onclick="event.stopPropagation(); addToCartById(104)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400&h=400&fit=crop" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Bingo Chips" />
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Bingo Potato Chips</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">130g Pack</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹30</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== TRAVEL SPECIALS HORIZONTAL SCROLL ===== -->
+    <section style="background: #ffffff; padding: 18px 0 12px; border-bottom: 6px solid #F1F5F0;">
+      <div style="padding: 0 16px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">⭐</span>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 800; color: #1E293B; margin: 0;">Travel Specials</h3>
+          <div style="display: inline-flex; align-items: center; gap: 3px; background: #E7F6EF; padding: 3px 8px; border-radius: 999px;">
+            <span class="material-symbols-outlined" style="font-size: 12px; color: #118A4E; font-weight: bold;">timer</span>
+            <span style="font-size: 9px; font-weight: 850; color: #118A4E; letter-spacing: 0.02em; font-family:'Outfit',sans-serif;">LIMITED TIME</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px 12px; -webkit-overflow-scrolling: touch;" class="no-scrollbar">
+        
+        <!-- Chilled Rail Neer Water (id 201) -->
+        <div onclick="event.stopPropagation(); addToCartById(201)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">BEST PRICE</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_water.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Mineral Water" />
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Rail Neer Water 1L</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">1 Bottle</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹15</span>
+              <span style="font-size: 9px; color: #94A3B8; text-decoration: line-through; font-family:'JetBrains Mono',monospace;">₹20</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
+          </div>
+        </div>
+
+        <!-- boAt Bass Earphones (id 401) -->
+        <div onclick="event.stopPropagation(); addToCartById(401)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #EF4444; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">25% OFF</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_earphones.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Earphones" />
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">boAt Bass Earphones</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">1 Unit</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹349</span>
+              <span style="font-size: 9px; color: #94A3B8; text-decoration: line-through; font-family:'JetBrains Mono',monospace;">₹499</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
+          </div>
+        </div>
+
+        <!-- 10,000mAh Slim Fast Power Bank (id 402) -->
+        <div onclick="event.stopPropagation(); addToCartById(402)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #EF4444; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">45% OFF</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_powerbank.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Power Bank" />
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">10,000mAh Power Bank</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">1 Unit</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹799</span>
+              <span style="font-size: 9px; color: #94A3B8; text-decoration: line-through; font-family:'JetBrains Mono',monospace;">₹1,449</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
+          </div>
+        </div>
+
+        <!-- Premium Memory Foam Neck Pillow (id 101) -->
+        <div onclick="event.stopPropagation(); addToCartById(101)" style="min-width: 140px; width: 140px; background: #ffffff; border-radius: 18px; padding: 12px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.03); border: 1px solid #ECEFF1; position: relative; transition: transform 0.2s; display: flex; flex-direction: column;" class="active:scale-98">
+          <div style="position: absolute; top: 8px; left: 8px; background: #118A4E; color: #fff; font-size: 8px; font-weight: 900; padding: 2px 6px; border-radius: 6px; z-index: 2; font-family:'Outfit',sans-serif;">BEST SELLER</div>
+          <div style="width: 100%; height: 90px; background: #F8F9FA; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; padding: 6px;">
+            <img src="product_neckpillow.png" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Neck Pillow" />
+          </div>
+          <div style="font-size: 11px; font-weight: 700; color: #1E293B; line-height: 1.3; margin-bottom: 4px; font-family:'Outfit',sans-serif; min-height: 28px;">Memory Foam Neck Pillow</div>
+          <div style="font-size: 9px; font-weight: 600; color: #94A3B8; margin-bottom: 10px; font-family:'Outfit',sans-serif;">1 Unit</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: auto; width: 100%;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 13px; font-weight: 900; color: #1E293B; font-family:'JetBrains Mono',monospace;">₹299</span>
+            </div>
+            <div style="background:#fff; border:1px solid #118A4E; color:#118A4E; border-radius:8px; font-size:10px; font-weight:800; padding:4px 10px; font-family:'Outfit',sans-serif; text-transform:uppercase; box-shadow: 0 2px 4px rgba(17,138,78,0.08);">Add</div>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- ===== QUICK ACTIONS BAR ===== -->
-    <section style="background: #ffffff; padding: 6px 16px 14px; border-bottom: 6px solid #F1F5F0;">
-      <div style="display: flex; gap: 8px;">
-        <div onclick="navigateTo('page-pnr'); setTimeout(()=>switchPNRTab('pnr'), 100);" style="flex: 1; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border: 1px solid #A7F3D0; transition: all 0.2s;">
-          <div style="width: 36px; height: 36px; background: #118A4E; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #fff;">search</span>
+    <section style="background:#ffffff;padding:6px 16px 14px;border-bottom:6px solid #F1F5F0;">
+      <div style="display:flex;gap:8px;">
+        <div onclick="navigateTo('page-pnr');setTimeout(()=>switchPNRTab('pnr'),100);" style="flex:1;background:linear-gradient(135deg,#E7F6EF 0%,#d1f0e3 100%);border-radius:14px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:10px;border:1px solid #b6e8d0;transition:all 0.2s;">
+          <div style="width:36px;height:36px;background:#118A4E;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#fff;">confirmation_number</span>
           </div>
           <div>
-            <div style="font-size: 11px; font-weight: 800; color: #1A1A1A;">Check PNR</div>
-            <div style="font-size: 9px; color: #6B7280; font-weight: 600;">Verify ticket status</div>
+            <div style="font-size:11px;font-weight:800;color:#1A1A1A;">Check PNR</div>
+            <div style="font-size:9px;color:#6B7280;font-weight:600;">Verify ticket status</div>
           </div>
         </div>
-        <div onclick="navigateTo('page-pnr'); setTimeout(()=>switchPNRTab('live'), 100);" style="flex: 1; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-radius: 14px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; border: 1px solid #93C5FD; transition: all 0.2s;">
-          <div style="width: 36px; height: 36px; background: #3B82F6; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: #fff;">train</span>
+        <div onclick="navigateTo('page-pnr');setTimeout(()=>switchPNRTab('live'),100);" style="flex:1;background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border-radius:14px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:10px;border:1px solid #FDE68A;transition:all 0.2s;">
+          <div style="width:36px;height:36px;background:#F59E0B;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#fff;">train</span>
           </div>
           <div>
-            <div style="font-size: 11px; font-weight: 800; color: #1A1A1A;">Live Train</div>
-            <div style="font-size: 9px; color: #6B7280; font-weight: 600;">Track your train</div>
+            <div style="font-size:11px;font-weight:800;color:#1A1A1A;">Live Train</div>
+            <div style="font-size:9px;color:#6B7280;font-weight:600;">Track your train</div>
           </div>
         </div>
       </div>
@@ -3570,6 +3744,6 @@ input[type='text'], input[type='number'], input[type='tel'], input[type='date'] 
     </div>
   </div>
 
-<script src="app.js"></script>
+<script src="app.js?v=1.1"></script>
 </body>
 </html>
